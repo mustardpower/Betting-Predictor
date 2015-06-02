@@ -1,0 +1,52 @@
+﻿<Window x:Class="BettingPredictorV3.FixtureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Team" Height="639" Width="1108">
+    <Grid Height="569" Width="1123">
+        <DataGrid AutoGenerateColumns="False" Height="177" HorizontalAlignment="Left"
+                  Margin="12,54,0,0" Name="homeFixturesGrid" Loaded="homeTeamFixtures_Loaded"
+                  VerticalAlignment="Top" Width="1100" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=date}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Home Team" Binding="{Binding Path=home_team.Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Away Team" Binding="{Binding Path=away_team.Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Home Goals" Binding="{Binding Path=home_goals}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Away Goals" Binding="{Binding Path=away_goals}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Predicted Goal Difference" Binding="{Binding Path=predicted_goal_difference}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Home Form" Binding="{Binding Path=home_form}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Away Form" Binding="{Binding Path=away_form}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Predicted Home Goals" Binding="{Binding Path=predicted_home_goals}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Predicted Away Goals" Binding="{Binding Path=predicted_away_goals}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Home Goals Residual Error" Binding="{Binding Path=home_residual}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Away Goals Residual Error" Binding="{Binding Path=away_residual}"></DataGridTextColumn>
+
+                </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid AutoGenerateColumns="False" Height="177" HorizontalAlignment="Left"
+                  Margin="12,293,0,0" Name="awayFixturesGrid" Loaded="awayTeamFixtures_Loaded"
+                  VerticalAlignment="Top" Width="1100" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=date}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Home Team" Binding="{Binding Path=home_team.Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Away Team" Binding="{Binding Path=away_team.Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Home Goals" Binding="{Binding Path=home_goals}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Away Goals" Binding="{Binding Path=away_goals}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Predicted Goal Difference" Binding="{Binding Path=predicted_goal_difference}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Home Form" Binding="{Binding Path=home_form}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Away Form" Binding="{Binding Path=away_form}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Predicted Home Goals" Binding="{Binding Path=predicted_home_goals}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Predicted Away Goals" Binding="{Binding Path=predicted_away_goals}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Home Goals Residual Error" Binding="{Binding Path=home_residual}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Away Goals Residual Error" Binding="{Binding Path=away_residual}"></DataGridTextColumn>
+                </DataGrid.Columns>
+                </DataGrid>
+        <Label Content="Home Team Results" Height="27" HorizontalAlignment="Left" Margin="12,21,0,0" Name="label1" VerticalAlignment="Top" Width="121" />
+        <Label Content="Away Team Results" Height="27" HorizontalAlignment="Left" Margin="12,250,0,0" Name="label2" VerticalAlignment="Top" Width="121" />
+        <Label Content="Home Win Probability:" Height="28" HorizontalAlignment="Left" Margin="36,495,0,0" Name="label3" VerticalAlignment="Top" Width="135" />
+        <Label Content="Draw Probability:" Height="28" HorizontalAlignment="Left" Margin="367,495,0,0" Name="label4" VerticalAlignment="Top" Width="135" />
+        <Label Content="Away Win Probability:" Height="28" HorizontalAlignment="Left" Margin="678,495,0,0" Name="label5" VerticalAlignment="Top" Width="135" />
+        <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="187,495,0,0" Name="homeProbability" VerticalAlignment="Top" />
+        <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="489,495,0,0" Name="drawProbability" VerticalAlignment="Top" Width="46" />
+        <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="819,495,0,0" Name="awayProbability" VerticalAlignment="Top" Width="50" />
+    </Grid>
+</Window>
