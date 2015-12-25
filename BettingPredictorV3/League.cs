@@ -67,7 +67,7 @@ namespace BettingPredictorV3
 
         public int getFileOffset(string[] fixture_data)
         {
-            if (fixture_data.Length == 52)
+            if (fixture_data.Length == 49 || fixture_data.Length == 52)
             {
                 return 0;
             }
@@ -75,13 +75,13 @@ namespace BettingPredictorV3
             {
                 return 12;
             }
-            else if(fixture_data.Length == 65)
+            else if(fixture_data.Length == 62 || fixture_data.Length == 65)
             {
                 return 13;
             }
             else
             {
-                throw new Exception();
+                return fixture_data.Length - 52;
             }
         }
 

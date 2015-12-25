@@ -64,7 +64,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 35 "..\..\..\MainWindow.xaml"
+        #line 36 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.TabItem tabItem2;
         
@@ -72,7 +72,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 37 "..\..\..\MainWindow.xaml"
+        #line 38 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.DataGrid dataGrid_PreviousFixtures;
         
@@ -80,7 +80,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 53 "..\..\..\MainWindow.xaml"
+        #line 54 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Button searchButton;
         
@@ -88,7 +88,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 54 "..\..\..\MainWindow.xaml"
+        #line 55 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Label label1;
         
@@ -96,7 +96,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 55 "..\..\..\MainWindow.xaml"
+        #line 56 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Label label2;
         
@@ -104,7 +104,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 56 "..\..\..\MainWindow.xaml"
+        #line 57 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.ComboBox leaguesComboBox;
         
@@ -112,7 +112,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 57 "..\..\..\MainWindow.xaml"
+        #line 58 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.ComboBox dateComboBox;
         
@@ -120,7 +120,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 58 "..\..\..\MainWindow.xaml"
+        #line 59 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Button resetButton;
         
@@ -128,7 +128,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 59 "..\..\..\MainWindow.xaml"
+        #line 60 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.GroupBox groupBox1;
         
@@ -136,7 +136,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 61 "..\..\..\MainWindow.xaml"
+        #line 62 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Label label3;
         
@@ -144,7 +144,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 62 "..\..\..\MainWindow.xaml"
+        #line 63 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Label label4;
         
@@ -152,7 +152,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 63 "..\..\..\MainWindow.xaml"
+        #line 64 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.TextBox minGD;
         
@@ -160,7 +160,7 @@ namespace BettingPredictorV3 {
         #line hidden
         
         
-        #line 64 "..\..\..\MainWindow.xaml"
+        #line 65 "..\..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.TextBox maxGD;
         
@@ -240,13 +240,13 @@ namespace BettingPredictorV3 {
             case 7:
             this.dataGrid_PreviousFixtures = ((System.Windows.Controls.DataGrid)(target));
             
-            #line 37 "..\..\..\MainWindow.xaml"
+            #line 38 "..\..\..\MainWindow.xaml"
             this.dataGrid_PreviousFixtures.Loaded += new System.Windows.RoutedEventHandler(this.dataGrid_PreviousFixtures_Loaded);
             
             #line default
             #line hidden
             
-            #line 38 "..\..\..\MainWindow.xaml"
+            #line 39 "..\..\..\MainWindow.xaml"
             this.dataGrid_PreviousFixtures.MouseDoubleClick += new System.Windows.Input.MouseButtonEventHandler(this.dataGrid_MouseDoubleClick);
             
             #line default
@@ -255,7 +255,7 @@ namespace BettingPredictorV3 {
             case 8:
             this.searchButton = ((System.Windows.Controls.Button)(target));
             
-            #line 53 "..\..\..\MainWindow.xaml"
+            #line 54 "..\..\..\MainWindow.xaml"
             this.searchButton.Click += new System.Windows.RoutedEventHandler(this.searchButton_Click);
             
             #line default
@@ -276,7 +276,7 @@ namespace BettingPredictorV3 {
             case 13:
             this.resetButton = ((System.Windows.Controls.Button)(target));
             
-            #line 58 "..\..\..\MainWindow.xaml"
+            #line 59 "..\..\..\MainWindow.xaml"
             this.resetButton.Click += new System.Windows.RoutedEventHandler(this.resetButton_Click);
             
             #line default

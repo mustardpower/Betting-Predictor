@@ -298,7 +298,7 @@ namespace BettingPredictorV3
 
         public void setHistoryFiles()
         {
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E0.csv");
+            /*historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E0.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E2.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E3.csv");
@@ -319,7 +319,7 @@ namespace BettingPredictorV3
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/B1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/P1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/T1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/G1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/G1.csv");*/
 
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/E0.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/E1.csv");
@@ -343,6 +343,29 @@ namespace BettingPredictorV3
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/P1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/T1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/G1.csv");
+
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/E0.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/E1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/E2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/E3.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/EC.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/SC0.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/SC1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/SC2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/SC3.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/D1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/D2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/I1.csv");
+            //historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/I2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/SP1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/SP2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/F1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/F2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/N1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/B1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/P1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/T1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/G1.csv");
         }
 
         public void setFixturesFile()

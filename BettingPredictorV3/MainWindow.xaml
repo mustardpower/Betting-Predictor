@@ -23,12 +23,13 @@
                     <!--<DataGridTextColumn Header="Home Goals" Binding="{Binding Path=home_goals}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Away Goals" Binding="{Binding Path=away_goals}"></DataGridTextColumn>-->
                     <DataGridTextColumn Header="Predicted Goal Difference" Binding="{Binding Path=predicted_goal_difference}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Home Form" Binding="{Binding Path=home_form}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Away Form" Binding="{Binding Path=away_form}"></DataGridTextColumn>
+                    <!--<DataGridTextColumn Header="Home Form" Binding="{Binding Path=home_form}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Away Form" Binding="{Binding Path=away_form}"></DataGridTextColumn>-->
                     <DataGridTextColumn Header="Predicted Home Goals" Binding="{Binding Path=predicted_home_goals}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Predicted Away Goals" Binding="{Binding Path=predicted_away_goals}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Avg Home Residual Error" Binding="{Binding Path=average_home_residual}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Avg Away Residual Error" Binding="{Binding Path=average_away_residual}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Both teams to score" Binding="{Binding Path=both_to_score}"></DataGridTextColumn>
+                     <!--<DataGridTextColumn Header="Avg Home Residual Error" Binding="{Binding Path=average_home_residual}"></DataGridTextColumn>
+                     <DataGridTextColumn Header="Avg Away Residual Error" Binding="{Binding Path=average_away_residual}"></DataGridTextColumn>-->
                 </DataGrid.Columns>
             </DataGrid>
             </TabItem>

@@ -24,6 +24,7 @@ namespace BettingPredictorV3
         public double away_residual { get; set; }
         public double average_home_residual { get; set; }
         public double average_away_residual { get; set; }
+        public double both_to_score { get; set; }   // probability that both teams score in the fixture
 
         public int home_form { get; set; }
         public int away_form { get; set; }
@@ -47,6 +48,7 @@ namespace BettingPredictorV3
             this.odds = odds;
             predicted_home_goals = 0;
             predicted_away_goals = 0;
+            both_to_score = 0.0;
 
             findBestOdds();
         }
@@ -298,11 +300,26 @@ namespace BettingPredictorV3
                 average_home_residual = home_team.getResiduals(DateTime.Now).Average(); 
                 average_away_residual = away_team.getResiduals(DateTime.Now).Average();
 
+                calculateBothToScore();
                 //// generate a large sample of simulated results
                 //simulated_sample = generateSimulatedResults();
                 //fixture_it->calculateProfit(simulated_sample,home_goals,away_goals,home_form,away_form);
 			}
 		}
+
+        public void calculateBothToScore()
+        {
+            // subtract probabilities from 1.0 for the following results: 0-0, 1-0, 2-0, 3- 0 ....., 0-1, 0-2, 0-3....
+
+            both_to_score = 1.0;
+
+            double home_prob_no_goals = StatsLib.poissonPDF(predicted_home_goals, 0);
+            double away_prob_no_goals = StatsLib.poissonPDF(predicted_away_goals, 0);
+
+            both_to_score -= (home_prob_no_goals * away_prob_no_goals);  // P(A = 0 & B = 0) 
+            both_to_score -= ((1 - home_prob_no_goals) * away_prob_no_goals); // P(A != 0 & B = 0) 
+            both_to_score -= (home_prob_no_goals * (1 - away_prob_no_goals)); // P(A = 0 & B != 0) 
+        }
 
         //public List<Fixture> generateSimulatedResults()
         //{

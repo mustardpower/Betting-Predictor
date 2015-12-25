@@ -44,3 +44,17 @@ C:\Users\Paul\Desktop\Code\Projects\C# & Xamarin\BettingPredictorV3\BettingPredi
 C:\Users\Paul\Desktop\Code\Projects\C# & Xamarin\BettingPredictorV3\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.pdb
 C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.exe
 C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.pdb
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.exe
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.pdb
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\bin\Release\BettingPredictorV3.exe
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\bin\Release\BettingPredictorV3.pdb
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.csprojResolveAssemblyReference.cache
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\MainWindow.baml
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\FixtureWindow.baml
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\MainWindow.g.cs
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\FixtureWindow.g.cs
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\App.g.cs
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3_MarkupCompile.cache
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.g.resources
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.Properties.Resources.resources
+C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.csproj.GenerateResource.Cache
