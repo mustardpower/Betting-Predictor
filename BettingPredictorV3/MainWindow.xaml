@@ -1,37 +1,41 @@
 ﻿<Window x:Class="BettingPredictorV3.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x ="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="HomePage" Height="762" Width="1220" WindowState="Maximized" ResizeMode="CanMinimize" Background="#FFF0F0F0">
+        Title="HomePage" Height="730.323" Width="1187.058" WindowState="Normal" ResizeMode = "NoResize"  Background="#FFF0F0F0">
 
-    <Grid Height="814" Width="1200">
-        <Menu IsMainMenu="True">
+    <Grid Margin="7,0,-6,11">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0*"/>
+        </Grid.RowDefinitions>
+        <Menu IsMainMenu="True" Margin="0,0,10,87">
             <MenuItem Header="_File">
                 <MenuItem Header="Save To CSV..." Click="GridToCSV"></MenuItem>
                 <MenuItem Header="Load From CSV..." Click="CSVToGrid"></MenuItem>
             </MenuItem>
         </Menu>
-        <TabControl Height="659" HorizontalAlignment="Left" Margin="0,20,0,0" Name="tabControl1" VerticalAlignment="Top" Width="922">
+        <TabControl Height="656" HorizontalAlignment="Left" Margin="0,20,0,0" Name="tabControl1" VerticalAlignment="Top" Width="922">
             <TabItem Header="Upcoming Fixtures" Name="tabItem1">
-            <DataGrid AutoGenerateColumns="False" Height="550" HorizontalAlignment="Left"
+                <DataGrid AutoGenerateColumns="False" Height="550" HorizontalAlignment="Left"
                   Margin="22,70,0,0" Name="dataGrid_UpcomingFixtures" Loaded="dataGrid_UpcomingFixtures_Loaded"
                   VerticalAlignment="Top" Width="875" SelectionUnit="FullRow" IsReadOnly="True" MouseDoubleClick="dataGrid_MouseDoubleClick" DataContext="{Binding}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="League Code" Binding="{Binding Path=league.LeagueID}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Date" Binding="{Binding Path=date}" ></DataGridTextColumn>
-                    <DataGridTextColumn Header="Home Team" Binding="{Binding Path=home_team.Name}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Away Team" Binding="{Binding Path=away_team.Name}"></DataGridTextColumn>
-                    <!--<DataGridTextColumn Header="Home Goals" Binding="{Binding Path=home_goals}"></DataGridTextColumn>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="League Code" Binding="{Binding Path=league.LeagueID}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Path=date}" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Home Team" Binding="{Binding Path=home_team.Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Away Team" Binding="{Binding Path=away_team.Name}"></DataGridTextColumn>
+                        <!--<DataGridTextColumn Header="Home Goals" Binding="{Binding Path=home_goals}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Away Goals" Binding="{Binding Path=away_goals}"></DataGridTextColumn>-->
-                    <DataGridTextColumn Header="Predicted Goal Difference" Binding="{Binding Path=predicted_goal_difference}"></DataGridTextColumn>
-                    <!--<DataGridTextColumn Header="Home Form" Binding="{Binding Path=home_form}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Predicted Goal Difference" Binding="{Binding Path=predicted_goal_difference}"></DataGridTextColumn>
+                        <!--<DataGridTextColumn Header="Home Form" Binding="{Binding Path=home_form}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Away Form" Binding="{Binding Path=away_form}"></DataGridTextColumn>-->
-                    <DataGridTextColumn Header="Predicted Home Goals" Binding="{Binding Path=predicted_home_goals}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Predicted Away Goals" Binding="{Binding Path=predicted_away_goals}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Both teams to score" Binding="{Binding Path=both_to_score}"></DataGridTextColumn>
-                     <!--<DataGridTextColumn Header="Avg Home Residual Error" Binding="{Binding Path=average_home_residual}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Predicted Home Goals" Binding="{Binding Path=predicted_home_goals}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Predicted Away Goals" Binding="{Binding Path=predicted_away_goals}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Both teams to score" Binding="{Binding Path=both_to_score}"></DataGridTextColumn>
+                        <!--<DataGridTextColumn Header="Avg Home Residual Error" Binding="{Binding Path=average_home_residual}"></DataGridTextColumn>
                      <DataGridTextColumn Header="Avg Away Residual Error" Binding="{Binding Path=average_away_residual}"></DataGridTextColumn>-->
-                </DataGrid.Columns>
-            </DataGrid>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
             <TabItem Header = "Previous Fixtures" Name="tabItem2">
                 <DataGrid AutoGenerateColumns="False" Height="719" HorizontalAlignment="Left"
@@ -51,20 +55,20 @@
                 </DataGrid>
             </TabItem>
         </TabControl>
-        <Button Content="Search" Height="32" HorizontalAlignment="Left" Margin="1045,331,0,0" Name="searchButton" Click="searchButton_Click" VerticalAlignment="Top" Width="84" />
-            <Label Content="League Code" Height="29" HorizontalAlignment="Left" Margin="928,127,0,0" Name="label1" VerticalAlignment="Top" Width="84" />
-            <Label Content="Date" Height="29" HorizontalAlignment="Left" Margin="928,176,0,0" Name="label2" VerticalAlignment="Top" Width="84" />
-            <ComboBox Height="32" DataContext="{Binding}" HorizontalAlignment="Left" Margin="1045,127,0,0" Name="leaguesComboBox" ItemsSource="{Binding Path=league}" DisplayMemberPath="LeagueID" VerticalAlignment="Top" Width="89" />
-            <ComboBox Height="32" DataContext="{Binding}" HorizontalAlignment="Left" Margin="1045,176,0,0"  Name="dateComboBox" ItemsSource="{Binding Path=fixture.date}" VerticalAlignment="Top" Width="89" />
-            <Button Content="Reset Search" Height="32" HorizontalAlignment="Left" Margin="928,331,0,0" Click ="resetButton_Click" Name="resetButton" VerticalAlignment="Top" Width="84" />
-            <GroupBox Header="Predicted Goal Difference" Height="105" HorizontalAlignment="Left" Margin="931,220,0,0" Name="groupBox1" VerticalAlignment="Top" Width="204">
-                <Grid Margin="0,0,17,3" Width="192">
-                    <Label Content="Minimum:" Height="30" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label3" VerticalAlignment="Top" Width="69" />
-                    <Label Content="Maximum:" Height="30" HorizontalAlignment="Left" Margin="6,46,0,0" Name="label4" VerticalAlignment="Top" Width="69" />
-                    <TextBox x:Name="minGD" HorizontalAlignment="Left" Height="23" Margin="80,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95"/>
-                    <TextBox x:Name="maxGD" HorizontalAlignment="Left" Height="23" Margin="80,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95"/>
-                </Grid>
-            </GroupBox>
-                <Grid></Grid>
+        <Button Content="Search" Height="32" HorizontalAlignment="Left" Margin="1045,331,0,0" Name="searchButton" Click="searchButton_Click" VerticalAlignment="Top" Width="90" />
+        <Label Content="League Code" Height="29" HorizontalAlignment="Left" Margin="928,127,0,0" Name="label1" VerticalAlignment="Top" Width="84" />
+        <Label Content="Date" Height="29" HorizontalAlignment="Left" Margin="928,176,0,0" Name="label2" VerticalAlignment="Top" Width="84" />
+        <ComboBox Height="32" DataContext="{Binding}" HorizontalAlignment="Left" Margin="1045,127,0,0" Name="leaguesComboBox" ItemsSource="{Binding Path=league}" DisplayMemberPath="LeagueID" VerticalAlignment="Top" Width="89" />
+        <ComboBox Height="32" DataContext="{Binding}" HorizontalAlignment="Left" Margin="1045,176,0,0"  Name="dateComboBox" ItemsSource="{Binding Path=fixture.date}" VerticalAlignment="Top" Width="89" />
+        <Button Content="Reset Search" Height="32" HorizontalAlignment="Left" Margin="931,331,0,0" Click ="resetButton_Click" Name="resetButton" VerticalAlignment="Top" Width="84" />
+        <GroupBox Header="Predicted Goal Difference" Height="105" HorizontalAlignment="Left" Margin="931,220,0,0" Name="groupBox1" VerticalAlignment="Top" Width="204">
+            <Grid Margin="0,0,17,3" Width="192">
+                <Label Content="Minimum:" Height="30" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label3" VerticalAlignment="Top" Width="69" />
+                <Label Content="Maximum:" Height="30" HorizontalAlignment="Left" Margin="6,46,0,0" Name="label4" VerticalAlignment="Top" Width="69" />
+                <TextBox x:Name="minGD" HorizontalAlignment="Left" Height="23" Margin="80,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95"/>
+                <TextBox x:Name="maxGD" HorizontalAlignment="Left" Height="23" Margin="80,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95"/>
+            </Grid>
+        </GroupBox>
+        <Grid Margin="0,0,10,50"></Grid>
     </Grid>
 </Window>

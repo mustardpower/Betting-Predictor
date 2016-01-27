@@ -70,3 +70,17 @@ C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\Bett
 C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\BettingPredictorV3.g.resources
 C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\BettingPredictorV3.Properties.Resources.resources
 C:\Users\Paul\Desktop\Code\Projects\C#\BettingPredictorV3\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\BettingPredictorV3.csproj.GenerateResource.Cache
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\BettingPredictorV3.exe
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\BettingPredictorV3.pdb
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\bin\Debug\BettingPredictorV3.exe
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\bin\Debug\BettingPredictorV3.pdb
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\BettingPredictorV3.csprojResolveAssemblyReference.cache
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\MainWindow.baml
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\FixtureWindow.baml
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\MainWindow.g.cs
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\FixtureWindow.g.cs
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\App.g.cs
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\BettingPredictorV3_MarkupCompile.cache
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\BettingPredictorV3.g.resources
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\BettingPredictorV3.Properties.Resources.resources
+C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Debug\BettingPredictorV3.csproj.GenerateResource.Cache

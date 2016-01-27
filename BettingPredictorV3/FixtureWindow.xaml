@@ -1,7 +1,7 @@
 ﻿<Window x:Class="BettingPredictorV3.FixtureWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Team" Height="639" Width="1108">
+        Title="Team" SizeToContent="WidthAndHeight" Height="639" Width="1108">
     <Grid Height="569" Width="1123">
         <DataGrid AutoGenerateColumns="False" Height="177" HorizontalAlignment="Left"
                   Margin="12,54,0,0" Name="homeFixturesGrid" Loaded="homeTeamFixtures_Loaded"

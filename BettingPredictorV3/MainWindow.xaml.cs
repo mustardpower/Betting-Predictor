@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.IO;
 using CsvFiles;
 
@@ -207,14 +200,8 @@ namespace BettingPredictorV3
 
         public List<Fixture> filterForChosenGD(IEnumerable<Fixture> aFixtureList, double minGD, double maxGD)
         {
-            if (minGD != null)
-            {
-                aFixtureList = aFixtureList.Where(x => x.predicted_goal_difference > minGD);
-            }
-            if (maxGD!=null)
-            {
-                aFixtureList = aFixtureList.Where(x => x.predicted_goal_difference < maxGD);
-            }
+            aFixtureList = aFixtureList.Where(x => x.predicted_goal_difference > minGD);
+            aFixtureList = aFixtureList.Where(x => x.predicted_goal_difference < maxGD);
 
             return aFixtureList.ToList();
         }
