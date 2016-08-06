@@ -258,7 +258,7 @@ namespace BettingPredictorV3
             }
 
             double yield = profit / fixtures.Count;
-            Console.WriteLine("Home profit from {0} bets would be £{1} with a yield of {2}", fixtures.Count.ToString(), profit.ToString(), yield.ToString());
+            Console.WriteLine("Home profit from {0} bets would be £{1} with a yield of {2}%", fixtures.Count.ToString(), profit.ToString(), yield.ToString());
             return profit;
         }
 

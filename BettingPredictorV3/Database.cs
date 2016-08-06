@@ -93,17 +93,20 @@ namespace BettingPredictorV3
             {
                 var fixture_data = fixture.Split(new[]{','},System.StringSplitOptions.None);
                 String league_code = fixture_data[0];
-                Console.WriteLine(league_code + ": " + fixture_data.Length);
-                League aLeague = getLeague(league_code);
-                if (aLeague != null)
+                if (league_code.Length > 0)
                 {
-                    aLeague.parseHistoricalData(fixture_data);
-                }
-                else
-                {
-                    League newLeague = new League(league_code);
-                    newLeague.parseHistoricalData(fixture_data);
-                    addLeague(newLeague);
+                    Console.WriteLine(league_code + ": " + fixture_data.Length);
+                    League aLeague = getLeague(league_code);
+                    if (aLeague != null)
+                    {
+                        aLeague.parseHistoricalData(fixture_data);
+                    }
+                    else
+                    {
+                        League newLeague = new League(league_code);
+                        newLeague.parseHistoricalData(fixture_data);
+                        addLeague(newLeague);
+                    }
                 }
             }
         }
@@ -356,7 +359,7 @@ namespace BettingPredictorV3
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/D1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/D2.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/I1.csv");
-            //historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/I2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/I2.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/SP1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/SP2.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/F1.csv");
