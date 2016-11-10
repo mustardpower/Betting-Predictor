@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>BettingPredictorV3.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="alglibnet2">
       <HintPath>..\..\..\..\..\Downloads\alglib-3.8.2.csharp\csharp\alglibnet2.dll</HintPath>
@@ -67,6 +70,9 @@
     <Compile Include="CSVManager.cs" />
     <Compile Include="Fixture.cs" />
     <Compile Include="Referee.cs" />
+    <Compile Include="Splash.xaml.cs">
+      <DependentUpon>Splash.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StatsLib.cs" />
     <Compile Include="Team.cs" />
     <Compile Include="FixtureWindow.xaml.cs">
@@ -86,6 +92,10 @@
     </Compile>
     <Compile Include="League.cs" />
     <Page Include="FixtureWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Splash.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

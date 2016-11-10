@@ -5,10 +5,12 @@ using System.Text;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace BettingPredictorV3
 {
-    class Database
+    public class Database
     {
         private List<League> leagues;   // list of all the leagues stored
         private List<Fixture> fixtureList;
@@ -22,31 +24,34 @@ namespace BettingPredictorV3
             historyFiles = new List<String>();
         }
 
-        /* LoadData - loads all the file data in historyFiles and the upcoming fixtures.
-        *  Results will also be predicted while historical fixtures are being loaded but not for the upcoming fixtures
-        */ 
-        public void loadData()
+        public void clearData()
         {
-            String htmlCode;
             leagues.Clear();
-            List<Fixture> previous_results = new List<Fixture>();
-
-                foreach (String file in historyFiles)          // download and parse previous results
-                {
-                    // download HTML code
-                    using (WebClient client = new WebClient())
-                    {
-                            htmlCode = client.DownloadString(file);
-                            parseHistoricalData(htmlCode);
-                    }
-                }
-
-                using (WebClient client = new WebClient())         // download upcoming fixture list
-                {
-                    htmlCode = client.DownloadString(fixturesFile);
-                    parseUpcomingFixtures(htmlCode);
-                }
         }
+
+        public List<String> getHistoricalFiles()
+        {
+            return historyFiles;
+        }
+
+        public void loadHistoricalFile(String aFile)
+        {
+            using (WebClient client = new WebClient())
+            {
+                string htmlCode = client.DownloadString(aFile);
+                parseHistoricalData(htmlCode);
+            }
+        }
+
+        public void loadUpcomingFixturesFile()
+        {
+            using (WebClient client = new WebClient())         // download upcoming fixture list
+            {
+                String htmlCode = client.DownloadString(fixturesFile);
+                parseUpcomingFixtures(htmlCode);
+            }
+        }
+
         public void addFixture(Fixture fixture)
         {
             if (leagues.Count(x => x.LeagueID == fixture.getLeagueID()) == 0)
@@ -300,30 +305,7 @@ namespace BettingPredictorV3
             }
 
         public void setHistoryFiles()
-        {
-            /*historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E0.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E2.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E3.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/EC.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SC0.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SC1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SC2.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SC3.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/D1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/D2.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/I1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/I2.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SP1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SP2.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/F1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/F2.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/N1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/B1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/P1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/T1.csv");
-            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/G1.csv");*/
-
+        {     
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/E0.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/E1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/E2.csv");
@@ -369,6 +351,11 @@ namespace BettingPredictorV3
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/P1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/T1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1516/G1.csv");
+
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/E0.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/E1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/E2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/E3.csv");
         }
 
         public void setFixturesFile()

@@ -72,3 +72,16 @@ C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Rele
 C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.g.resources
 C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.Properties.Resources.resources
 C:\Users\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.csproj.GenerateResource.Cache
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.exe
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.pdb
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\bin\Release\BettingPredictorV3.exe
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\bin\Release\BettingPredictorV3.pdb
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\MainWindow.baml
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\FixtureWindow.baml
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\MainWindow.g.cs
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\FixtureWindow.g.cs
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\App.g.cs
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3_MarkupCompile.cache
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.g.resources
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.Properties.Resources.resources
+D:\paul\Documents\GitHub\Betting-Predictor\BettingPredictorV3\obj\x86\Release\BettingPredictorV3.csproj.GenerateResource.Cache

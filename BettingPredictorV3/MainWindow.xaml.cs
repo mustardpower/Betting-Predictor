@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.IO;
 using CsvFiles;
+using System.ComponentModel;
 
 namespace BettingPredictorV3
 {
@@ -14,49 +15,14 @@ namespace BettingPredictorV3
     public partial class MainWindow : Window
     {
         private Database database = new Database();
+        private BackgroundWorker worker = new BackgroundWorker();
 
-        public MainWindow()
+        public MainWindow(Database aDatabase)
         {
             InitializeComponent();
-
-            try
-            {
-                bool dataLoaded = false;
-                double alpha, beta;
-                database.setFixturesFile();
-                database.setHistoryFiles();
-                database.loadData();
-
-                List<double> errors = new List<double>();
-                List<double> beta_values = new List<double>();
-
-                do
-                {
-                    alpha = database.getAlphaValue();
-                    beta = database.getBetaValue();
-                    if (!dataLoaded)
-                    {
-                        database.loadData();
-                        dataLoaded = true;
-                    }
-                    database.predictResults(alpha, beta);
-                }
-                while ((Math.Abs(alpha) > Math.Abs(database.getAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.getBetaValue()))));
-                
-
-                List<double> home_residuals = database.getHomeResiduals(DateTime.Now);
-                List<double> away_residuals = database.getAwayResiduals(DateTime.Now);
-
-                home_residuals.RemoveAll(x => Double.IsNaN(x));
-                double home_average_error = home_residuals.Average();
-                away_residuals.RemoveAll(x => Double.IsNaN(x));
-                double away_average_error = away_residuals.Average();
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-            }
+            database = aDatabase;
         }
+
         public void dataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)
         {
             List<Fixture> upcoming_fixtures = new List<Fixture>();     
@@ -291,5 +257,34 @@ namespace BettingPredictorV3
             return profit;
         }
 
+        private void ShowAbout(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.MessageBox.Show("© Copyright of Paul Gothard. Not for commercial use.");
+        }
+
+        private void predictResults()
+        {
+            double alpha, beta;
+
+            List<double> errors = new List<double>();
+            List<double> beta_values = new List<double>();
+
+            do
+            {
+                alpha = database.getAlphaValue();
+                beta = database.getBetaValue();
+                database.predictResults(alpha, beta);
+            }
+            while ((Math.Abs(alpha) > Math.Abs(database.getAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.getBetaValue()))));
+
+
+            List<double> home_residuals = database.getHomeResiduals(DateTime.Now);
+            List<double> away_residuals = database.getAwayResiduals(DateTime.Now);
+
+            home_residuals.RemoveAll(x => Double.IsNaN(x));
+            double home_average_error = home_residuals.Average();
+            away_residuals.RemoveAll(x => Double.IsNaN(x));
+            double away_average_error = away_residuals.Average();
+        }
     }
 }
