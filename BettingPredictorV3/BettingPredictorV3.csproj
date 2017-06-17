@@ -69,6 +69,7 @@
     <Compile Include="Bookmaker.cs" />
     <Compile Include="CSVManager.cs" />
     <Compile Include="Fixture.cs" />
+    <Compile Include="ProfitLossInterval.cs" />
     <Compile Include="Referee.cs" />
     <Compile Include="Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
