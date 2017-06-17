@@ -139,6 +139,7 @@ namespace BettingPredictorV3
         public Team getTeam(String league_code, String team_name)
         {
             League league = leagues.Find(x => x.LeagueID == league_code);
+            if(league == null){ return null; }
             return league.getTeam(team_name);
         }
 
@@ -173,7 +174,7 @@ namespace BettingPredictorV3
 
         public double getAlphaValue()
         {
-            double alpha;
+            double alpha = 0.0;
             List<double> errors = new List<double>();
 
             foreach (Fixture fixture in fixtureList)
@@ -182,14 +183,18 @@ namespace BettingPredictorV3
             }
 
             errors.RemoveAll(x => Double.IsNaN(x));
-            alpha = errors.Average();
+
+            if (errors.Count > 0)
+            {
+                alpha = errors.Average();
+            }
                 
             return alpha;
         }
 
         public double getBetaValue()
         {
-            double beta;
+            double beta = 0.0;
             List<double> errors = new List<double>();
 
             foreach (Fixture fixture in fixtureList)
@@ -198,7 +203,11 @@ namespace BettingPredictorV3
             }
 
             errors.RemoveAll(x => Double.IsNaN(x));
-            beta = errors.Average();
+
+            if (errors.Count > 0)
+            {
+                beta = errors.Average();
+            }
 
             return beta;
         }

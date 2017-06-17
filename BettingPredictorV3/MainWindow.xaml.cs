@@ -44,28 +44,45 @@ namespace BettingPredictorV3
             previous_fixtures = previous_fixtures.Distinct().ToList();
             dataGrid_PreviousFixtures.ItemsSource = previous_fixtures;
 
-            double minValue = -3.0;
-            double maxValue = 3.0;
+            float minValue = -3.0f;
+            float maxValue = 3.0f;
             int noOfIntervals = 60;
             calculateProfitIntervals(previous_fixtures,minValue, maxValue, noOfIntervals);
 
         }
 
-        public void calculateProfitIntervals(List<Fixture> previousFixtures, double min, double max, int n)
+        private void dataGrid_ProfitLossReport_Loaded(object sender, RoutedEventArgs e)
         {
-            double h = ((max-min)/n); // step size of each interval
-            double x1 = min;
-            double x2 = x1 + h;
+            List<Fixture> previousFixtures = database.getPreviousResults();
+            float min = -4.0f;
+            float max = 4.0f;
+            int numberOfSteps = 20;
+            List<ProfitLossInterval> profitLossIntervals = calculateProfitIntervals(previousFixtures, min, max, numberOfSteps);
+            dataGrid_ProfitLossReport.ItemsSource = profitLossIntervals;
+        }
+
+        public List<ProfitLossInterval> calculateProfitIntervals(List<Fixture> previousFixtures, float min, float max, int n)
+        {
+            float h = ((max-min)/n); // step size of each interval
+            float x1 = min;
+            float x2 = x1 + h;
             List<Fixture> intervalFixtures = new List<Fixture>();
+            List<ProfitLossInterval> profitLossIntervals = new List<ProfitLossInterval>();
             for (int i = 0; i < n; i++)
             {
                 intervalFixtures = filterForChosenGD(previousFixtures, x1, x2);
-                Console.WriteLine("For interval between {0} and {1}",x1.ToString(),x2.ToString());
-                calculateHomeGameProfit(intervalFixtures);
-                calculateAwayGameProfit(intervalFixtures);
+                ProfitLossInterval homeInterval = calculateHomeGameProfit(intervalFixtures);
+                ProfitLossInterval awayInterval = calculateAwayGameProfit(intervalFixtures);
                 x1 = x2;
                 x2 += h;
+
+                homeInterval.setRange(x1, x2);
+                awayInterval.setRange(x1, x2);
+                profitLossIntervals.Add(homeInterval);
+                profitLossIntervals.Add(awayInterval);
             }
+
+            return profitLossIntervals;
         }
 
         private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -193,7 +210,7 @@ namespace BettingPredictorV3
             }
         }
 
-        private double calculateHomeGameProfit(List<Fixture> fixtures)
+        private ProfitLossInterval calculateHomeGameProfit(List<Fixture> fixtures)
         {
             double profit = 0.0;
             int ignoredTeams = 0;
@@ -224,11 +241,11 @@ namespace BettingPredictorV3
             }
 
             double yield = profit / fixtures.Count;
-            Console.WriteLine("Home profit from {0} bets would be £{1} with a yield of {2}%", fixtures.Count.ToString(), profit.ToString(), yield.ToString());
-            return profit;
+            string intervalName = "Test interval name";
+            return new ProfitLossInterval(intervalName, "Home", fixtures.Count, profit, yield);
         }
 
-        private double calculateAwayGameProfit(List<Fixture> fixtures)
+        private ProfitLossInterval calculateAwayGameProfit(List<Fixture> fixtures)
         {
             double profit = 0.0;
             int ignoredTeams = 0;
@@ -253,8 +270,8 @@ namespace BettingPredictorV3
             }
 
             double yield = profit / fixtures.Count;
-            Console.WriteLine("Away profit from {0} bets would be £{1} with a yield of {2}%",fixtures.Count.ToString(),profit.ToString(), yield.ToString() );
-            return profit;
+            string intervalName = "Test interval name";
+            return new ProfitLossInterval(intervalName, "Away", fixtures.Count, profit, yield);
         }
 
         private void ShowAbout(object sender, RoutedEventArgs e)
