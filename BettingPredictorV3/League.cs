@@ -108,28 +108,30 @@ namespace BettingPredictorV3
 
             try
             {
-                Bookmaker bet_365 = new Bookmaker("Bet 365", double.Parse(fixture_data[10 + offset]), double.Parse(fixture_data[11 + offset]),
-                        double.Parse(fixture_data[12 + offset]));
-                Bookmaker bet_win = new Bookmaker("BetWin", double.Parse(fixture_data[13 + offset]), double.Parse(fixture_data[14 + offset]),
-                    double.Parse(fixture_data[15 + offset]));
-                Bookmaker inter_wetten = new Bookmaker("InterWetten", double.Parse(fixture_data[16 + offset]), double.Parse(fixture_data[17 + offset]),
-                    double.Parse(fixture_data[18 + offset]));
-                Bookmaker ladbrokes = new Bookmaker("Ladbrokes", double.Parse(fixture_data[19 + offset]), double.Parse(fixture_data[20 + offset]),
-                    double.Parse(fixture_data[21 + offset]));
-                Bookmaker pinnacle_sport = new Bookmaker("Pinnacle Sport", double.Parse(fixture_data[22 + offset]), double.Parse(fixture_data[23 + offset]),
-                    double.Parse(fixture_data[24 + offset]));
-                Bookmaker william_hill = new Bookmaker("William Hill", double.Parse(fixture_data[25 + offset]), double.Parse(fixture_data[26 + offset]),
-                    double.Parse(fixture_data[27 + offset]));
-                Bookmaker stan_james = new Bookmaker("Stan James", double.Parse(fixture_data[28 + offset]), double.Parse(fixture_data[29 + offset]),
-                    double.Parse(fixture_data[30 + offset]));
+                List<Bookmaker> bookmakers = new List<Bookmaker>();
+                bookmakers.Add(new Bookmaker("Bet 365", double.Parse(fixture_data[10 + offset]), double.Parse(fixture_data[11 + offset]),
+                        double.Parse(fixture_data[12 + offset])));
+                bookmakers.Add(new Bookmaker("BetWin", double.Parse(fixture_data[13 + offset]), double.Parse(fixture_data[14 + offset]),
+                    double.Parse(fixture_data[15 + offset])));
+                bookmakers.Add(new Bookmaker("InterWetten", double.Parse(fixture_data[16 + offset]), double.Parse(fixture_data[17 + offset]),
+                    double.Parse(fixture_data[18 + offset])));
+                bookmakers.Add(new Bookmaker("Ladbrokes", double.Parse(fixture_data[19 + offset]), double.Parse(fixture_data[20 + offset]),
+                    double.Parse(fixture_data[21 + offset])));
+                bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixture_data[22 + offset]), double.Parse(fixture_data[23 + offset]),
+                    double.Parse(fixture_data[24 + offset])));
+                bookmakers.Add(new Bookmaker("William Hill", double.Parse(fixture_data[25 + offset]), double.Parse(fixture_data[26 + offset]),
+                    double.Parse(fixture_data[27 + offset])));
+                bookmakers.Add(new Bookmaker("Stan James", double.Parse(fixture_data[28 + offset]), double.Parse(fixture_data[29 + offset]),
+                    double.Parse(fixture_data[30 + offset])));
 
-                /*odds.Add(bet_365);
-                odds.Add(bet_win);
-                odds.Add(inter_wetten);
-                odds.Add(ladbrokes);
-                odds.Add(pinnacle_sport);*/
-                odds.Add(william_hill);
-                //odds.Add(stan_james);
+                foreach (Bookmaker bookmaker in bookmakers)
+                {
+                    int index = DatabaseSettings.bookmakersUsed.IndexOf(bookmaker.getName());
+                    if (index != -1)
+                    {
+                        odds.Add(bookmaker);
+                    }
+                }
             }
             catch (FormatException ex)
             {

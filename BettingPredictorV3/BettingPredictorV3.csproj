@@ -68,6 +68,13 @@
     </ApplicationDefinition>
     <Compile Include="Bookmaker.cs" />
     <Compile Include="CSVManager.cs" />
+    <Compile Include="DatabaseSettings.cs" />
+    <Compile Include="DatabaseSettingsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatabaseSettingsWindow.Designer.cs">
+      <DependentUpon>DatabaseSettingsWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Fixture.cs" />
     <Compile Include="ProfitLossInterval.cs" />
     <Compile Include="Referee.cs" />
@@ -115,6 +122,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="DatabaseSettingsWindow.resx">
+      <DependentUpon>DatabaseSettingsWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

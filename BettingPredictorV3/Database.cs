@@ -22,6 +22,7 @@ namespace BettingPredictorV3
             leagues = new List<League>();
             fixtureList = new List<Fixture>();
             historyFiles = new List<String>();
+            DatabaseSettings.bookmakersUsed = DatabaseSettings.defaultBookmakers();
         }
 
         public void clearData()
@@ -272,29 +273,30 @@ namespace BettingPredictorV3
 
                 try
                 {
+                    List<Bookmaker> bookmakers = new List<Bookmaker>();
+                    bookmakers.Add(new Bookmaker("Bet 365",double.Parse(fixture_data[10]), double.Parse(fixture_data[11]),
+                            double.Parse(fixture_data[12])));
+                    bookmakers.Add(new Bookmaker("BetWin",double.Parse(fixture_data[13]), double.Parse(fixture_data[14]),
+                        double.Parse(fixture_data[15])));
+                    bookmakers.Add(new Bookmaker("InterWetten",double.Parse(fixture_data[16]), double.Parse(fixture_data[17]),
+                        double.Parse(fixture_data[18])));
+                    bookmakers.Add(new Bookmaker("Ladbrokes",double.Parse(fixture_data[19]), double.Parse(fixture_data[20]),
+                        double.Parse(fixture_data[21])));
+                    bookmakers.Add(new Bookmaker("Pinnacle Sport",double.Parse(fixture_data[22]), double.Parse(fixture_data[23]),
+                        double.Parse(fixture_data[24])));
+                    bookmakers.Add(new Bookmaker("William Hill",double.Parse(fixture_data[25]), double.Parse(fixture_data[26]),
+                        double.Parse(fixture_data[27])));
+                    bookmakers.Add(new Bookmaker("Stan James",double.Parse(fixture_data[28]), double.Parse(fixture_data[29]),
+                        double.Parse(fixture_data[30])));
 
-                    Bookmaker bet_365 = new Bookmaker("Bet 365",double.Parse(fixture_data[10]), double.Parse(fixture_data[11]),
-                            double.Parse(fixture_data[12]));
-                    Bookmaker bet_win = new Bookmaker("BetWin",double.Parse(fixture_data[13]), double.Parse(fixture_data[14]),
-                        double.Parse(fixture_data[15]));
-                    Bookmaker inter_wetten = new Bookmaker("InterWetten",double.Parse(fixture_data[16]), double.Parse(fixture_data[17]),
-                        double.Parse(fixture_data[18]));
-                    Bookmaker ladbrokes = new Bookmaker("Ladbrokes",double.Parse(fixture_data[19]), double.Parse(fixture_data[20]),
-                        double.Parse(fixture_data[21]));
-                    Bookmaker pinnacle_sport = new Bookmaker("Pinnacle Sport",double.Parse(fixture_data[22]), double.Parse(fixture_data[23]),
-                        double.Parse(fixture_data[24]));
-                    Bookmaker william_hill = new Bookmaker("William Hill",double.Parse(fixture_data[25]), double.Parse(fixture_data[26]),
-                        double.Parse(fixture_data[27]));
-                    Bookmaker stan_james = new Bookmaker("Stan James",double.Parse(fixture_data[28]), double.Parse(fixture_data[29]),
-                        double.Parse(fixture_data[30]));
-
-                    odds.Add(bet_365);
-                    odds.Add(bet_win);
-                    odds.Add(inter_wetten);
-                    odds.Add(ladbrokes);
-                    odds.Add(pinnacle_sport);
-                    odds.Add(william_hill);
-                    odds.Add(stan_james);
+                    foreach(Bookmaker bookmaker in bookmakers)
+                    {
+                        int index = DatabaseSettings.bookmakersUsed.IndexOf(bookmaker.getName());
+                        if(index != -1)
+                        {
+                            odds.Add(bookmaker);
+                        }
+                    }
                 }
                 catch (FormatException ex)
                 {
@@ -314,7 +316,30 @@ namespace BettingPredictorV3
             }
 
         public void setHistoryFiles()
-        {     
+        {
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E0.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E3.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/EC.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SC0.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SC1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SC2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SC3.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/D1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/D2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/I1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/I2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SP1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/SP2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/F1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/F2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/N1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/B1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/P1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/T1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/G1.csv");
+
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/E0.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/E1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1415/E2.csv");
@@ -365,6 +390,51 @@ namespace BettingPredictorV3
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/E1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/E2.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/E3.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/EC.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/SC0.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/SC1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/SC2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/SC3.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/D1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/D2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/I1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/I2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/SP1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/SP2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/F1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/F2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/N1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/B1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/P1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/T1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1617/G1.csv");
+
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/E0.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/E1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/E2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/E3.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/EC.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/SC0.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/SC1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/SC2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/SC3.csv");
+
+            //historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/D1.csv");
+
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/D2.csv");
+
+            //historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/I1.csv");
+            //historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/I2.csv");
+
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/SP1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/SP2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/F1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/F2.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/N1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/B1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/P1.csv");
+            historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/T1.csv");
+            //historyFiles.Add("http://www.football-data.co.uk/mmz4281/1718/G1.csv");
         }
 
         public void setFixturesFile()

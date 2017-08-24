@@ -18,7 +18,7 @@ namespace BettingPredictorV3
         private BackgroundWorker worker = new BackgroundWorker();
 
         public MainWindow(Database aDatabase)
-        {
+        { 
             InitializeComponent();
             database = aDatabase;
         }
@@ -54,9 +54,9 @@ namespace BettingPredictorV3
         private void dataGrid_ProfitLossReport_Loaded(object sender, RoutedEventArgs e)
         {
             List<Fixture> previousFixtures = database.getPreviousResults();
-            float min = -4.0f;
-            float max = 4.0f;
-            int numberOfSteps = 20;
+            float min = -3.0f;
+            float max = 3.0f;
+            int numberOfSteps = 40;
             List<ProfitLossInterval> profitLossIntervals = calculateProfitIntervals(previousFixtures, min, max, numberOfSteps);
             dataGrid_ProfitLossReport.ItemsSource = profitLossIntervals;
         }

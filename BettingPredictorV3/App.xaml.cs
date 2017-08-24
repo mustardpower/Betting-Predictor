@@ -32,6 +32,7 @@ namespace BettingPredictorV3
         internal ApplicationInitializeDelegate ApplicationInitialize;
         private void _applicationInitialize(Splash splashWindow)
         {
+            new DatabaseSettingsWindow().ShowDialog();
             List<String> historyFiles = database.getHistoricalFiles();
             database.clearData();
             int fileNumber = 0;
