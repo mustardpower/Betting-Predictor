@@ -37,10 +37,26 @@ namespace BettingPredictorV3
 
         public void loadHistoricalFile(String aFile)
         {
-            using (WebClient client = new WebClient())
+            try
             {
-                string htmlCode = client.DownloadString(aFile);
-                parseHistoricalData(htmlCode);
+                using (WebClient client = new WebClient())
+                {
+                // TO DO: Add handling for exceptions
+                    string htmlCode = client.DownloadString(aFile);
+                    parseHistoricalData(htmlCode);
+                }
+            }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.NameResolutionFailure)
+                {
+                    MessageBox.Show("Could not download file: " + aFile);
+                }
+                else
+                {
+                    string statusCode = ((HttpWebResponse)(ex.Response)).StatusCode.ToString();
+                    MessageBox.Show("Could not download file: " + aFile + ". Error:" + statusCode);
+                }
             }
         }
 
