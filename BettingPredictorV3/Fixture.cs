@@ -379,21 +379,21 @@ namespace BettingPredictorV3
             double away_odds = 0 ;
             foreach (Bookmaker bookie in odds)
             {
-                if (bookie.getHomeOdds() > home_odds)
+                if (bookie.HomeOdds > home_odds)
                 {
-                    home_odds = bookie.getHomeOdds();
+                    home_odds = bookie.HomeOdds;
                     best_home_odds = bookie;
                 }
 
-                if (bookie.getDrawOdds() > draw_odds)
+                if (bookie.DrawOdds > draw_odds)
                 {
-                    draw_odds = bookie.getDrawOdds();
+                    draw_odds = bookie.DrawOdds;
                     best_draw_odds = bookie;
                 }
 
-                if (bookie.getAwayOdds() > away_odds)
+                if (bookie.AwayOdds > away_odds)
                 {
-                    away_odds = bookie.getAwayOdds();
+                    away_odds = bookie.AwayOdds;
                     best_away_odds = bookie;
                 }
             }

@@ -227,11 +227,11 @@ namespace BettingPredictorV3
                 {
                     if (fixture.home_goals > fixture.away_goals)
                     {
-                        if (max_odds_fixture.best_home_odds.getHomeOdds() < fixture.best_home_odds.getHomeOdds())
+                        if (max_odds_fixture.best_home_odds.HomeOdds < fixture.best_home_odds.HomeOdds)
                         {
                             max_odds_fixture = fixture;
                         }
-                        profit += fixture.best_home_odds.getHomeOdds() - 1;
+                        profit += fixture.best_home_odds.HomeOdds - 1;
                     }
                     else
                     {
@@ -260,7 +260,7 @@ namespace BettingPredictorV3
                 {
                     if (fixture.home_goals < fixture.away_goals)
                     {
-                        profit += (fixture.best_away_odds.getAwayOdds() - 1);
+                        profit += (fixture.best_away_odds.AwayOdds - 1);
                     }
                     else
                     {

@@ -307,7 +307,7 @@ namespace BettingPredictorV3
 
                     foreach(Bookmaker bookmaker in bookmakers)
                     {
-                        int index = DatabaseSettings.bookmakersUsed.IndexOf(bookmaker.getName());
+                        int index = DatabaseSettings.bookmakersUsed.IndexOf(bookmaker.Name);
                         if(index != -1)
                         {
                             odds.Add(bookmaker);

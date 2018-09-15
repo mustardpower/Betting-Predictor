@@ -32,6 +32,9 @@
                         <DataGridTextColumn Header="Predicted Home Goals" Binding="{Binding Path=predicted_home_goals}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Predicted Away Goals" Binding="{Binding Path=predicted_away_goals}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Both teams to score" Binding="{Binding Path=both_to_score}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Best Home Odds" Binding="{Binding Path=best_home_odds.HomeOdds}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Best Draw Odds" Binding="{Binding Path=best_draw_odds.DrawOdds}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Best Away Odds" Binding="{Binding Path=best_away_odds.AwayOdds}"></DataGridTextColumn>
                         <!--<DataGridTextColumn Header="Avg Home Residual Error" Binding="{Binding Path=average_home_residual}"></DataGridTextColumn>
                      <DataGridTextColumn Header="Avg Away Residual Error" Binding="{Binding Path=average_away_residual}"></DataGridTextColumn>-->
                     </DataGrid.Columns>
