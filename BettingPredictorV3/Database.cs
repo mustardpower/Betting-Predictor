@@ -15,14 +15,15 @@ namespace BettingPredictorV3
         private List<League> leagues;   // list of all the leagues stored
         private List<Fixture> fixtureList;
         List<String> historyFiles;
-        String fixturesFile;
+        List<String> fixturesFiles;
 
         public Database()
         {
             leagues = new List<League>();
             fixtureList = new List<Fixture>();
             historyFiles = new List<String>();
-            DatabaseSettings.bookmakersUsed = DatabaseSettings.defaultBookmakers();
+            fixturesFiles = new List<String>();
+            DatabaseSettings.BookmakersUsed = DatabaseSettings.defaultBookmakers();
         }
 
         public void clearData()
@@ -64,8 +65,12 @@ namespace BettingPredictorV3
         {
             using (WebClient client = new WebClient())         // download upcoming fixture list
             {
-                String htmlCode = client.DownloadString(fixturesFile);
-                parseUpcomingFixtures(htmlCode);
+                fixtureList = new List<Fixture>();
+                foreach (String fixturesFile in fixturesFiles)
+                {
+                    String htmlCode = client.DownloadString(fixturesFile);
+                    parseUpcomingFixtures(htmlCode);
+                }
             }
         }
 
@@ -168,7 +173,7 @@ namespace BettingPredictorV3
         public void predictResults(double alpha,double beta)
         {
             // predict the results for historical fixtures - used to find profitable betting areas 
-            predictHistoricalResults(alpha, beta);
+            //predictHistoricalResults(alpha, beta);
             // predict the upcoming fixtures
             predictUpcomingFixtures(alpha, beta);
         }
@@ -259,7 +264,6 @@ namespace BettingPredictorV3
             Team away_team = null;
 
             List<Bookmaker> odds = new List<Bookmaker>();
-            fixtureList = new List<Fixture>();
             int headings = htmlCode.IndexOf("\n");
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
             var fixtures = htmlCode.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
@@ -274,10 +278,13 @@ namespace BettingPredictorV3
                 {
                     continue;
                 }
-                var date_params = fixture_data[1].Split('/');
+
+                var newLeague = fixture_data.Length == 15;
+                var dateIndex = newLeague ? 2 : 1;
+                var date_params = fixture_data[dateIndex].Split('/');
                 DateTime date = new DateTime(2000 + int.Parse(date_params[2]), int.Parse(date_params[1]), int.Parse(date_params[0]));
-                String home_team_name = fixture_data[2];
-                String away_team_name = fixture_data[3];
+                String home_team_name = newLeague ? fixture_data[4] : fixture_data[2];
+                String away_team_name = newLeague ? fixture_data[5] : fixture_data[3];
 
                 for (int idx = 0; idx < fixture_data.Length; idx++)
                 {
@@ -290,24 +297,35 @@ namespace BettingPredictorV3
                 try
                 {
                     List<Bookmaker> bookmakers = new List<Bookmaker>();
-                    bookmakers.Add(new Bookmaker("Bet 365",double.Parse(fixture_data[10]), double.Parse(fixture_data[11]),
-                            double.Parse(fixture_data[12])));
-                    bookmakers.Add(new Bookmaker("BetWin",double.Parse(fixture_data[13]), double.Parse(fixture_data[14]),
-                        double.Parse(fixture_data[15])));
-                    bookmakers.Add(new Bookmaker("InterWetten",double.Parse(fixture_data[16]), double.Parse(fixture_data[17]),
-                        double.Parse(fixture_data[18])));
-                    bookmakers.Add(new Bookmaker("Ladbrokes",double.Parse(fixture_data[19]), double.Parse(fixture_data[20]),
-                        double.Parse(fixture_data[21])));
-                    bookmakers.Add(new Bookmaker("Pinnacle Sport",double.Parse(fixture_data[22]), double.Parse(fixture_data[23]),
-                        double.Parse(fixture_data[24])));
-                    bookmakers.Add(new Bookmaker("William Hill",double.Parse(fixture_data[25]), double.Parse(fixture_data[26]),
-                        double.Parse(fixture_data[27])));
-                    bookmakers.Add(new Bookmaker("Stan James",double.Parse(fixture_data[28]), double.Parse(fixture_data[29]),
-                        double.Parse(fixture_data[30])));
+                    if (newLeague)
+                    {
+                        bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixture_data[6]), double.Parse(fixture_data[7]),
+                                double.Parse(fixture_data[8])));
+                        bookmakers.Add(new Bookmaker("OddsPortal", double.Parse(fixture_data[9]), double.Parse(fixture_data[10]),
+                                double.Parse(fixture_data[11])));
+                    }
+                    else
+                    {
+                        bookmakers.Add(new Bookmaker("Bet 365", double.Parse(fixture_data[10]), double.Parse(fixture_data[11]),
+                                double.Parse(fixture_data[12])));
+                        bookmakers.Add(new Bookmaker("BetWin", double.Parse(fixture_data[13]), double.Parse(fixture_data[14]),
+                            double.Parse(fixture_data[15])));
+                        bookmakers.Add(new Bookmaker("InterWetten", double.Parse(fixture_data[16]), double.Parse(fixture_data[17]),
+                            double.Parse(fixture_data[18])));
+                        bookmakers.Add(new Bookmaker("Ladbrokes", double.Parse(fixture_data[19]), double.Parse(fixture_data[20]),
+                            double.Parse(fixture_data[21])));
+                        bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixture_data[22]), double.Parse(fixture_data[23]),
+                            double.Parse(fixture_data[24])));
+                        bookmakers.Add(new Bookmaker("William Hill", double.Parse(fixture_data[25]), double.Parse(fixture_data[26]),
+                            double.Parse(fixture_data[27])));
+                        bookmakers.Add(new Bookmaker("Stan James", double.Parse(fixture_data[28]), double.Parse(fixture_data[29]),
+                            double.Parse(fixture_data[30])));
+                    }
+                    
 
                     foreach(Bookmaker bookmaker in bookmakers)
                     {
-                        int index = DatabaseSettings.bookmakersUsed.IndexOf(bookmaker.Name);
+                        int index = DatabaseSettings.BookmakersUsed.IndexOf(bookmaker.Name);
                         if(index != -1)
                         {
                             odds.Add(bookmaker);
@@ -470,11 +488,29 @@ namespace BettingPredictorV3
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1819/P1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1819/T1.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1819/G1.csv");
+
+            historyFiles.Add("http://www.football-data.co.uk/new/ARG.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/AUT.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/BRA.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/CHN.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/DNK.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/FIN.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/IRL.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/JPN.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/MEX.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/NOR.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/POL.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/ROU.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/RUS.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/SWE.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/SWZ.csv");
+            historyFiles.Add("http://www.football-data.co.uk/new/USA.csv");
         }
 
-        public void setFixturesFile()
+        public void setFixturesFiles()
         {
-            fixturesFile = "http://www.football-data.co.uk/fixtures.csv";
+            fixturesFiles.Add("http://www.football-data.co.uk/fixtures.csv");
+            fixturesFiles.Add("http://www.football-data.co.uk/new_league_fixtures.csv");
         }
     }
 }

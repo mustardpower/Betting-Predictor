@@ -7,7 +7,24 @@ namespace BettingPredictorV3
 {
     static class DatabaseSettings
     {
-        static public List<string> bookmakersUsed { get; set; }
+        static private List<string> bookmakersUsed;
+
+        static public List<string> BookmakersUsed
+        {
+            get
+            {
+                return bookmakersUsed;
+            }
+
+            set
+            {
+                bookmakersUsed = value;
+
+                // new leagues do not have odds for individual bookmakers
+                // so add placeholder for overall best odds
+                bookmakersUsed.Add("Best Odds"); 
+            }
+        }
 
         static public List<string> defaultBookmakers()
         {
@@ -19,6 +36,7 @@ namespace BettingPredictorV3
             bookmakers.Add("Pinnacle Sport");
             bookmakers.Add("William Hill");
             bookmakers.Add("Stan James");
+            bookmakers.Add("Best Odds");
             return bookmakers;
         }
     }

@@ -21,7 +21,7 @@ namespace BettingPredictorV3
         public App()
         {
             ApplicationInitialize = _applicationInitialize;
-            database.setFixturesFile();
+            database.setFixturesFiles();
             database.setHistoryFiles();
         }
         public static new App Current

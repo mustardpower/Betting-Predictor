@@ -15,13 +15,13 @@ namespace BettingPredictorV3
         {
             InitializeComponent();
 
-            if(DatabaseSettings.bookmakersUsed.IndexOf("Bet 365") > -1) { bet365Checkbox.Checked = true; }
-            if (DatabaseSettings.bookmakersUsed.IndexOf("InterWetten") > -1) { interwettenCheckbox.Checked = true; }
-            if (DatabaseSettings.bookmakersUsed.IndexOf("BetWin") > -1) { betWinCheckbox.Checked = true; }
-            if (DatabaseSettings.bookmakersUsed.IndexOf("Stan James") > -1) { stanJamesCheckbox.Checked = true; }
-            if (DatabaseSettings.bookmakersUsed.IndexOf("William Hill") > -1) { williamHillCheckbox.Checked = true; }
-            if (DatabaseSettings.bookmakersUsed.IndexOf("Ladbrokes") > -1) { ladbrokesCheckbox.Checked = true; }
-            if (DatabaseSettings.bookmakersUsed.IndexOf("Pinnacle Sport") > -1) { pinnacleSportCheckbox.Checked = true; }
+            if(DatabaseSettings.BookmakersUsed.IndexOf("Bet 365") > -1) { bet365Checkbox.Checked = true; }
+            if (DatabaseSettings.BookmakersUsed.IndexOf("InterWetten") > -1) { interwettenCheckbox.Checked = true; }
+            if (DatabaseSettings.BookmakersUsed.IndexOf("BetWin") > -1) { betWinCheckbox.Checked = true; }
+            if (DatabaseSettings.BookmakersUsed.IndexOf("Stan James") > -1) { stanJamesCheckbox.Checked = true; }
+            if (DatabaseSettings.BookmakersUsed.IndexOf("William Hill") > -1) { williamHillCheckbox.Checked = true; }
+            if (DatabaseSettings.BookmakersUsed.IndexOf("Ladbrokes") > -1) { ladbrokesCheckbox.Checked = true; }
+            if (DatabaseSettings.BookmakersUsed.IndexOf("Pinnacle Sport") > -1) { pinnacleSportCheckbox.Checked = true; }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -36,7 +36,7 @@ namespace BettingPredictorV3
             if (ladbrokesCheckbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("Ladbrokes"); }
             if (pinnacleSportCheckbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("Pinnacle Sport"); }
 
-            DatabaseSettings.bookmakersUsed = bookmakersSelected;
+            DatabaseSettings.BookmakersUsed = bookmakersSelected;
 
             this.Close();
         }
