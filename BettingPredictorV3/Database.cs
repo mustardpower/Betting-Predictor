@@ -282,7 +282,20 @@ namespace BettingPredictorV3
                 var newLeague = fixture_data.Length == 15;
                 var dateIndex = newLeague ? 2 : 1;
                 var date_params = fixture_data[dateIndex].Split('/');
-                DateTime date = new DateTime(2000 + int.Parse(date_params[2]), int.Parse(date_params[1]), int.Parse(date_params[0]));
+
+                DateTime date;
+                if (newLeague)
+                {
+                    DateTime kickOffTime = Convert.ToDateTime(fixture_data[3]);
+                    date = new DateTime(2000 + int.Parse(date_params[2]), int.Parse(date_params[1]), int.Parse(date_params[0]));
+                    date = date.AddHours(kickOffTime.Hour);
+                    date = date.AddMinutes(kickOffTime.Minute);
+                }
+                else
+                {
+                    date = new DateTime(2000 + int.Parse(date_params[2]), int.Parse(date_params[1]), int.Parse(date_params[0]));
+                }
+                
                 String home_team_name = newLeague ? fixture_data[4] : fixture_data[2];
                 String away_team_name = newLeague ? fixture_data[5] : fixture_data[3];
 
