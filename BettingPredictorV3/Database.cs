@@ -173,7 +173,7 @@ namespace BettingPredictorV3
         public void predictResults(double alpha,double beta)
         {
             // predict the results for historical fixtures - used to find profitable betting areas 
-            //predictHistoricalResults(alpha, beta);
+            predictHistoricalResults(alpha, beta);
             // predict the upcoming fixtures
             predictUpcomingFixtures(alpha, beta);
         }

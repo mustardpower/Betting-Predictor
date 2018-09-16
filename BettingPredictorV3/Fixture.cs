@@ -68,11 +68,6 @@ namespace BettingPredictorV3
             findBestOdds();
         }
 
-        public void calculateProfit(List<Fixture> simulated_results, double home_goals, double away_goals, int home_form, int away_form)
-        {
-            // calculate the expected profit for betting on both teams in the fixture
-        }
-
         public String getLeagueID()
         {
             return league.LeagueID;
