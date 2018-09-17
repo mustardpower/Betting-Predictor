@@ -33,7 +33,7 @@ namespace BettingPredictorV3
 
             dataGrid_UpcomingFixtures.ItemsSource = upcoming_fixtures;
             leaguesComboBox.ItemsSource = database.getLeagues();
-            dateComboBox.ItemsSource = upcoming_fixtures.Select(x => x.date).Distinct();
+            dateComboBox.ItemsSource = upcoming_fixtures.Select(x => x.date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
         }
 
         private void dataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
@@ -119,7 +119,8 @@ namespace BettingPredictorV3
 
                 if (dateComboBox.SelectedItem != null)
                 {
-                    queriedFixtures = queriedFixtures.Where(x => x.date == (DateTime)dateComboBox.SelectedItem).ToList();
+                    DateTime selectedDate = (DateTime)(dateComboBox.SelectedItem);
+                    queriedFixtures = queriedFixtures.Where(x => x.date.DayOfYear == selectedDate.DayOfYear).ToList();
                 }
 
                 queriedFixtures = filterForChosenGD(queriedFixtures);
@@ -141,7 +142,8 @@ namespace BettingPredictorV3
 
                 if (dateComboBox.SelectedItem != null)
                 {
-                    queriedFixtures = queriedFixtures.Where(x => x.date == (DateTime)dateComboBox.SelectedItem).ToList();
+                    DateTime selectedDate = (DateTime)(dateComboBox.SelectedItem);
+                    queriedFixtures = queriedFixtures.Where(x => x.date.DayOfYear == selectedDate.DayOfYear).ToList();
                 }
 
                 queriedFixtures = filterForChosenGD(queriedFixtures);
