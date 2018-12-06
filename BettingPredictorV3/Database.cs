@@ -176,16 +176,16 @@ namespace BettingPredictorV3
             return fixtures;
         }
 
-        public Team getTeam(String league_code, String team_name)
+        public Team getTeam(String leagueCode, String teamName)
         {
-            League league = leagues.Find(x => x.LeagueID == league_code);
+            League league = leagues.Find(x => x.LeagueID == leagueCode);
             if(league == null){ return null; }
-            return league.GetTeam(team_name);
+            return league.GetTeam(teamName);
         }
 
-        public League getLeague(String league_code)
+        public League getLeague(String leagueCode)
         {
-            return leagues.Find(x => x.LeagueID == league_code);
+            return leagues.Find(x => x.LeagueID == leagueCode);
         }
 
         public void predictResults(double alpha,double beta)
