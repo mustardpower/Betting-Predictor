@@ -103,17 +103,17 @@ namespace BettingPredictorV3
 
         public void AddFixture(Fixture fixture)
         {
-            if (leagues.Count(x => x.LeagueID == fixture.getLeagueID()) == 0)
+            if (leagues.Count(x => x.LeagueID == fixture.LeagueID) == 0)
             {
                 // if no match found then add league with the fixture's league ID
-                AddLeague(new League(fixture.getLeagueID()));
+                AddLeague(new League(fixture.LeagueID));
             }
 
             foreach (League league in leagues)
             {
-                if (league.LeagueID == fixture.getLeagueID())
+                if (league.LeagueID == fixture.LeagueID)
                 {
-                    league.addFixture(fixture);
+                    league.AddFixture(fixture);
                 }
             }
         }
@@ -132,7 +132,7 @@ namespace BettingPredictorV3
             {
                 if (league.LeagueID == team.LeagueID)
                 {
-                    league.addTeam(team);
+                    league.AddTeam(team);
                 }
             }
         }
@@ -153,12 +153,12 @@ namespace BettingPredictorV3
                     League aLeague = getLeague(league_code);
                     if (aLeague != null)
                     {
-                        aLeague.parseHistoricalData(fixture_data);
+                        aLeague.ParseHistoricalData(fixture_data);
                     }
                     else
                     {
                         League newLeague = new League(league_code);
-                        newLeague.parseHistoricalData(fixture_data);
+                        newLeague.ParseHistoricalData(fixture_data);
                         AddLeague(newLeague);
                     }
                 }
@@ -170,7 +170,7 @@ namespace BettingPredictorV3
             List<Fixture> fixtures = new List<Fixture>();
             foreach (League league in leagues)
             {
-                fixtures.AddRange(league.getFixtures());
+                fixtures.AddRange(league.GetFixtures());
             }
 
             return fixtures;
@@ -180,7 +180,7 @@ namespace BettingPredictorV3
         {
             League league = leagues.Find(x => x.LeagueID == league_code);
             if(league == null){ return null; }
-            return league.getTeam(team_name);
+            return league.GetTeam(team_name);
         }
 
         public League getLeague(String league_code)
@@ -200,7 +200,7 @@ namespace BettingPredictorV3
         {
             foreach (League league in leagues)
             {
-                league.predictResults(alpha, beta);
+                league.PredictResults(alpha, beta);
             }
         }
 
@@ -208,7 +208,7 @@ namespace BettingPredictorV3
         {
             foreach (Fixture fixture in fixtureList)
             {
-                fixture.predictResult(alpha, beta);
+                fixture.PredictResult(alpha, beta);
             }
         }
 
@@ -257,7 +257,7 @@ namespace BettingPredictorV3
             List<double> residuals = new List<double>();
             foreach (League league in leagues)
             {
-                residuals.AddRange(league.getHomeResiduals(date));
+                residuals.AddRange(league.GetHomeResiduals(date));
             }
 
             return residuals;
@@ -267,7 +267,7 @@ namespace BettingPredictorV3
             List<double> residuals = new List<double>();
             foreach (League league in leagues)
             {
-                residuals.AddRange(league.getAwayResiduals(date));
+                residuals.AddRange(league.GetAwayResiduals(date));
             }
 
             return residuals;

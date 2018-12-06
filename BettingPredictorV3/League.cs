@@ -27,7 +27,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public void addTeam(Team team)
+        public void AddTeam(Team team)
         {
             if (teams.Find(x => x.Name == team.Name) == null)
             {
@@ -35,7 +35,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public Team getTeam(String name)
+        public Team GetTeam(String name)
         {
             foreach (Team team in teams)
             {
@@ -48,24 +48,24 @@ namespace BettingPredictorV3
             return null;
         }
 
-        public void addFixture(Fixture fixture)
+        public void AddFixture(Fixture fixture)
         {
-            if (teams.Count(x => x.Name == fixture.getHomeTeam().Name) == 0)
+            if (teams.Count(x => x.Name == fixture.HomeTeam.Name) == 0)
             {
                 // if no match found then add team to the league
-                addTeam(fixture.getHomeTeam());
+                AddTeam(fixture.HomeTeam);
             }
 
             foreach (Team team in teams)
             {
-                if (team.Name == fixture.getHomeTeam().Name)
+                if (team.Name == fixture.HomeTeam.Name)
                 {
-                    team.addFixture(fixture);
+                    team.AddFixture(fixture);
                 }
             }
         }
 
-        public int getFileOffset(string[] fixture_data)
+        public int GetFileOffset(string[] fixture_data)
         {
             if (fixture_data.Length == 49 || fixture_data.Length == 52)
             {
@@ -89,7 +89,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public void parseHistoricalData(string[] fixture_data)
+        public void ParseHistoricalData(string[] fixture_data)
         {
             Team home_team = null;
             Team away_team = null;
@@ -112,7 +112,7 @@ namespace BettingPredictorV3
                 }
             }
 
-            int offset = getFileOffset(fixture_data);
+            int offset = GetFileOffset(fixture_data);
 
             try
             {
@@ -169,26 +169,26 @@ namespace BettingPredictorV3
             }
             
 
-            addTeam(new Team(this, home_team_name));
-            addTeam(new Team(this, away_team_name));
+            AddTeam(new Team(this, home_team_name));
+            AddTeam(new Team(this, away_team_name));
 
-            home_team = getTeam(home_team_name);
-            away_team = getTeam(away_team_name);
+            home_team = GetTeam(home_team_name);
+            away_team = GetTeam(away_team_name);
 
             Fixture newFixture = new Fixture(this, date, home_team, away_team, home_goals, away_goals, new Referee(""), odds);
-            home_team.addFixture(newFixture);
-            away_team.addFixture(newFixture);
+            home_team.AddFixture(newFixture);
+            away_team.AddFixture(newFixture);
         }
 
-        public void predictResults(double alpha, double beta)
+        public void PredictResults(double alpha, double beta)
         {
             foreach (Team team in teams)
             {
-                team.predictResults(alpha,beta);
+                team.PredictResults(alpha,beta);
             }
         }
 
-        public List<Fixture> getFixtures()
+        public List<Fixture> GetFixtures()
         {
             List<Fixture> fixtures = new List<Fixture>();
             foreach (Team team in teams)
@@ -199,21 +199,21 @@ namespace BettingPredictorV3
             return fixtures;
         }
 
-        public List<Fixture> getFixtures(DateTime date)
+        public List<Fixture> GetFixtures(DateTime date)
         {
             List<Fixture> fixtures = new List<Fixture>();
             foreach (Team team in teams)
             {
-                fixtures.AddRange(team.getFixturesBefore(date));
+                fixtures.AddRange(team.GetFixturesBefore(date));
             }
 
             return fixtures;
         }
 
-        public double getAverageHomeGoals(DateTime date)
+        public double GetAverageHomeGoals(DateTime date)
         {
             List<double> sample = new List<double>();
-            List<Fixture> fixtures = getFixtures(date);
+            List<Fixture> fixtures = GetFixtures(date);
 
             if (fixtures.Count == 0)
             {
@@ -222,16 +222,16 @@ namespace BettingPredictorV3
 
             foreach(Fixture fixture in fixtures)
             {
-                sample.Add(fixture.getHomeGoals());
+                sample.Add(fixture.HomeGoals);
             }
 
             return sample.Average();
         }
 
-        public double getAverageAwayGoals(DateTime date)
+        public double GetAverageAwayGoals(DateTime date)
         {
             List<double> sample = new List<double>();
-            List<Fixture> fixtures = getFixtures(date);
+            List<Fixture> fixtures = GetFixtures(date);
 
             if (fixtures.Count == 0)
             {
@@ -240,28 +240,28 @@ namespace BettingPredictorV3
 
             foreach (Fixture fixture in fixtures)
             {
-                sample.Add(fixture.getAwayGoals());
+                sample.Add(fixture.AwayGoals);
             }
 
             return sample.Average();
         }
 
-        public List<double> getHomeResiduals(DateTime date)
+        public List<double> GetHomeResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
             foreach (Team team in teams)
             {
-                residuals.AddRange(team.getHomeResiduals(date));
+                residuals.AddRange(team.GetHomeResiduals(date));
             }
 
             return residuals;
         }
-        public List<double> getAwayResiduals(DateTime date)
+        public List<double> GetAwayResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
             foreach (Team team in teams)
             {
-                residuals.AddRange(team.getAwayResiduals(date));
+                residuals.AddRange(team.GetAwayResiduals(date));
             }
 
             return residuals;

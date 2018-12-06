@@ -28,8 +28,8 @@ namespace BettingPredictorV3
             List<Fixture> upcoming_fixtures = new List<Fixture>();     
             upcoming_fixtures = database.FixtureList;
             // remove teams with less than a season of results
-            upcoming_fixtures.RemoveAll(x => x.getHomeTeam().getFixturesBefore(DateTime.Now).Count < 19);
-            upcoming_fixtures.RemoveAll(x => x.getAwayTeam().getFixturesBefore(DateTime.Now).Count < 19);
+            upcoming_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+            upcoming_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
 
             dataGrid_UpcomingFixtures.ItemsSource = upcoming_fixtures;
             leaguesComboBox.ItemsSource = database.Leagues;
@@ -39,8 +39,8 @@ namespace BettingPredictorV3
         private void dataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
         {
             List<Fixture> previous_fixtures = database.getPreviousResults();
-            previous_fixtures.RemoveAll(x => x.getHomeTeam().getFixturesBefore(x.date).Count < 10);
-            previous_fixtures.RemoveAll(x => x.getAwayTeam().getFixturesBefore(x.date).Count < 10);
+            previous_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.date).Count < 10);
+            previous_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.date).Count < 10);
             previous_fixtures = previous_fixtures.Distinct().ToList();
             dataGrid_PreviousFixtures.ItemsSource = previous_fixtures;
 
@@ -129,8 +129,8 @@ namespace BettingPredictorV3
             else if (tabItem2.IsSelected)
             {
                 List<Fixture> previous_fixtures = database.getPreviousResults();
-                previous_fixtures.RemoveAll(x => x.getHomeTeam().getFixturesBefore(x.date).Count < 10);
-                previous_fixtures.RemoveAll(x => x.getAwayTeam().getFixturesBefore(x.date).Count < 10);
+                previous_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.date).Count < 10);
+                previous_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.date).Count < 10);
                 queriedFixtures = previous_fixtures.Distinct().ToList();
   
                 IEnumerable<String> leagueIDs = database.Leagues.Select(x => x.LeagueID);
@@ -161,8 +161,8 @@ namespace BettingPredictorV3
             upcoming_fixtures = database.FixtureList;
 
             // remove teams with less than a season of results
-            upcoming_fixtures.RemoveAll(x => x.getHomeTeam().getFixturesBefore(DateTime.Now).Count < 19);
-            upcoming_fixtures.RemoveAll(x => x.getAwayTeam().getFixturesBefore(DateTime.Now).Count < 19);
+            upcoming_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+            upcoming_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
 
             dataGrid_UpcomingFixtures.ItemsSource = upcoming_fixtures;
         }
@@ -227,7 +227,7 @@ namespace BettingPredictorV3
                 }
                 else
                 {
-                    if (fixture.home_goals > fixture.away_goals)
+                    if (fixture.HomeGoals > fixture.AwayGoals)
                     {
                         if (max_odds_fixture.best_home_odds.HomeOdds < fixture.best_home_odds.HomeOdds)
                         {
@@ -260,7 +260,7 @@ namespace BettingPredictorV3
                 }
                 else
                 {
-                    if (fixture.home_goals < fixture.away_goals)
+                    if (fixture.HomeGoals < fixture.AwayGoals)
                     {
                         profit += (fixture.best_away_odds.AwayOdds - 1);
                     }

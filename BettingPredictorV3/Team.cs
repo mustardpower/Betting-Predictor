@@ -61,17 +61,17 @@ namespace BettingPredictorV3
             }
         }
 
-        public void addFixture(Fixture fixture)
+        public void AddFixture(Fixture fixture)
         {
             fixtures.Add(fixture);
         }
 
-        public List<Fixture> getFixturesBefore(DateTime date)
+        public List<Fixture> GetFixturesBefore(DateTime date)
         {
             List<Fixture> previous_results = new List<Fixture>();
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.getDate() < date)
+                if (fixture.Date < date)
                 {
                     previous_results.Add(fixture);
                 }
@@ -80,36 +80,36 @@ namespace BettingPredictorV3
             return previous_results;
         }
 
-        public int calculateForm(DateTime date)
+        public int CalculateForm(DateTime date)
         {
             int idx = 0;
             form = 0;
 
-            List<Fixture> previous_results = getFixturesBefore(date);
+            List<Fixture> previous_results = GetFixturesBefore(date);
             previous_results.Reverse();
 
             foreach (Fixture fixture in previous_results)
             {
                 if (idx < 5)
                 {
-                    if (fixture.getHomeTeam() == this) // if current team is home side
+                    if (fixture.HomeTeam == this) // if current team is home side
                     {
-                        if (fixture.getAwayGoals() < fixture.getHomeGoals())	// home win
+                        if (fixture.AwayGoals < fixture.HomeGoals)	// home win
                         {
                             form += 3;
                         }
-                        else if (fixture.getAwayGoals() == fixture.getHomeGoals()) // draw
+                        else if (fixture.AwayGoals == fixture.HomeGoals) // draw
                         {
                             form++;
                         }
                     }
                     else // if current team is the away side
                     {
-                        if (fixture.getAwayGoals() > fixture.getHomeGoals())	// away win
+                        if (fixture.AwayGoals > fixture.HomeGoals)	// away win
                         {
                             form += 3;
                         }
-                        else if (fixture.getAwayGoals() == fixture.getHomeGoals()) // draw
+                        else if (fixture.AwayGoals == fixture.HomeGoals) // draw
                         {
                             form++;
                         }
@@ -122,17 +122,17 @@ namespace BettingPredictorV3
             return form;
         }
 
-        public List<double> createHomeSample(DateTime date)
+        public List<double> CreateHomeSample(DateTime date)
         {
             List<double> sample = new List<double>();
 
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.getDate() < date)
+                if (fixture.Date < date)
                 {
-                    if (fixture.getHomeTeam() == this)
+                    if (fixture.HomeTeam == this)
                     {
-                        sample.Add(fixture.getHomeGoals());
+                        sample.Add(fixture.HomeGoals);
                     }
                 }
             }
@@ -140,34 +140,34 @@ namespace BettingPredictorV3
             return sample;
         }
 
-        public List<double> createAwaySample(DateTime date)
+        public List<double> CreateAwaySample(DateTime date)
         {
             List<double> sample = new List<double>();
 
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.getDate() < date)
+                if (fixture.Date < date)
                 {
-                    if (fixture.getAwayTeam() == this)
+                    if (fixture.AwayTeam == this)
                     {
-                        sample.Add(fixture.getAwayGoals());
+                        sample.Add(fixture.AwayGoals);
                     }
                 }
             }
 
             return sample;
         }
-        public List<double> createHomeOppositionSample(DateTime date)
+        public List<double> CreateHomeOppositionSample(DateTime date)
         {
             List<double> sample = new List<double>();
 
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.getDate() < date)
+                if (fixture.Date < date)
                 {
-                    if (fixture.getHomeTeam() == this)
+                    if (fixture.HomeTeam == this)
                     {
-                        sample.Add(fixture.getAwayGoals());
+                        sample.Add(fixture.AwayGoals);
                     }
                 }
             }
@@ -175,58 +175,58 @@ namespace BettingPredictorV3
             return sample;
         }
 
-        public List<double> createAwayOppositionSample(DateTime date)
+        public List<double> CreateAwayOppositionSample(DateTime date)
         {
             List<double> sample = new List<double>();
 
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.getDate() < date)
+                if (fixture.Date < date)
                 {
-                    if (fixture.getAwayTeam() == this)
+                    if (fixture.AwayTeam == this)
                     {
-                        sample.Add(fixture.getHomeGoals());
+                        sample.Add(fixture.HomeGoals);
                     }
                 }
             }
 
             return sample;
         }
-        public void predictResults(double alpha,double beta)
+        public void PredictResults(double alpha,double beta)
         {
             foreach (Fixture fixture in fixtures)
             {
-                fixture.predictResult(alpha,beta);
-                fixture.calculateResiduals();
+                fixture.PredictResult(alpha,beta);
+                fixture.CalculateResiduals();
             }
         }
 
-        public List<double> getHomeResiduals(DateTime date)
+        public List<double> GetHomeResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.getDate() < date)
+                if (fixture.Date < date)
                 {
-                    if (fixture.getHomeResidual() != fixture.getHomeGoals())
+                    if (fixture.HomeResidual != fixture.HomeGoals)
                     {
-                        residuals.Add(fixture.getHomeResidual());
+                        residuals.Add(fixture.HomeResidual);
                     }
                 }
             }
 
             return residuals;
         }
-        public List<double> getAwayResiduals(DateTime date)
+        public List<double> GetAwayResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.getDate() < date)
+                if (fixture.Date < date)
                 {
-                    if (fixture.getHomeResidual() != fixture.getHomeGoals())
+                    if (fixture.HomeResidual != fixture.HomeGoals)
                     {
-                        residuals.Add(fixture.getAwayResidual());
+                        residuals.Add(fixture.AwayResidual);
                     }
                 }
             }
@@ -234,25 +234,25 @@ namespace BettingPredictorV3
             return residuals;
         }
 
-        public List<double> getResiduals(DateTime date)
+        public List<double> GetResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
             double residual;
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.getDate() < date)
+                if (fixture.Date < date)
                 {
-                    if (fixture.getHomeTeam() == this)
+                    if (fixture.HomeTeam == this)
                     {
-                        residual = fixture.getHomeResidual();
+                        residual = fixture.HomeResidual;
                         if (!Double.IsNaN(residual))
                         {
                             residuals.Add(residual);
                         }
                     }
-                    else if (fixture.getAwayTeam() == this)
+                    else if (fixture.AwayTeam == this)
                     {
-                        residual = fixture.getAwayResidual();
+                        residual = fixture.AwayResidual;
                         if(!Double.IsNaN(residual))
                         {
                             residuals.Add(residual);

@@ -11,8 +11,8 @@ namespace BettingPredictorV3
         public DateTime date { get; set; }
         public Team home_team { get; set; }
         public Team away_team { get; set; }
-        public double home_goals { get; set; }
-        public double away_goals { get; set; }
+        private double home_goals;
+        private double away_goals;
         public Referee referee { get; set; }
         public float home_goals_per_game { get; set; }
         public float away_goals_per_game { get; set; }
@@ -20,8 +20,8 @@ namespace BettingPredictorV3
         public double predicted_home_goals { get; set; }
         public double predicted_away_goals { get; set; }
         public double predicted_goal_difference { get; set; }
-        public double home_residual { get; set; }
-        public double away_residual { get; set; }
+        public double home_residual;
+        private double away_residual;
         public double average_home_residual { get; set; }
         public double average_away_residual { get; set; }
         public double both_to_score { get; set; }   // probability that both teams score in the fixture
@@ -50,7 +50,7 @@ namespace BettingPredictorV3
             predicted_away_goals = 0;
             both_to_score = 0.0;
 
-            findBestOdds();
+            FindBestOdds();
         }
         public Fixture(League league,DateTime date,Team home_team,Team away_team,double home_goals,double away_goals,Referee referee,List<Bookmaker> odds) // for result
         {
@@ -65,47 +65,72 @@ namespace BettingPredictorV3
             predicted_home_goals = 0;
             predicted_away_goals = 0;
 
-            findBestOdds();
+            FindBestOdds();
         }
 
-        public String getLeagueID()
+        public Team HomeTeam
         {
-            return league.LeagueID;
+            get
+            {
+                return home_team;
+            }
         }
 
-        public Team getHomeTeam()
+        public Team AwayTeam
         {
-            return home_team;
+            get
+            {
+                return away_team;
+            }
         }
 
-        public Team getAwayTeam()
+        public double HomeGoals
         {
-            return away_team;
+            get
+            {
+                return home_goals;
+            }
         }
 
-        public double getHomeResidual()
+        public double AwayGoals
         {
-            return home_residual;
+            get
+            {
+                return away_goals;
+            }
         }
 
-        public double getAwayResidual()
+        public double HomeResidual
         {
-            return away_residual;
+            get
+            {
+                return home_residual;
+            }
         }
 
-        public double getHomeGoals()
+        public double AwayResidual
         {
-            return home_goals;
+            get
+            {
+                return away_residual;
+            }
         }
 
-        public DateTime getDate()
+        public DateTime Date
         {
-            return date;
+            get
+            {
+                return date;
+            }
         }
 
-        public double getAwayGoals()
+
+        public String LeagueID
         {
-            return away_goals;
+            get
+            {
+                return league.LeagueID;
+            } 
         }
 
         public List<double> HomeWeightingFunction(List<double> sample)
@@ -208,18 +233,18 @@ namespace BettingPredictorV3
             return new_sample;
         }
 
-        public void calculateResiduals()
+        public void CalculateResiduals()
         {
             home_residual = home_goals - predicted_home_goals;
             away_residual = away_goals - predicted_away_goals;
         }
 
-        public void calculateGoalsPerGame()
+        public void CalculateGoalsPerGame()
         {
             home_goals_per_game = 0;
             away_goals_per_game = 0;
             // get all fixtures before the current fixture
-            List<Fixture> home_previous_results = home_team.getFixturesBefore(date);
+            List<Fixture> home_previous_results = home_team.GetFixturesBefore(date);
             double total_goals = 0;
 
             if (home_previous_results.Count > 0)
@@ -227,13 +252,13 @@ namespace BettingPredictorV3
                 foreach (Fixture fixture in home_previous_results)
                 {
                     // add up goals in those fixtures
-                    total_goals += fixture.getHomeGoals();
+                    total_goals += fixture.HomeGoals;
                 }
                 // divide by number of games
                 home_goals_per_game = (float)total_goals / (float)home_previous_results.Count;
             }
 
-            List<Fixture> away_previous_results = away_team.getFixturesBefore(date);
+            List<Fixture> away_previous_results = away_team.GetFixturesBefore(date);
 
             if (away_previous_results.Count > 0)
             {
@@ -242,14 +267,14 @@ namespace BettingPredictorV3
                 foreach (Fixture fixture in away_previous_results)
                 {
                     // add up goals in those fixtures
-                    total_goals += fixture.getHomeGoals();
+                    total_goals += fixture.HomeGoals;
                 }
                 // divide by number of games
                 away_goals_per_game = (float)total_goals / away_previous_results.Count;
             }
         }
 
-        public void predictResult(double alpha,double beta)
+        public void PredictResult(double alpha,double beta)
         {
             List<double> home_sample;
             List<double> away_sample;
@@ -261,48 +286,48 @@ namespace BettingPredictorV3
             double lgavghome_conceded;
             double lgavgaway_conceded;
 
-            calculateGoalsPerGame();
-            home_form = home_team.calculateForm(date);
-            away_form = away_team.calculateForm(date);
+            CalculateGoalsPerGame();
+            home_form = home_team.CalculateForm(date);
+            away_form = away_team.CalculateForm(date);
     
-			home_sample = home_team.createHomeSample(date);	// create the samples
-			away_sample = away_team.createAwaySample(date);
+			home_sample = home_team.CreateHomeSample(date);	// create the samples
+			away_sample = away_team.CreateAwaySample(date);
 
 			if((home_sample.Count != 0)&&(away_sample.Count != 0))
 			{
-                lgavghome_goals = league.getAverageHomeGoals(date);
-				lgavgaway_goals = league.getAverageAwayGoals(date);
+                lgavghome_goals = league.GetAverageHomeGoals(date);
+				lgavgaway_goals = league.GetAverageAwayGoals(date);
 
 				//find the average teams concede at home and away this is the inverse of goals scored
 
 				lgavghome_conceded = lgavgaway_goals;
 				lgavgaway_conceded = lgavghome_goals;
 
-				home_opp_sample = home_team.createHomeOppositionSample(date);
-				away_opp_sample = away_team.createAwayOppositionSample(date);
+				home_opp_sample = home_team.CreateHomeOppositionSample(date);
+				away_opp_sample = away_team.CreateAwayOppositionSample(date);
 
                 home_sample = HomeWeightingFunction(home_sample);
                 away_sample = AwayWeightingFunction(away_sample);
 
 				// calculates a home attacking strength and defence strength
-                calculateStrengths(home_sample, away_sample, home_opp_sample, away_opp_sample,alpha,beta);
+                CalculateStrengths(home_sample, away_sample, home_opp_sample, away_opp_sample,alpha,beta);
 
                 predicted_goal_difference = predicted_home_goals - predicted_away_goals;
 
                 home_residual = predicted_home_goals - home_goals;
                 away_residual = predicted_away_goals - away_goals;
 
-                average_home_residual = home_team.getResiduals(DateTime.Now).Average(); 
-                average_away_residual = away_team.getResiduals(DateTime.Now).Average();
+                average_home_residual = home_team.GetResiduals(DateTime.Now).Average(); 
+                average_away_residual = away_team.GetResiduals(DateTime.Now).Average();
 
-                calculateBothToScore();
+                CalculateBothToScore();
                 //// generate a large sample of simulated results
                 //simulated_sample = generateSimulatedResults();
                 //fixture_it->calculateProfit(simulated_sample,home_goals,away_goals,home_form,away_form);
 			}
 		}
 
-        public void calculateBothToScore()
+        public void CalculateBothToScore()
         {
             // subtract probabilities from 1.0 for the following results: 0-0, 1-0, 2-0, 3- 0 ....., 0-1, 0-2, 0-3....
 
@@ -340,10 +365,10 @@ namespace BettingPredictorV3
         //    return simulated_sample;
         //}
 
-        public void calculateStrengths(List<double> home_sample, List<double> away_sample, List<double> home_opp_sample, List<double> away_opp_sample,double alpha,double beta)
+        public void CalculateStrengths(List<double> home_sample, List<double> away_sample, List<double> home_opp_sample, List<double> away_opp_sample,double alpha,double beta)
         {
-            double lgavghome_goals = league.getAverageHomeGoals(date);
-            double lgavgaway_goals = league.getAverageAwayGoals(date);
+            double lgavghome_goals = league.GetAverageHomeGoals(date);
+            double lgavgaway_goals = league.GetAverageAwayGoals(date);
             double lgavghome_conceded = lgavgaway_goals;
             double lgavgaway_conceded = lgavghome_goals;
 
@@ -367,7 +392,7 @@ namespace BettingPredictorV3
             
         }
 
-        public void findBestOdds()
+        public void FindBestOdds()
         {
             double home_odds = 0 ;
             double draw_odds = 0 ;
@@ -394,7 +419,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public double homeWinProbability()
+        public double HomeWinProbability()
         {
             double prob = 0.0;
             double h_prob, a_prob;
@@ -416,7 +441,7 @@ namespace BettingPredictorV3
             return prob;
         }
 
-        public double awayWinProbability()
+        public double AwayWinProbability()
         {
             double prob = 0.0;
             double h_prob, a_prob;
@@ -438,7 +463,7 @@ namespace BettingPredictorV3
             return prob;
         }
 
-        public double drawProbability()
+        public double DrawProbability()
         {
             double prob = 0.0;
             double h_prob, a_prob;
