@@ -150,7 +150,7 @@ namespace BettingPredictorV3
                 if (league_code.Length > 0)
                 {
                     Console.WriteLine(league_code + ": " + fixture_data.Length);
-                    League aLeague = getLeague(league_code);
+                    League aLeague = GetLeague(league_code);
                     if (aLeague != null)
                     {
                         aLeague.ParseHistoricalData(fixture_data);
@@ -176,27 +176,27 @@ namespace BettingPredictorV3
             return fixtures;
         }
 
-        public Team getTeam(String leagueCode, String teamName)
+        public Team GetTeam(String leagueCode, String teamName)
         {
             League league = leagues.Find(x => x.LeagueID == leagueCode);
             if(league == null){ return null; }
             return league.GetTeam(teamName);
         }
 
-        public League getLeague(String leagueCode)
+        public League GetLeague(String leagueCode)
         {
             return leagues.Find(x => x.LeagueID == leagueCode);
         }
 
-        public void predictResults(double alpha,double beta)
+        public void PredictResults(double alpha,double beta)
         {
             // predict the results for historical fixtures - used to find profitable betting areas 
-            predictHistoricalResults(alpha, beta);
+            PredictHistoricalResults(alpha, beta);
             // predict the upcoming fixtures
-            predictUpcomingFixtures(alpha, beta);
+            PredictUpcomingFixtures(alpha, beta);
         }
 
-        public void predictHistoricalResults(double alpha, double beta)
+        public void PredictHistoricalResults(double alpha, double beta)
         {
             foreach (League league in leagues)
             {
@@ -204,7 +204,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public void predictUpcomingFixtures(double alpha, double beta)
+        public void PredictUpcomingFixtures(double alpha, double beta)
         {
             foreach (Fixture fixture in fixtureList)
             {
@@ -368,9 +368,9 @@ namespace BettingPredictorV3
                     String a = ex.Message;
                 }
 
-                league = getLeague(league_code);
-                home_team = getTeam(league_code, home_team_name);
-                away_team = getTeam(league_code, away_team_name);
+                league = GetLeague(league_code);
+                home_team = GetTeam(league_code, home_team_name);
+                away_team = GetTeam(league_code, away_team_name);
 
                 if (!((home_team == null) || (away_team == null)))
                 {
