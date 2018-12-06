@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<RuleSet Name="All Rules with default action" Description="All Rules with default action. Rules with IsEnabledByDefault = false are disabled." ToolsVersion="15.0">
+   <Rules AnalyzerId="Microsoft.NetFramework.Analyzers" RuleNamespace="Microsoft.NetFramework.Analyzers">
+      <Rule Id="CA1058" Action="Warning" />          <!-- Types should not extend certain base types -->
+      <Rule Id="CA2153" Action="Warning" />          <!-- Do Not Catch Corrupted State Exceptions -->
+      <Rule Id="CA2229" Action="Warning" />          <!-- Implement serialization constructors -->
+      <Rule Id="CA2235" Action="Warning" />          <!-- Mark all non-serializable fields -->
+      <Rule Id="CA2237" Action="Warning" />          <!-- Mark ISerializable types with serializable -->
+      <Rule Id="CA3075" Action="Warning" />          <!-- Insecure DTD processing in XML -->
+      <Rule Id="CA3147" Action="Warning" />          <!-- MarkVerbHandlersWithValidateAntiforgeryTokenTitle -->
+      <Rule Id="CA9999" Action="Warning" />          <!-- Analyzer version mismatch -->
+   </Rules>
+   <Rules AnalyzerId="Microsoft.NetFramework.CSharp.Analyzers" RuleNamespace="Microsoft.NetFramework.CSharp.Analyzers">
+      <Rule Id="CA1300" Action="None" />             <!-- Specify MessageBoxOptions -->
+      <Rule Id="CA1301" Action="None" />             <!-- Avoid duplicate accelerators -->
+      <Rule Id="CA1306" Action="None" />             <!-- Set locale for data types -->
+      <Rule Id="CA2212" Action="None" />             <!-- Do not mark serviced components with WebMethod -->
+      <Rule Id="CA2232" Action="None" />             <!-- Mark Windows Forms entry points with STAThread -->
+      <Rule Id="CA2236" Action="None" />             <!-- Call base class methods on ISerializable types -->
+      <Rule Id="CA2238" Action="None" />             <!-- Implement serialization methods correctly -->
+      <Rule Id="CA2239" Action="None" />             <!-- Provide deserialization methods for optional fields -->
+      <Rule Id="CA2240" Action="None" />             <!-- Implement ISerializable correctly -->
+      <Rule Id="CA3076" Action="Warning" />          <!-- Insecure XSLT script processing. -->
+      <Rule Id="CA3077" Action="Warning" />          <!-- Insecure Processing in API Design, XmlDocument and XmlTextReader -->
+   </Rules>
+   <Rules AnalyzerId="Microsoft.NetFramework.VisualBasic.Analyzers" RuleNamespace="Microsoft.NetFramework.VisualBasic.Analyzers">
+      <Rule Id="CA1300" Action="None" />             <!-- Specify MessageBoxOptions -->
+      <Rule Id="CA1301" Action="None" />             <!-- Avoid duplicate accelerators -->
+      <Rule Id="CA1306" Action="None" />             <!-- Set locale for data types -->
+      <Rule Id="CA2212" Action="None" />             <!-- Do not mark serviced components with WebMethod -->
+      <Rule Id="CA2232" Action="None" />             <!-- Mark Windows Forms entry points with STAThread -->
+      <Rule Id="CA2236" Action="None" />             <!-- Call base class methods on ISerializable types -->
+      <Rule Id="CA2238" Action="None" />             <!-- Implement serialization methods correctly -->
+      <Rule Id="CA2239" Action="None" />             <!-- Provide deserialization methods for optional fields -->
+      <Rule Id="CA2240" Action="None" />             <!-- Implement ISerializable correctly -->
+      <Rule Id="CA3076" Action="Warning" />          <!-- Insecure XSLT script processing. -->
+      <Rule Id="CA3077" Action="Warning" />          <!-- Insecure Processing in API Design, XmlDocument and XmlTextReader -->
+   </Rules>
+</RuleSet>

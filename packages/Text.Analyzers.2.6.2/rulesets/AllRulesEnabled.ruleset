@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<RuleSet Name="All Rules Enabled with default action" Description="All Rules are enabled with default action. Rules with IsEnabledByDefault = false are force enabled with default action." ToolsVersion="15.0">
+   <Rules AnalyzerId="Text.CSharp.Analyzers" RuleNamespace="Text.CSharp.Analyzers">
+      <Rule Id="CA1704" Action="Warning" />          <!-- Identifiers should be spelled correctly -->
+   </Rules>
+   <Rules AnalyzerId="Text.VisualBasic.Analyzers" RuleNamespace="Text.VisualBasic.Analyzers">
+      <Rule Id="CA1704" Action="Warning" />          <!-- Identifiers should be spelled correctly -->
+   </Rules>
+</RuleSet>

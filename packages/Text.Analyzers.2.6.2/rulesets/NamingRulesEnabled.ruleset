@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<RuleSet Name="Naming Rules Enabled with default action" Description="All Naming Rules are enabled with default action. Naming Rules with IsEnabledByDefault = false are force enabled with default action. Rules from a different category are disabled." ToolsVersion="15.0">
+   <!-- Naming Rules -->
+   <Rules AnalyzerId="Text.CSharp.Analyzers" RuleNamespace="Text.CSharp.Analyzers">
+      <Rule Id="CA1704" Action="Warning" />          <!-- Identifiers should be spelled correctly -->
+   </Rules>
+   <Rules AnalyzerId="Text.VisualBasic.Analyzers" RuleNamespace="Text.VisualBasic.Analyzers">
+      <Rule Id="CA1704" Action="Warning" />          <!-- Identifiers should be spelled correctly -->
+   </Rules>
+
+   <!-- Other Rules -->
+   <Rules AnalyzerId="Text.CSharp.Analyzers" RuleNamespace="Text.CSharp.Analyzers">
+   </Rules>
+   <Rules AnalyzerId="Text.VisualBasic.Analyzers" RuleNamespace="Text.VisualBasic.Analyzers">
+   </Rules>
+</RuleSet>
