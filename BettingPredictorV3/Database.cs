@@ -14,8 +14,40 @@ namespace BettingPredictorV3
     {
         private List<League> leagues;   // list of all the leagues stored
         private List<Fixture> fixtureList;
-        List<String> historyFiles;
-        List<String> fixturesFiles;
+        private List<String> fixturesFiles;
+        private List<String> historyFiles;
+
+        public List<League> Leagues
+        {
+            get
+            {
+                return leagues;
+            }
+        }
+
+        public List<String> FixtureFiles
+        {
+            get
+            {
+                return fixturesFiles;
+            }
+        }
+
+        public List<String> HistoryFiles
+        {
+            get
+            {
+                return historyFiles;
+            }
+        }
+
+        public List<Fixture> FixtureList
+        {
+            get
+            {
+                return fixtureList;
+            }
+        }
 
         public Database()
         {
@@ -26,17 +58,12 @@ namespace BettingPredictorV3
             DatabaseSettings.BookmakersUsed = DatabaseSettings.defaultBookmakers();
         }
 
-        public void clearData()
+        public void ClearData()
         {
             leagues.Clear();
         }
 
-        public List<String> getHistoricalFiles()
-        {
-            return historyFiles;
-        }
-
-        public void loadHistoricalFile(String aFile)
+        public void LoadHistoricalFile(String aFile)
         {
             try
             {
@@ -61,7 +88,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public void loadUpcomingFixturesFile()
+        public void LoadUpcomingFixturesFile()
         {
             using (WebClient client = new WebClient())         // download upcoming fixture list
             {
@@ -69,17 +96,17 @@ namespace BettingPredictorV3
                 foreach (String fixturesFile in fixturesFiles)
                 {
                     String htmlCode = client.DownloadString(fixturesFile);
-                    parseUpcomingFixtures(htmlCode);
+                    ParseUpcomingFixtures(htmlCode);
                 }
             }
         }
 
-        public void addFixture(Fixture fixture)
+        public void AddFixture(Fixture fixture)
         {
             if (leagues.Count(x => x.LeagueID == fixture.getLeagueID()) == 0)
             {
                 // if no match found then add league with the fixture's league ID
-                addLeague(new League(fixture.getLeagueID()));
+                AddLeague(new League(fixture.getLeagueID()));
             }
 
             foreach (League league in leagues)
@@ -91,7 +118,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public void addLeague(League league)
+        public void AddLeague(League league)
         {
             if(leagues.Find(x => x.LeagueID == league.LeagueID) == null)
             {
@@ -99,7 +126,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public void addTeam(Team team)
+        public void AddTeam(Team team)
         {
             foreach (League league in leagues)
             {
@@ -132,16 +159,12 @@ namespace BettingPredictorV3
                     {
                         League newLeague = new League(league_code);
                         newLeague.parseHistoricalData(fixture_data);
-                        addLeague(newLeague);
+                        AddLeague(newLeague);
                     }
                 }
             }
         }
 
-        public List<League> getLeagues()
-        {
-            return leagues;
-        }
         public List<Fixture> getPreviousResults()
         {
             List<Fixture> fixtures = new List<Fixture>();
@@ -151,11 +174,6 @@ namespace BettingPredictorV3
             }
 
             return fixtures;
-        }
-
-        public List<Fixture> getFixtures()
-        {
-            return fixtureList;
         }
 
         public Team getTeam(String league_code, String team_name)
@@ -194,7 +212,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public double getAlphaValue()
+        public double GetAlphaValue()
         {
             double alpha = 0.0;
             List<double> errors = new List<double>();
@@ -214,7 +232,7 @@ namespace BettingPredictorV3
             return alpha;
         }
 
-        public double getBetaValue()
+        public double GetBetaValue()
         {
             double beta = 0.0;
             List<double> errors = new List<double>();
@@ -234,7 +252,7 @@ namespace BettingPredictorV3
             return beta;
         }
 
-        public List<double> getHomeResiduals(DateTime date)
+        public List<double> GetHomeResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
             foreach (League league in leagues)
@@ -244,7 +262,7 @@ namespace BettingPredictorV3
 
             return residuals;
         }
-        public List<double> getAwayResiduals(DateTime date)
+        public List<double> GetAwayResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
             foreach (League league in leagues)
@@ -257,7 +275,7 @@ namespace BettingPredictorV3
 
         /* Reads in fixture data for upcoming fixtures. Obviously these will not have goals scored or conceded and will just be dates, team names and odds.
          * Teams from upcoming fixtures are not actually added to the database - if they do not already exist in the database the fixture will be ignored */
-        public void parseUpcomingFixtures(String htmlCode)
+        public void ParseUpcomingFixtures(String htmlCode)
         {
             League league = null;
             Team home_team = null;

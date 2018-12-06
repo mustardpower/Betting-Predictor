@@ -26,13 +26,13 @@ namespace BettingPredictorV3
         public void dataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)
         {
             List<Fixture> upcoming_fixtures = new List<Fixture>();     
-            upcoming_fixtures = database.getFixtures();
+            upcoming_fixtures = database.FixtureList;
             // remove teams with less than a season of results
             upcoming_fixtures.RemoveAll(x => x.getHomeTeam().getFixturesBefore(DateTime.Now).Count < 19);
             upcoming_fixtures.RemoveAll(x => x.getAwayTeam().getFixturesBefore(DateTime.Now).Count < 19);
 
             dataGrid_UpcomingFixtures.ItemsSource = upcoming_fixtures;
-            leaguesComboBox.ItemsSource = database.getLeagues();
+            leaguesComboBox.ItemsSource = database.Leagues;
             dateComboBox.ItemsSource = upcoming_fixtures.Select(x => x.date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
         }
 
@@ -109,8 +109,8 @@ namespace BettingPredictorV3
             List<Fixture> queriedFixtures = new List<Fixture>();
             if (tabItem1.IsSelected)
             {
-                queriedFixtures = database.getFixtures();
-                IEnumerable<String> leagueIDs = database.getLeagues().Select(x => x.LeagueID);
+                queriedFixtures = database.FixtureList;
+                IEnumerable<String> leagueIDs = database.Leagues.Select(x => x.LeagueID);
 
                 if (leaguesComboBox.SelectedItem != null)
                 {
@@ -133,7 +133,7 @@ namespace BettingPredictorV3
                 previous_fixtures.RemoveAll(x => x.getAwayTeam().getFixturesBefore(x.date).Count < 10);
                 queriedFixtures = previous_fixtures.Distinct().ToList();
   
-                IEnumerable<String> leagueIDs = database.getLeagues().Select(x => x.LeagueID);
+                IEnumerable<String> leagueIDs = database.Leagues.Select(x => x.LeagueID);
 
                 if (leaguesComboBox.SelectedItem != null)
                 {
@@ -158,7 +158,7 @@ namespace BettingPredictorV3
             List<Fixture> upcoming_fixtures = new List<Fixture>();
             dateComboBox.SelectedItem = null;
             leaguesComboBox.SelectedItem = null;
-            upcoming_fixtures = database.getFixtures();
+            upcoming_fixtures = database.FixtureList;
 
             // remove teams with less than a season of results
             upcoming_fixtures.RemoveAll(x => x.getHomeTeam().getFixturesBefore(DateTime.Now).Count < 19);
@@ -290,15 +290,15 @@ namespace BettingPredictorV3
 
             do
             {
-                alpha = database.getAlphaValue();
-                beta = database.getBetaValue();
+                alpha = database.GetAlphaValue();
+                beta = database.GetBetaValue();
                 database.predictResults(alpha, beta);
             }
-            while ((Math.Abs(alpha) > Math.Abs(database.getAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.getBetaValue()))));
+            while ((Math.Abs(alpha) > Math.Abs(database.GetAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.GetBetaValue()))));
 
 
-            List<double> home_residuals = database.getHomeResiduals(DateTime.Now);
-            List<double> away_residuals = database.getAwayResiduals(DateTime.Now);
+            List<double> home_residuals = database.GetHomeResiduals(DateTime.Now);
+            List<double> away_residuals = database.GetAwayResiduals(DateTime.Now);
 
             home_residuals.RemoveAll(x => Double.IsNaN(x));
             double home_average_error = home_residuals.Average();

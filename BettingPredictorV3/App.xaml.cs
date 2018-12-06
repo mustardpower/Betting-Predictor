@@ -33,14 +33,14 @@ namespace BettingPredictorV3
         private void _applicationInitialize(Splash splashWindow)
         {
             new DatabaseSettingsWindow().ShowDialog();
-            List<String> historyFiles = database.getHistoricalFiles();
-            database.clearData();
+            List<String> historyFiles = database.HistoryFiles;
+            database.ClearData();
             int fileNumber = 0;
             double progress = 0.0;
 
             foreach (String file in historyFiles)          // download and parse previous results
             {
-                database.loadHistoricalFile(file);
+                database.LoadHistoricalFile(file);
                 fileNumber++;
                 progress = (double)fileNumber / (double)historyFiles.Count;
                 splashWindow.SetProgress(progress);
@@ -48,7 +48,7 @@ namespace BettingPredictorV3
             }
 
             splashWindow.SetText("Loading upcoming fixtures...");
-            database.loadUpcomingFixturesFile();
+            database.LoadUpcomingFixturesFile();
             splashWindow.SetText("Predicting upcoming fixtures...");
             predictResults();
             // Create the main window, but on the UI thread.
@@ -67,15 +67,15 @@ namespace BettingPredictorV3
 
             do
             {
-                alpha = database.getAlphaValue();
-                beta = database.getBetaValue();
+                alpha = database.GetAlphaValue();
+                beta = database.GetBetaValue();
                 database.predictResults(alpha, beta);
             }
-            while ((Math.Abs(alpha) > Math.Abs(database.getAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.getBetaValue()))));
+            while ((Math.Abs(alpha) > Math.Abs(database.GetAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.GetBetaValue()))));
 
 
-            List<double> home_residuals = database.getHomeResiduals(DateTime.Now);
-            List<double> away_residuals = database.getAwayResiduals(DateTime.Now);
+            List<double> home_residuals = database.GetHomeResiduals(DateTime.Now);
+            List<double> away_residuals = database.GetAwayResiduals(DateTime.Now);
 
             home_residuals.RemoveAll(x => Double.IsNaN(x));
             double home_average_error = home_residuals.Average();
