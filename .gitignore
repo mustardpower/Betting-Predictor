@@ -54,3 +54,4 @@ BettingPredictorV3/obj/x86/Debug/BettingPredictorV3.csproj.CopyComplete
 BettingPredictorV3/obj/x86/Debug/BettingPredictorV3.exe
 *.cache
 BettingPredictorV3/obj/x86/Debug/FixtureWindow.g.i.cs
+*.cache
