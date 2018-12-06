@@ -81,19 +81,21 @@ namespace BettingPredictorV3
         {
             int idx = 0;
             form = 0;
+            const int kNumberOfRelevantGames  = 5;
+            const int kNumberOfPtsForWin = 3;
 
             List<Fixture> previous_results = GetFixturesBefore(date);
             previous_results.Reverse();
 
             foreach (Fixture fixture in previous_results)
             {
-                if (idx < 5)
+                if (idx < kNumberOfRelevantGames)
                 {
                     if (fixture.HomeTeam == this) // if current team is home side
                     {
                         if (fixture.AwayGoals < fixture.HomeGoals)	// home win
                         {
-                            form += 3;
+                            form += kNumberOfPtsForWin;
                         }
                         else if (fixture.AwayGoals == fixture.HomeGoals) // draw
                         {
@@ -104,7 +106,7 @@ namespace BettingPredictorV3
                     {
                         if (fixture.AwayGoals > fixture.HomeGoals)	// away win
                         {
-                            form += 3;
+                            form += kNumberOfPtsForWin;
                         }
                         else if (fixture.AwayGoals == fixture.HomeGoals) // draw
                         {
