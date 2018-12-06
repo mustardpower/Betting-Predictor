@@ -41,3 +41,16 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+.vs/BettingPredictorV3/DesignTimeBuild/.dtbcache
+*.suo
+.vs/BettingPredictorV3/v15/Server/sqlite3/db.lock
+*.ide-shm
+*.ide-wal
+BettingPredictorV3/obj/x86/Debug/FixtureWindow.g.i.cs
+BettingPredictorV3/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+BettingPredictorV3/obj/x86/Debug/BettingPredictorV3.csprojAssemblyReference.cache
+BettingPredictorV3/obj/x86/Debug/BettingPredictorV3.csproj.CopyComplete
+BettingPredictorV3/obj/x86/Debug/BettingPredictorV3.exe
+*.cache
+BettingPredictorV3/obj/x86/Debug/FixtureWindow.g.i.cs
