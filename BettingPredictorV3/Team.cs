@@ -10,10 +10,7 @@ namespace BettingPredictorV3
         private League league { get; set; }
         private String name { get; set;}
         private List<Fixture> fixtures { get; set; }
-        private float goals_per_game;   // goals per game prior to the fixture
-        private float goals_per_home_game;  // goals per home game prior to the fixture
-        private float goals_per_away_game;  // goals per away game prior to the fixture
-        public int form { get; set; }   // points won in last 5 games
+        private int form; // points won in last 5 games
 
         public Team(League league,String name)
         {
@@ -49,7 +46,7 @@ namespace BettingPredictorV3
             }
             set
             {
-                this.form = form;
+                this.form = value;
             }
         }
 

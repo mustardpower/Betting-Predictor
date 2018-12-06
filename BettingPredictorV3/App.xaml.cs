@@ -69,7 +69,7 @@ namespace BettingPredictorV3
             {
                 alpha = database.GetAlphaValue();
                 beta = database.GetBetaValue();
-                database.predictResults(alpha, beta);
+                database.PredictResults(alpha, beta);
             }
             while ((Math.Abs(alpha) > Math.Abs(database.GetAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.GetBetaValue()))));
 

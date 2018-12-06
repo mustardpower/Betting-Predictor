@@ -8,9 +8,6 @@ namespace BettingPredictorV3
     public class Referee
     {
         private String name;
-        private int appearances;
-        private int yellow_cards;
-        private int red_cards;
 
         public Referee(String name)
         {
