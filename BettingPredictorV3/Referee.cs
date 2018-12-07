@@ -9,13 +9,16 @@ namespace BettingPredictorV3
     {
         private String name;
 
-        public Referee(String name)
+        public Referee(String aName)
         {
-            this.name = name;
+            this.Name = aName;
         }
+
+        public string Name { get => name; set => name = value; }
+
         public override string ToString()
         {
-            return name;
+            return Name;
         }
     }
 }

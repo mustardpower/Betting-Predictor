@@ -71,7 +71,7 @@ namespace BettingPredictorV3
                 {
                 // TO DO: Add handling for exceptions
                     string htmlCode = client.DownloadString(aFile);
-                    parseHistoricalData(htmlCode);
+                    ParseHistoricalData(htmlCode);
                 }
             }
             catch (WebException ex)
@@ -137,7 +137,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public void parseHistoricalData(String htmlCode)
+        public void ParseHistoricalData(String htmlCode)
         {
             int headings = htmlCode.IndexOf("\n");
             htmlCode = htmlCode.Remove(0,headings+"\n".Length); // remove all column headings from the CSV file
@@ -165,7 +165,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public List<Fixture> getPreviousResults()
+        public List<Fixture> GetPreviousResults()
         {
             List<Fixture> fixtures = new List<Fixture>();
             foreach (League league in leagues)
@@ -380,7 +380,7 @@ namespace BettingPredictorV3
                 }
             }
 
-        public void setHistoryFiles()
+        public void SetHistoryFiles()
         {
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E0.csv");
             historyFiles.Add("http://www.football-data.co.uk/mmz4281/1314/E1.csv");
@@ -538,7 +538,7 @@ namespace BettingPredictorV3
             historyFiles.Add("http://www.football-data.co.uk/new/USA.csv");
         }
 
-        public void setFixturesFiles()
+        public void SetFixturesFiles()
         {
             fixturesFiles.Add("http://www.football-data.co.uk/fixtures.csv");
             fixturesFiles.Add("http://www.football-data.co.uk/new_league_fixtures.csv");

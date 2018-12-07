@@ -7,9 +7,9 @@ namespace BettingPredictorV3
 {
     public class Team
     {
-        private League league { get; set; }
-        private String name { get; set;}
-        private List<Fixture> fixtures { get; set; }
+        private League league;
+        private String name;
+        private List<Fixture> fixtures;
         private int form; // points won in last 5 games
 
         public Team(League league,String name)
@@ -34,7 +34,7 @@ namespace BettingPredictorV3
             }
             set
             {
-                this.name = name;
+                this.name = value;
             }
         }
 

@@ -23,7 +23,7 @@ namespace BettingPredictorV3
             database = aDatabase;
         }
 
-        public void dataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)
+        public void DataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)
         {
             List<Fixture> upcoming_fixtures = new List<Fixture>();     
             upcoming_fixtures = database.FixtureList;
@@ -36,9 +36,9 @@ namespace BettingPredictorV3
             dateComboBox.ItemsSource = upcoming_fixtures.Select(x => x.date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
         }
 
-        private void dataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
+        private void DataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Fixture> previous_fixtures = database.getPreviousResults();
+            List<Fixture> previous_fixtures = database.GetPreviousResults();
             previous_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.date).Count < 10);
             previous_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.date).Count < 10);
             previous_fixtures = previous_fixtures.Distinct().ToList();
@@ -47,21 +47,21 @@ namespace BettingPredictorV3
             float minValue = -3.0f;
             float maxValue = 3.0f;
             int noOfIntervals = 60;
-            calculateProfitIntervals(previous_fixtures,minValue, maxValue, noOfIntervals);
+            CalculateProfitIntervals(previous_fixtures,minValue, maxValue, noOfIntervals);
 
         }
 
-        private void dataGrid_ProfitLossReport_Loaded(object sender, RoutedEventArgs e)
+        private void DataGrid_ProfitLossReport_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Fixture> previousFixtures = database.getPreviousResults();
+            List<Fixture> previousFixtures = database.GetPreviousResults();
             float min = -3.0f;
             float max = 3.0f;
             int numberOfSteps = 40;
-            List<ProfitLossInterval> profitLossIntervals = calculateProfitIntervals(previousFixtures, min, max, numberOfSteps);
+            List<ProfitLossInterval> profitLossIntervals = CalculateProfitIntervals(previousFixtures, min, max, numberOfSteps);
             dataGrid_ProfitLossReport.ItemsSource = profitLossIntervals;
         }
 
-        public List<ProfitLossInterval> calculateProfitIntervals(List<Fixture> previousFixtures, float min, float max, int n)
+        public List<ProfitLossInterval> CalculateProfitIntervals(List<Fixture> previousFixtures, float min, float max, int n)
         {
             float h = ((max-min)/n); // step size of each interval
             float x1 = min;
@@ -70,9 +70,9 @@ namespace BettingPredictorV3
             List<ProfitLossInterval> profitLossIntervals = new List<ProfitLossInterval>();
             for (int i = 0; i < n; i++)
             {
-                intervalFixtures = filterForChosenGD(previousFixtures, x1, x2);
-                ProfitLossInterval homeInterval = calculateHomeGameProfit(intervalFixtures);
-                ProfitLossInterval awayInterval = calculateAwayGameProfit(intervalFixtures);
+                intervalFixtures = FilterForChosenGD(previousFixtures, x1, x2);
+                ProfitLossInterval homeInterval = CalculateHomeGameProfit(intervalFixtures);
+                ProfitLossInterval awayInterval = CalculateAwayGameProfit(intervalFixtures);
                 x1 = x2;
                 x2 += h;
 
@@ -85,7 +85,7 @@ namespace BettingPredictorV3
             return profitLossIntervals;
         }
 
-        private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Fixture selectedFixture;
             if (tabItem1.IsSelected)
@@ -104,7 +104,7 @@ namespace BettingPredictorV3
             fixtureDlg.Show();
         }
 
-        private void searchButton_Click(object sender, RoutedEventArgs e)
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             List<Fixture> queriedFixtures = new List<Fixture>();
             if (tabItem1.IsSelected)
@@ -123,12 +123,12 @@ namespace BettingPredictorV3
                     queriedFixtures = queriedFixtures.Where(x => x.date.DayOfYear == selectedDate.DayOfYear).ToList();
                 }
 
-                queriedFixtures = filterForChosenGD(queriedFixtures);
+                queriedFixtures = FilterForChosenGD(queriedFixtures);
                 dataGrid_UpcomingFixtures.ItemsSource = queriedFixtures;
             }
             else if (tabItem2.IsSelected)
             {
-                List<Fixture> previous_fixtures = database.getPreviousResults();
+                List<Fixture> previous_fixtures = database.GetPreviousResults();
                 previous_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.date).Count < 10);
                 previous_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.date).Count < 10);
                 queriedFixtures = previous_fixtures.Distinct().ToList();
@@ -146,14 +146,14 @@ namespace BettingPredictorV3
                     queriedFixtures = queriedFixtures.Where(x => x.date.DayOfYear == selectedDate.DayOfYear).ToList();
                 }
 
-                queriedFixtures = filterForChosenGD(queriedFixtures);
+                queriedFixtures = FilterForChosenGD(queriedFixtures);
                 dataGrid_PreviousFixtures.ItemsSource = queriedFixtures;
-                calculateHomeGameProfit(queriedFixtures);
-                calculateAwayGameProfit(queriedFixtures);
+                CalculateHomeGameProfit(queriedFixtures);
+                CalculateAwayGameProfit(queriedFixtures);
             }
         }
 
-        private void resetButton_Click(object sender, RoutedEventArgs e)
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             List<Fixture> upcoming_fixtures = new List<Fixture>();
             dateComboBox.SelectedItem = null;
@@ -167,7 +167,7 @@ namespace BettingPredictorV3
             dataGrid_UpcomingFixtures.ItemsSource = upcoming_fixtures;
         }
 
-        public List<Fixture> filterForChosenGD(IEnumerable<Fixture> aFixtureList)
+        public List<Fixture> FilterForChosenGD(IEnumerable<Fixture> aFixtureList)
         {
             if (!((minGD.Text == null) || (minGD.Text.Equals(""))))
             {
@@ -183,7 +183,7 @@ namespace BettingPredictorV3
             return aFixtureList.ToList();
         }
 
-        public List<Fixture> filterForChosenGD(IEnumerable<Fixture> aFixtureList, double minGD, double maxGD)
+        public List<Fixture> FilterForChosenGD(IEnumerable<Fixture> aFixtureList, double minGD, double maxGD)
         {
             aFixtureList = aFixtureList.Where(x => x.predicted_goal_difference > minGD);
             aFixtureList = aFixtureList.Where(x => x.predicted_goal_difference < maxGD);
@@ -212,7 +212,7 @@ namespace BettingPredictorV3
             }
         }
 
-        private ProfitLossInterval calculateHomeGameProfit(List<Fixture> fixtures)
+        private ProfitLossInterval CalculateHomeGameProfit(List<Fixture> fixtures)
         {
             double profit = 0.0;
             int ignoredTeams = 0;
@@ -247,7 +247,7 @@ namespace BettingPredictorV3
             return new ProfitLossInterval(intervalName, "Home", fixtures.Count, profit, yield);
         }
 
-        private ProfitLossInterval calculateAwayGameProfit(List<Fixture> fixtures)
+        private ProfitLossInterval CalculateAwayGameProfit(List<Fixture> fixtures)
         {
             double profit = 0.0;
             int ignoredTeams = 0;
@@ -281,7 +281,7 @@ namespace BettingPredictorV3
             System.Windows.Forms.MessageBox.Show("© Copyright of Paul Gothard. Not for commercial use.");
         }
 
-        private void predictResults()
+        private void PredictResults()
         {
             double alpha, beta;
 

@@ -21,8 +21,8 @@ namespace BettingPredictorV3
         public App()
         {
             ApplicationInitialize = _applicationInitialize;
-            database.setFixturesFiles();
-            database.setHistoryFiles();
+            database.SetFixturesFiles();
+            database.SetHistoryFiles();
         }
         public static new App Current
         {
@@ -50,7 +50,7 @@ namespace BettingPredictorV3
             splashWindow.SetText("Loading upcoming fixtures...");
             database.LoadUpcomingFixturesFile();
             splashWindow.SetText("Predicting upcoming fixtures...");
-            predictResults();
+            PredictResults();
             // Create the main window, but on the UI thread.
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
             {
@@ -58,7 +58,7 @@ namespace BettingPredictorV3
                 MainWindow.Show();
             });
         }
-        private void predictResults()
+        private void PredictResults()
         {
             double alpha, beta;
 

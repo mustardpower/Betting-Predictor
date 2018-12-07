@@ -17,8 +17,8 @@
         <TabControl Height="656" HorizontalAlignment="Left" Margin="0,20,0,0" Name="tabControl1" VerticalAlignment="Top" Width="922">
             <TabItem Header="Upcoming Fixtures" Name="tabItem1">
                 <DataGrid AutoGenerateColumns="False" Height="606" HorizontalAlignment="Left"
-                  Margin="22,14,0,0" Name="dataGrid_UpcomingFixtures" Loaded="dataGrid_UpcomingFixtures_Loaded"
-                  VerticalAlignment="Top" Width="875" SelectionUnit="FullRow" IsReadOnly="True" MouseDoubleClick="dataGrid_MouseDoubleClick" DataContext="{Binding}">
+                  Margin="22,14,0,0" Name="dataGrid_UpcomingFixtures" Loaded="DataGrid_UpcomingFixtures_Loaded"
+                  VerticalAlignment="Top" Width="875" SelectionUnit="FullRow" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick" DataContext="{Binding}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="League Code" Binding="{Binding Path=league.LeagueID}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Date" Binding="{Binding Path=date}" ></DataGridTextColumn>
@@ -45,8 +45,8 @@
             </TabItem>
             <TabItem Header = "Previous Fixtures" Name="tabItem2">
                 <DataGrid AutoGenerateColumns="False" Height="719" HorizontalAlignment="Left"
-                  Margin="22,70,0,0" Name="dataGrid_PreviousFixtures" Loaded="dataGrid_PreviousFixtures_Loaded"
-                  VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" MouseDoubleClick="dataGrid_MouseDoubleClick" DataContext="{Binding}">
+                  Margin="22,70,0,0" Name="dataGrid_PreviousFixtures" Loaded="DataGrid_PreviousFixtures_Loaded"
+                  VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick" DataContext="{Binding}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="League Code" Binding="{Binding Path=league.LeagueID}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Date" Binding="{Binding Path=date}" ></DataGridTextColumn>
@@ -62,7 +62,7 @@
             </TabItem>
             <TabItem Header="Reports" Name="tabItem3">
                 <DataGrid AutoGenerateColumns="False" Height="719" HorizontalAlignment="Left"
-                  Margin="22,70,0,0" Name="dataGrid_ProfitLossReport" Loaded="dataGrid_ProfitLossReport_Loaded"
+                  Margin="22,70,0,0" Name="dataGrid_ProfitLossReport" Loaded="DataGrid_ProfitLossReport_Loaded"
                   VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Goal Difference Interval" Binding="{Binding Path=gdInterval}"></DataGridTextColumn>
@@ -74,12 +74,12 @@
                 </DataGrid>
             </TabItem>
         </TabControl>
-        <Button Content="Search" Height="32" HorizontalAlignment="Left" Margin="1045,331,0,0" Name="searchButton" Click="searchButton_Click" VerticalAlignment="Top" Width="90" />
+        <Button Content="Search" Height="32" HorizontalAlignment="Left" Margin="1045,331,0,0" Name="searchButton" Click="SearchButton_Click" VerticalAlignment="Top" Width="90" />
         <Label Content="League Code" Height="29" HorizontalAlignment="Left" Margin="928,127,0,0" Name="label1" VerticalAlignment="Top" Width="84" />
         <Label Content="Date" Height="29" HorizontalAlignment="Left" Margin="928,176,0,0" Name="label2" VerticalAlignment="Top" Width="84" />
         <ComboBox Height="32" DataContext="{Binding}" HorizontalAlignment="Left" Margin="1045,127,0,0" Name="leaguesComboBox" ItemsSource="{Binding Path=league}" DisplayMemberPath="LeagueID" VerticalAlignment="Top" Width="89" />
         <ComboBox Height="32" DataContext="{Binding}" HorizontalAlignment="Left" Margin="1045,176,0,0"  Name="dateComboBox" ItemsSource="{Binding Path=fixture.date}" VerticalAlignment="Top" Width="89" />
-        <Button Content="Reset Search" Height="32" HorizontalAlignment="Left" Margin="931,331,0,0" Click ="resetButton_Click" Name="resetButton" VerticalAlignment="Top" Width="84" />
+        <Button Content="Reset Search" Height="32" HorizontalAlignment="Left" Margin="931,331,0,0" Click ="ResetButton_Click" Name="resetButton" VerticalAlignment="Top" Width="84" />
         <GroupBox Header="Predicted Goal Difference" Height="105" HorizontalAlignment="Left" Margin="931,220,0,0" Name="groupBox1" VerticalAlignment="Top" Width="204">
             <Grid Margin="0,0,17,3" Width="192">
                 <Label Content="Minimum:" Height="30" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label3" VerticalAlignment="Top" Width="69" />
