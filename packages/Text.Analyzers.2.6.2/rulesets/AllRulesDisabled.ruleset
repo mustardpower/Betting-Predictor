@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<RuleSet Name="All Rules Disabled" Description="All Rules are disabled." ToolsVersion="15.0">
-   <Rules AnalyzerId="Text.CSharp.Analyzers" RuleNamespace="Text.CSharp.Analyzers">
-      <Rule Id="CA1704" Action="None" />             <!-- Identifiers should be spelled correctly -->
-   </Rules>
-   <Rules AnalyzerId="Text.VisualBasic.Analyzers" RuleNamespace="Text.VisualBasic.Analyzers">
-      <Rule Id="CA1704" Action="None" />             <!-- Identifiers should be spelled correctly -->
-   </Rules>
-</RuleSet>
