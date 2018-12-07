@@ -33,23 +33,11 @@ namespace BettingPredictorV3
         private void _applicationInitialize(Splash splashWindow)
         {
             new DatabaseSettingsWindow().ShowDialog();
-            List<String> historyFiles = database.HistoryFiles;
+            FileParser fileParser = new FileParser();
             database.ClearData();
-            int fileNumber = 0;
-            double progress = 0.0;
+            
+            fileParser.PopulateDatabase(database, splashWindow);
 
-            foreach (String file in historyFiles)          // download and parse previous results
-            {
-                database.LoadHistoricalFile(file);
-                fileNumber++;
-                progress = (double)fileNumber / (double)historyFiles.Count;
-                splashWindow.SetProgress(progress);
-                splashWindow.SetText(System.String.Format("Loading historical data file number: {0} / {1} File Name: {2}", fileNumber, historyFiles.Count, file));
-            }
-
-            splashWindow.SetText("Loading upcoming fixtures...");
-            database.LoadUpcomingFixturesFile();
-            splashWindow.SetText("Predicting upcoming fixtures...");
             PredictResults();
             // Create the main window, but on the UI thread.
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
