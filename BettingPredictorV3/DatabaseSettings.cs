@@ -26,7 +26,7 @@ namespace BettingPredictorV3
             }
         }
 
-        static public List<string> defaultBookmakers()
+        static public List<string> DefaultBookmakers()
         {
             List<string> bookmakers = new List<string>();
             bookmakers.Add("Bet 365"); 

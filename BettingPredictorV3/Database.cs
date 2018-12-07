@@ -55,7 +55,7 @@ namespace BettingPredictorV3
             fixtureList = new List<Fixture>();
             historyFiles = new List<String>();
             fixturesFiles = new List<String>();
-            DatabaseSettings.BookmakersUsed = DatabaseSettings.defaultBookmakers();
+            DatabaseSettings.BookmakersUsed = DatabaseSettings.DefaultBookmakers();
         }
 
         public void ClearData()
