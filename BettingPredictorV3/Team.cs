@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BettingPredictorV3
+namespace BettingPredictorV3.DataStructures
 {
     public class Team
     {

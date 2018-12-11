@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Forms;
+using BettingPredictorV3.DataStructures;
 
 namespace BettingPredictorV3
 {

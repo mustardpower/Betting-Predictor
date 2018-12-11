@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.IO;
 using CsvFiles;
 using System.ComponentModel;
+using BettingPredictorV3.DataStructures;
 
 namespace BettingPredictorV3
 {
@@ -216,10 +217,12 @@ namespace BettingPredictorV3
         {
             double profit = 0.0;
             int ignoredTeams = 0;
-            Fixture max_odds_fixture = new Fixture();
-            max_odds_fixture.best_home_odds = new Bookmaker("bookie",0.0,0.0,0.0);
+            Fixture max_odds_fixture = new Fixture
+            {
+                best_home_odds = new Bookmaker("bookie", 0.0, 0.0, 0.0)
+            };
 
-            foreach(Fixture fixture in fixtures)
+            foreach (Fixture fixture in fixtures)
             {
                 if (fixture.best_home_odds == null)
                 {

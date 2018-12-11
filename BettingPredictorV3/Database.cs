@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
+using BettingPredictorV3.DataStructures;
 
 namespace BettingPredictorV3
 {
@@ -63,33 +64,30 @@ namespace BettingPredictorV3
             leagues.Clear();
         }
 
-        public void AddUpcomingFixture(League league, DateTime date, Team homeTeam, Team awayTeam, List<Bookmaker> odds)
+        public void AddUpcomingFixture(string leagueCode, DateTime date, string homeTeamName, string awayTeamName, List<Bookmaker> odds)
         {
-            fixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
-        }
+            League league = GetLeague(leagueCode);
+            Team homeTeam = GetTeam(leagueCode, homeTeamName);
+            Team awayTeam = GetTeam(leagueCode, awayTeamName);
 
-        public void AddFixture(Fixture fixture)
-        {
-            if (leagues.Count(x => x.LeagueID == fixture.LeagueID) == 0)
+            if (!((homeTeam == null) || (awayTeam == null)))
             {
-                // if no match found then add league with the fixture's league ID
-                AddLeague(new League(fixture.LeagueID));
-            }
-
-            foreach (League league in leagues)
-            {
-                if (league.LeagueID == fixture.LeagueID)
-                {
-                    league.AddFixture(fixture);
-                }
+                fixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
             }
         }
 
-        public void AddLeague(League league)
+        public void AddLeague(string leagueCode, string[] fixtureData)
         {
-            if(leagues.Find(x => x.LeagueID == league.LeagueID) == null)
+            League aLeague = GetLeague(leagueCode);
+            if (aLeague != null)
             {
-                leagues.Add(league);
+                aLeague.ParseHistoricalData(fixtureData);
+            }
+            else
+            {
+                League newLeague = new League(leagueCode);
+                newLeague.ParseHistoricalData(fixtureData);
+                leagues.Add(newLeague);
             }
         }
 
