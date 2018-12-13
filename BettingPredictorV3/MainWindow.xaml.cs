@@ -34,14 +34,14 @@ namespace BettingPredictorV3
 
             dataGrid_UpcomingFixtures.ItemsSource = upcoming_fixtures;
             leaguesComboBox.ItemsSource = database.Leagues;
-            dateComboBox.ItemsSource = upcoming_fixtures.Select(x => x.date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
+            dateComboBox.ItemsSource = upcoming_fixtures.Select(x => x.Date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
         }
 
         private void DataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
         {
             List<Fixture> previous_fixtures = database.GetPreviousResults();
-            previous_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.date).Count < 10);
-            previous_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.date).Count < 10);
+            previous_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
+            previous_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
             previous_fixtures = previous_fixtures.Distinct().ToList();
             dataGrid_PreviousFixtures.ItemsSource = previous_fixtures;
 
@@ -115,13 +115,13 @@ namespace BettingPredictorV3
 
                 if (leaguesComboBox.SelectedItem != null)
                 {
-                    queriedFixtures = queriedFixtures.Where(x => x.league == leaguesComboBox.SelectedItem).ToList();
+                    queriedFixtures = queriedFixtures.Where(x => x.League == leaguesComboBox.SelectedItem).ToList();
                 }
 
                 if (dateComboBox.SelectedItem != null)
                 {
                     DateTime selectedDate = (DateTime)(dateComboBox.SelectedItem);
-                    queriedFixtures = queriedFixtures.Where(x => x.date.DayOfYear == selectedDate.DayOfYear).ToList();
+                    queriedFixtures = queriedFixtures.Where(x => x.Date.DayOfYear == selectedDate.DayOfYear).ToList();
                 }
 
                 queriedFixtures = FilterForChosenGD(queriedFixtures);
@@ -130,21 +130,21 @@ namespace BettingPredictorV3
             else if (tabItem2.IsSelected)
             {
                 List<Fixture> previous_fixtures = database.GetPreviousResults();
-                previous_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.date).Count < 10);
-                previous_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.date).Count < 10);
+                previous_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
+                previous_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
                 queriedFixtures = previous_fixtures.Distinct().ToList();
   
                 IEnumerable<String> leagueIDs = database.Leagues.Select(x => x.LeagueID);
 
                 if (leaguesComboBox.SelectedItem != null)
                 {
-                    queriedFixtures = queriedFixtures.Where(x => x.league == leaguesComboBox.SelectedItem).ToList();
+                    queriedFixtures = queriedFixtures.Where(x => x.League == leaguesComboBox.SelectedItem).ToList();
                 }
 
                 if (dateComboBox.SelectedItem != null)
                 {
                     DateTime selectedDate = (DateTime)(dateComboBox.SelectedItem);
-                    queriedFixtures = queriedFixtures.Where(x => x.date.DayOfYear == selectedDate.DayOfYear).ToList();
+                    queriedFixtures = queriedFixtures.Where(x => x.Date.DayOfYear == selectedDate.DayOfYear).ToList();
                 }
 
                 queriedFixtures = FilterForChosenGD(queriedFixtures);
@@ -173,12 +173,12 @@ namespace BettingPredictorV3
             if (!((minGD.Text == null) || (minGD.Text.Equals(""))))
             {
                 double minimumGD = Convert.ToDouble(minGD.Text);
-                aFixtureList = aFixtureList.Where(x => x.predicted_goal_difference > minimumGD);
+                aFixtureList = aFixtureList.Where(x => x.PredictedGoalDifference > minimumGD);
             }
             if (!((maxGD.Text == null) || (maxGD.Text.Equals(""))))
             {
                 double maximumGD = Convert.ToDouble(maxGD.Text);
-                aFixtureList = aFixtureList.Where(x => x.predicted_goal_difference < maximumGD);
+                aFixtureList = aFixtureList.Where(x => x.PredictedGoalDifference < maximumGD);
             }
 
             return aFixtureList.ToList();
@@ -186,8 +186,8 @@ namespace BettingPredictorV3
 
         public List<Fixture> FilterForChosenGD(IEnumerable<Fixture> aFixtureList, double minGD, double maxGD)
         {
-            aFixtureList = aFixtureList.Where(x => x.predicted_goal_difference > minGD);
-            aFixtureList = aFixtureList.Where(x => x.predicted_goal_difference < maxGD);
+            aFixtureList = aFixtureList.Where(x => x.PredictedGoalDifference > minGD);
+            aFixtureList = aFixtureList.Where(x => x.PredictedGoalDifference < maxGD);
 
             return aFixtureList.ToList();
         }
@@ -219,12 +219,12 @@ namespace BettingPredictorV3
             int ignoredTeams = 0;
             Fixture max_odds_fixture = new Fixture
             {
-                best_home_odds = new Bookmaker("bookie", 0.0, 0.0, 0.0)
+                bestHomeOdds = new Bookmaker("bookie", 0.0, 0.0, 0.0)
             };
 
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.best_home_odds == null)
+                if (fixture.BestHomeOdds == null)
                 {
                     ignoredTeams++;
                 }
@@ -232,11 +232,11 @@ namespace BettingPredictorV3
                 {
                     if (fixture.HomeGoals > fixture.AwayGoals)
                     {
-                        if (max_odds_fixture.best_home_odds.HomeOdds < fixture.best_home_odds.HomeOdds)
+                        if (max_odds_fixture.BestHomeOdds.HomeOdds < fixture.BestHomeOdds.HomeOdds)
                         {
                             max_odds_fixture = fixture;
                         }
-                        profit += fixture.best_home_odds.HomeOdds - 1;
+                        profit += fixture.BestHomeOdds.HomeOdds - 1;
                     }
                     else
                     {
@@ -257,7 +257,7 @@ namespace BettingPredictorV3
 
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.best_away_odds == null)
+                if (fixture.BestAwayOdds == null)
                 {
                     ignoredTeams++;
                 }
@@ -265,7 +265,7 @@ namespace BettingPredictorV3
                 {
                     if (fixture.HomeGoals < fixture.AwayGoals)
                     {
-                        profit += (fixture.best_away_odds.AwayOdds - 1);
+                        profit += (fixture.BestAwayOdds.AwayOdds - 1);
                     }
                     else
                     {

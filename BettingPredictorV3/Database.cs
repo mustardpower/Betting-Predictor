@@ -156,7 +156,7 @@ namespace BettingPredictorV3
 
             foreach (Fixture fixture in fixtureList)
             {
-                errors.Add(fixture.average_home_residual);
+                errors.Add(fixture.AverageHomeResidual);
             }
 
             errors.RemoveAll(x => Double.IsNaN(x));
@@ -176,7 +176,7 @@ namespace BettingPredictorV3
 
             foreach (Fixture fixture in fixtureList)
             {
-                errors.Add(fixture.average_away_residual);
+                errors.Add(fixture.AverageAwayResidual);
             }
 
             errors.RemoveAll(x => Double.IsNaN(x));

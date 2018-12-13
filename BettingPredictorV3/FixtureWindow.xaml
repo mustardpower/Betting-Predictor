@@ -4,7 +4,7 @@
         Title="Team" SizeToContent="WidthAndHeight" Height="639" Width="1108">
     <Grid Height="569" Width="1123">
         <DataGrid AutoGenerateColumns="False" Height="177" HorizontalAlignment="Left"
-                  Margin="12,54,0,0" Name="homeFixturesGrid" Loaded="homeTeamFixtures_Loaded"
+                  Margin="12,54,0,0" Name="homeFixturesGrid" Loaded="HomeTeamFixtures_Loaded"
                   VerticalAlignment="Top" Width="1100" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=date}" ></DataGridTextColumn>
@@ -23,7 +23,7 @@
                 </DataGrid.Columns>
         </DataGrid>
         <DataGrid AutoGenerateColumns="False" Height="177" HorizontalAlignment="Left"
-                  Margin="12,293,0,0" Name="awayFixturesGrid" Loaded="awayTeamFixtures_Loaded"
+                  Margin="12,293,0,0" Name="awayFixturesGrid" Loaded="AwayTeamFixtures_Loaded"
                   VerticalAlignment="Top" Width="1100" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=date}" ></DataGridTextColumn>

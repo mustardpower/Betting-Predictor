@@ -25,26 +25,26 @@ namespace BettingPredictorV3
         {
             InitializeComponent();
             selectedFixture = aFixture;
-            calculateResultProbabilities();
+            CalculateResultProbabilities();
         }
 
-        private void homeTeamFixtures_Loaded(object sender, RoutedEventArgs e)
+        private void HomeTeamFixtures_Loaded(object sender, RoutedEventArgs e)
         {
             if(selectedFixture != null)
             {
-                homeFixturesGrid.ItemsSource = selectedFixture.home_team.Fixtures;
+                homeFixturesGrid.ItemsSource = selectedFixture.HomeTeam.Fixtures;
             }
         }
 
-        private void awayTeamFixtures_Loaded(object sender, RoutedEventArgs e)
+        private void AwayTeamFixtures_Loaded(object sender, RoutedEventArgs e)
         {
             if (selectedFixture != null)
             {
-                awayFixturesGrid.ItemsSource = selectedFixture.away_team.Fixtures;
+                awayFixturesGrid.ItemsSource = selectedFixture.AwayTeam.Fixtures;
             }
         }
 
-        private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void DataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if ((e.ColumnIndex == 11) || (e.ColumnIndex == 12))
             {
@@ -55,7 +55,7 @@ namespace BettingPredictorV3
             }
         }
         
-        public void calculateResultProbabilities()
+        public void CalculateResultProbabilities()
         {
             if (selectedFixture != null)
             {

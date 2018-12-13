@@ -7,32 +7,31 @@ namespace BettingPredictorV3.DataStructures
 {
     public class Fixture
     {
-        public League league { get; set; }
-        public DateTime date { get; set; }
-        public Team home_team { get; set; }
-        public Team away_team { get; set; }
-        private double home_goals;
-        private double away_goals;
-        public Referee referee { get; set; }
-        public float home_goals_per_game { get; set; }
-        public float away_goals_per_game { get; set; }
+        private League league;
+        private readonly DateTime date;
+        private Team homeTeam;
+        private Team awayTeam;
+        private readonly double homeGoals;
+        private readonly double awayGoals;
+        private readonly Referee referee;
+        private float homeGoalsPerGame;
+        private float awayGoalsPerGame;
+        private double predictedHomeGoals;
+        private double predictedAwayGoals;
+        private double predictedGoalDifference;
+        private double homeResidual;
+        private double awayResidual;
+        private double averageHomeResidual;
+        private double averageAwayResidual;
+        private double bothToScore;   // probability that both teams score in the fixture
 
-        public double predicted_home_goals { get; set; }
-        public double predicted_away_goals { get; set; }
-        public double predicted_goal_difference { get; set; }
-        public double home_residual;
-        private double away_residual;
-        public double average_home_residual { get; set; }
-        public double average_away_residual { get; set; }
-        public double both_to_score { get; set; }   // probability that both teams score in the fixture
-
-        public int home_form { get; set; }
-        public int away_form { get; set; }
+        private int homeForm;
+        private int awayForm;
 
         public List<Bookmaker> odds;
-        public Bookmaker best_home_odds { get; set; }
-        public Bookmaker best_draw_odds { get; set; }
-        public Bookmaker best_away_odds { get; set; }
+        public Bookmaker bestHomeOdds;
+        public Bookmaker bestDrawOdds;
+        public Bookmaker bestAwayOdds;
 
         public Fixture()
         {
@@ -42,13 +41,13 @@ namespace BettingPredictorV3.DataStructures
         {
             this.league = league;
             this.date = date;
-            this.home_team = home_team;
-            this.away_team = away_team;
+            this.homeTeam = home_team;
+            this.awayTeam = away_team;
             this.referee = referee;
             this.odds = odds;
-            predicted_home_goals = 0;
-            predicted_away_goals = 0;
-            both_to_score = 0.0;
+            predictedHomeGoals = 0;
+            predictedAwayGoals = 0;
+            bothToScore = 0.0;
 
             FindBestOdds();
         }
@@ -56,23 +55,31 @@ namespace BettingPredictorV3.DataStructures
         {
             this.league = league;
             this.date = date;
-            this.home_team = home_team;
-            this.away_team = away_team;
-            this.home_goals = home_goals;
-            this.away_goals = away_goals;
+            this.homeTeam = home_team;
+            this.awayTeam = away_team;
+            this.homeGoals = home_goals;
+            this.awayGoals = away_goals;
             this.referee = referee;
             this.odds = odds;
-            predicted_home_goals = 0;
-            predicted_away_goals = 0;
+            predictedHomeGoals = 0;
+            predictedAwayGoals = 0;
 
             FindBestOdds();
+        }
+
+        public League League
+        {
+            get
+            {
+                return league;
+            }
         }
 
         public Team HomeTeam
         {
             get
             {
-                return home_team;
+                return homeTeam;
             }
         }
 
@@ -80,7 +87,7 @@ namespace BettingPredictorV3.DataStructures
         {
             get
             {
-                return away_team;
+                return awayTeam;
             }
         }
 
@@ -88,7 +95,7 @@ namespace BettingPredictorV3.DataStructures
         {
             get
             {
-                return home_goals;
+                return homeGoals;
             }
         }
 
@@ -96,7 +103,7 @@ namespace BettingPredictorV3.DataStructures
         {
             get
             {
-                return away_goals;
+                return awayGoals;
             }
         }
 
@@ -104,7 +111,7 @@ namespace BettingPredictorV3.DataStructures
         {
             get
             {
-                return home_residual;
+                return homeResidual;
             }
         }
 
@@ -112,7 +119,7 @@ namespace BettingPredictorV3.DataStructures
         {
             get
             {
-                return away_residual;
+                return awayResidual;
             }
         }
 
@@ -132,6 +139,36 @@ namespace BettingPredictorV3.DataStructures
                 return league.LeagueID;
             } 
         }
+
+        public Bookmaker BestHomeOdds
+        {
+            get
+            {
+                return bestHomeOdds;
+            }
+        }
+
+        public Bookmaker BestDrawOdds
+        {
+            get
+            {
+                return bestDrawOdds;
+            }
+        }
+
+        public Bookmaker BestAwayOdds
+        {
+            get
+            {
+                return bestAwayOdds;
+            }
+        }
+
+        public double PredictedGoalDifference { get => predictedGoalDifference; set => predictedGoalDifference = value; }
+        public double Home_residual { get => homeResidual; set => homeResidual = value; }
+        public double Away_residual { get => awayResidual; set => awayResidual = value; }
+        public double AverageHomeResidual { get => averageHomeResidual; set => averageHomeResidual = value; }
+        public double AverageAwayResidual { get => averageAwayResidual; set => averageAwayResidual = value; }
 
         public List<double> HomeWeightingFunction(List<double> sample)
         {
@@ -235,16 +272,16 @@ namespace BettingPredictorV3.DataStructures
 
         public void CalculateResiduals()
         {
-            home_residual = home_goals - predicted_home_goals;
-            away_residual = away_goals - predicted_away_goals;
+            homeResidual = homeGoals - predictedHomeGoals;
+            awayResidual = awayGoals - predictedAwayGoals;
         }
 
         public void CalculateGoalsPerGame()
         {
-            home_goals_per_game = 0;
-            away_goals_per_game = 0;
+            homeGoalsPerGame = 0;
+            awayGoalsPerGame = 0;
             // get all fixtures before the current fixture
-            List<Fixture> home_previous_results = home_team.GetFixturesBefore(date);
+            List<Fixture> home_previous_results = homeTeam.GetFixturesBefore(date);
             double total_goals = 0;
 
             if (home_previous_results.Count > 0)
@@ -255,10 +292,10 @@ namespace BettingPredictorV3.DataStructures
                     total_goals += fixture.HomeGoals;
                 }
                 // divide by number of games
-                home_goals_per_game = (float)total_goals / (float)home_previous_results.Count;
+                homeGoalsPerGame = (float)total_goals / (float)home_previous_results.Count;
             }
 
-            List<Fixture> away_previous_results = away_team.GetFixturesBefore(date);
+            List<Fixture> away_previous_results = awayTeam.GetFixturesBefore(date);
 
             if (away_previous_results.Count > 0)
             {
@@ -270,7 +307,7 @@ namespace BettingPredictorV3.DataStructures
                     total_goals += fixture.HomeGoals;
                 }
                 // divide by number of games
-                away_goals_per_game = (float)total_goals / away_previous_results.Count;
+                awayGoalsPerGame = (float)total_goals / away_previous_results.Count;
             }
         }
 
@@ -287,11 +324,11 @@ namespace BettingPredictorV3.DataStructures
             double lgavgaway_conceded;
 
             CalculateGoalsPerGame();
-            home_form = home_team.CalculateForm(date);
-            away_form = away_team.CalculateForm(date);
+            homeForm = homeTeam.CalculateForm(date);
+            awayForm = awayTeam.CalculateForm(date);
     
-			home_sample = home_team.CreateHomeSample(date);	// create the samples
-			away_sample = away_team.CreateAwaySample(date);
+			home_sample = homeTeam.CreateHomeSample(date);	// create the samples
+			away_sample = awayTeam.CreateAwaySample(date);
 
 			if((home_sample.Count != 0)&&(away_sample.Count != 0))
 			{
@@ -303,8 +340,8 @@ namespace BettingPredictorV3.DataStructures
 				lgavghome_conceded = lgavgaway_goals;
 				lgavgaway_conceded = lgavghome_goals;
 
-				home_opp_sample = home_team.CreateHomeOppositionSample(date);
-				away_opp_sample = away_team.CreateAwayOppositionSample(date);
+				home_opp_sample = homeTeam.CreateHomeOppositionSample(date);
+				away_opp_sample = awayTeam.CreateAwayOppositionSample(date);
 
                 home_sample = HomeWeightingFunction(home_sample);
                 away_sample = AwayWeightingFunction(away_sample);
@@ -312,13 +349,13 @@ namespace BettingPredictorV3.DataStructures
 				// calculates a home attacking strength and defence strength
                 CalculateStrengths(home_sample, away_sample, home_opp_sample, away_opp_sample,alpha,beta);
 
-                predicted_goal_difference = predicted_home_goals - predicted_away_goals;
+                predictedGoalDifference = predictedHomeGoals - predictedAwayGoals;
 
-                home_residual = predicted_home_goals - home_goals;
-                away_residual = predicted_away_goals - away_goals;
+                homeResidual = predictedHomeGoals - homeGoals;
+                awayResidual = predictedAwayGoals - awayResidual;
 
-                average_home_residual = home_team.GetResiduals(DateTime.Now).Average(); 
-                average_away_residual = away_team.GetResiduals(DateTime.Now).Average();
+                averageHomeResidual = homeTeam.GetResiduals(DateTime.Now).Average(); 
+                averageAwayResidual = awayTeam.GetResiduals(DateTime.Now).Average();
 
                 CalculateBothToScore();
                 //// generate a large sample of simulated results
@@ -331,14 +368,14 @@ namespace BettingPredictorV3.DataStructures
         {
             // subtract probabilities from 1.0 for the following results: 0-0, 1-0, 2-0, 3- 0 ....., 0-1, 0-2, 0-3....
 
-            both_to_score = 1.0;
+            bothToScore = 1.0;
 
-            double home_prob_no_goals = StatsLib.poissonPDF(predicted_home_goals, 0);
-            double away_prob_no_goals = StatsLib.poissonPDF(predicted_away_goals, 0);
+            double home_prob_no_goals = StatsLib.poissonPDF(predictedHomeGoals, 0);
+            double away_prob_no_goals = StatsLib.poissonPDF(predictedAwayGoals, 0);
 
-            both_to_score -= (home_prob_no_goals * away_prob_no_goals);  // P(A = 0 & B = 0) 
-            both_to_score -= ((1 - home_prob_no_goals) * away_prob_no_goals); // P(A != 0 & B = 0) 
-            both_to_score -= (home_prob_no_goals * (1 - away_prob_no_goals)); // P(A = 0 & B != 0) 
+            bothToScore -= (home_prob_no_goals * away_prob_no_goals);  // P(A = 0 & B = 0) 
+            bothToScore -= ((1 - home_prob_no_goals) * away_prob_no_goals); // P(A != 0 & B = 0) 
+            bothToScore -= (home_prob_no_goals * (1 - away_prob_no_goals)); // P(A = 0 & B != 0) 
         }
 
         //public List<Fixture> generateSimulatedResults()
@@ -387,8 +424,8 @@ namespace BettingPredictorV3.DataStructures
             // assumes a teams defensive strength and oppositions
             // attacking strength affect each other when calculating predicted goals
 
-            predicted_home_goals = home_attack_strength * away_defence_strength * lgavghome_goals-alpha;
-            predicted_away_goals = away_attack_strength * home_defence_strength * lgavgaway_goals-beta;
+            predictedHomeGoals = home_attack_strength * away_defence_strength * lgavghome_goals-alpha;
+            predictedAwayGoals = away_attack_strength * home_defence_strength * lgavgaway_goals-beta;
             
         }
 
@@ -402,19 +439,19 @@ namespace BettingPredictorV3.DataStructures
                 if (bookie.HomeOdds > home_odds)
                 {
                     home_odds = bookie.HomeOdds;
-                    best_home_odds = bookie;
+                    bestHomeOdds = bookie;
                 }
 
                 if (bookie.DrawOdds > draw_odds)
                 {
                     draw_odds = bookie.DrawOdds;
-                    best_draw_odds = bookie;
+                    bestDrawOdds = bookie;
                 }
 
                 if (bookie.AwayOdds > away_odds)
                 {
                     away_odds = bookie.AwayOdds;
-                    best_away_odds = bookie;
+                    bestAwayOdds = bookie;
                 }
             }
         }
@@ -432,8 +469,8 @@ namespace BettingPredictorV3.DataStructures
                     // calc poisson prob of h goals given rate of predicted home goals
                     // calc poisson prob of a goals given rate of predicted away goals
                     // multiply and add to total probability
-                    h_prob = StatsLib.poissonPDF(predicted_home_goals, h);
-                    a_prob = StatsLib.poissonPDF(predicted_away_goals, a);
+                    h_prob = StatsLib.poissonPDF(predictedHomeGoals, h);
+                    a_prob = StatsLib.poissonPDF(predictedAwayGoals, a);
                     prob += h_prob * a_prob;
                 }
             }
@@ -454,8 +491,8 @@ namespace BettingPredictorV3.DataStructures
                     // calc poisson prob of h goals given rate of predicted home goals
                     // calc poisson prob of a goals given rate of predicted away goals
                     // multiply and add to total probability
-                    h_prob = StatsLib.poissonPDF(predicted_home_goals, h);
-                    a_prob = StatsLib.poissonPDF(predicted_away_goals, a);
+                    h_prob = StatsLib.poissonPDF(predictedHomeGoals, h);
+                    a_prob = StatsLib.poissonPDF(predictedAwayGoals, a);
                     prob += h_prob * a_prob;
                 }
             }
@@ -474,8 +511,8 @@ namespace BettingPredictorV3.DataStructures
                 // calc poisson prob of h goals given rate of predicted home goals
                 // calc poisson prob of a goals given rate of predicted away goals
                 // multiply and add to total probability
-                h_prob = StatsLib.poissonPDF(predicted_home_goals, x);
-                a_prob = StatsLib.poissonPDF(predicted_away_goals, x);
+                h_prob = StatsLib.poissonPDF(predictedHomeGoals, x);
+                a_prob = StatsLib.poissonPDF(predictedAwayGoals, x);
                 prob += h_prob * a_prob;
             }
 
