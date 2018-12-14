@@ -26,29 +26,29 @@ namespace BettingPredictorV3
 
         public void DataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Fixture> upcoming_fixtures = new List<Fixture>();     
-            upcoming_fixtures = database.FixtureList;
+            List<Fixture> upcomingFixtures = new List<Fixture>();
+            upcomingFixtures = database.FixtureList;
             // remove teams with less than a season of results
-            upcoming_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
-            upcoming_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+            upcomingFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+            upcomingFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
 
-            dataGrid_UpcomingFixtures.ItemsSource = upcoming_fixtures;
+            dataGrid_UpcomingFixtures.ItemsSource = upcomingFixtures;
             leaguesComboBox.ItemsSource = database.Leagues;
-            dateComboBox.ItemsSource = upcoming_fixtures.Select(x => x.Date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
+            dateComboBox.ItemsSource = upcomingFixtures.Select(x => x.Date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
         }
 
         private void DataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Fixture> previous_fixtures = database.GetPreviousResults();
-            previous_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
-            previous_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
-            previous_fixtures = previous_fixtures.Distinct().ToList();
-            dataGrid_PreviousFixtures.ItemsSource = previous_fixtures;
+            List<Fixture> previousFixtures = database.GetPreviousResults();
+            previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
+            previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
+            previousFixtures = previousFixtures.Distinct().ToList();
+            dataGrid_PreviousFixtures.ItemsSource = previousFixtures;
 
             const float minValue = -3.0f;
             const float maxValue = 3.0f;
             const int noOfIntervals = 60;
-            CalculateProfitIntervals(previous_fixtures,minValue, maxValue, noOfIntervals);
+            CalculateProfitIntervals(previousFixtures, minValue, maxValue, noOfIntervals);
 
         }
 
@@ -129,10 +129,10 @@ namespace BettingPredictorV3
             }
             else if (tabItem2.IsSelected)
             {
-                List<Fixture> previous_fixtures = database.GetPreviousResults();
-                previous_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
-                previous_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
-                queriedFixtures = previous_fixtures.Distinct().ToList();
+                List<Fixture> previousFixtures = database.GetPreviousResults();
+                previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
+                previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
+                queriedFixtures = previousFixtures.Distinct().ToList();
   
                 IEnumerable<String> leagueIDs = database.Leagues.Select(x => x.LeagueID);
 
@@ -156,16 +156,16 @@ namespace BettingPredictorV3
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Fixture> upcoming_fixtures = new List<Fixture>();
+            List<Fixture> upcomingFixtures = new List<Fixture>();
             dateComboBox.SelectedItem = null;
             leaguesComboBox.SelectedItem = null;
-            upcoming_fixtures = database.FixtureList;
+            upcomingFixtures = database.FixtureList;
 
             // remove teams with less than a season of results
-            upcoming_fixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
-            upcoming_fixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+            upcomingFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+            upcomingFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
 
-            dataGrid_UpcomingFixtures.ItemsSource = upcoming_fixtures;
+            dataGrid_UpcomingFixtures.ItemsSource = upcomingFixtures;
         }
 
         public List<Fixture> FilterForChosenGD(IEnumerable<Fixture> aFixtureList)
@@ -288,9 +288,6 @@ namespace BettingPredictorV3
         {
             double alpha, beta;
 
-            List<double> errors = new List<double>();
-            List<double> beta_values = new List<double>();
-
             do
             {
                 alpha = database.GetAlphaValue();
@@ -300,13 +297,11 @@ namespace BettingPredictorV3
             while ((Math.Abs(alpha) > Math.Abs(database.GetAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.GetBetaValue()))));
 
 
-            List<double> home_residuals = database.GetHomeResiduals(DateTime.Now);
-            List<double> away_residuals = database.GetAwayResiduals(DateTime.Now);
+            List<double> homeResiduals = database.GetHomeResiduals(DateTime.Now);
+            List<double> awayResiduals = database.GetAwayResiduals(DateTime.Now);
 
-            home_residuals.RemoveAll(x => Double.IsNaN(x));
-            double home_average_error = home_residuals.Average();
-            away_residuals.RemoveAll(x => Double.IsNaN(x));
-            double away_average_error = away_residuals.Average();
+            homeResiduals.RemoveAll(x => Double.IsNaN(x));
+            awayResiduals.RemoveAll(x => Double.IsNaN(x));
         }
     }
 }

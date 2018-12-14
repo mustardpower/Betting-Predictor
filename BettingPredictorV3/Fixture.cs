@@ -164,6 +164,31 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
+        public double PredictedHomeGoals
+        {
+            get
+            {
+                return predictedHomeGoals;
+            }
+        }
+
+        public double PredictedAwayGoals
+        {
+            get
+            {
+                return predictedAwayGoals;
+            }
+        }
+
+        public double BothToScore
+        {
+            get
+            {
+                return bothToScore;
+            }
+        }
+
+
         public double PredictedGoalDifference { get => predictedGoalDifference; set => predictedGoalDifference = value; }
         public double Home_residual { get => homeResidual; set => homeResidual = value; }
         public double Away_residual { get => awayResidual; set => awayResidual = value; }
