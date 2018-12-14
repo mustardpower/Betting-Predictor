@@ -45,9 +45,9 @@ namespace BettingPredictorV3
             previous_fixtures = previous_fixtures.Distinct().ToList();
             dataGrid_PreviousFixtures.ItemsSource = previous_fixtures;
 
-            float minValue = -3.0f;
-            float maxValue = 3.0f;
-            int noOfIntervals = 60;
+            const float minValue = -3.0f;
+            const float maxValue = 3.0f;
+            const int noOfIntervals = 60;
             CalculateProfitIntervals(previous_fixtures,minValue, maxValue, noOfIntervals);
 
         }
@@ -55,9 +55,9 @@ namespace BettingPredictorV3
         private void DataGrid_ProfitLossReport_Loaded(object sender, RoutedEventArgs e)
         {
             List<Fixture> previousFixtures = database.GetPreviousResults();
-            float min = -3.0f;
-            float max = 3.0f;
-            int numberOfSteps = 40;
+            const float min = -3.0f;
+            const float max = 3.0f;
+            const int numberOfSteps = 40;
             List<ProfitLossInterval> profitLossIntervals = CalculateProfitIntervals(previousFixtures, min, max, numberOfSteps);
             dataGrid_ProfitLossReport.ItemsSource = profitLossIntervals;
         }
