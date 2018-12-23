@@ -100,7 +100,9 @@ namespace BettingPredictorV3.DataStructures
             var newLeague = fixture_data.Length == 19; 
             var dateIndex = newLeague ? 3 : 1;
             var date_params = fixture_data[dateIndex].Split('/');
-            DateTime date = new DateTime(2000 + int.Parse(date_params[2]), int.Parse(date_params[1]), int.Parse(date_params[0]));
+            int yearParam = int.Parse(date_params[2]);
+            if(!newLeague) { yearParam += 2000; }
+            DateTime date = new DateTime(yearParam, int.Parse(date_params[1]), int.Parse(date_params[0]));
             String home_team_name = newLeague ? fixture_data[5] : fixture_data[2];
             String away_team_name = newLeague ? fixture_data[6] : fixture_data[3];
 

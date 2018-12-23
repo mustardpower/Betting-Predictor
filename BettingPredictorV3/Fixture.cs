@@ -338,10 +338,10 @@ namespace BettingPredictorV3.DataStructures
 
         public void PredictResult(double alpha,double beta)
         {
-            List<double> home_sample;
-            List<double> away_sample;
-            List<double> home_opp_sample;
-            List<double> away_opp_sample;
+            List<double> homeSample;
+            List<double> awaySample;
+            List<double> homeOppSample;
+            List<double> awayOppSample;
 
             double lgavghome_goals;
             double lgavgaway_goals;
@@ -351,11 +351,11 @@ namespace BettingPredictorV3.DataStructures
             CalculateGoalsPerGame();
             homeForm = homeTeam.CalculateForm(date);
             awayForm = awayTeam.CalculateForm(date);
-    
-			home_sample = homeTeam.CreateHomeSample(date);	// create the samples
-			away_sample = awayTeam.CreateAwaySample(date);
 
-			if((home_sample.Count != 0)&&(away_sample.Count != 0))
+            homeSample = homeTeam.CreateHomeSample(date);   // create the samples
+            awaySample = awayTeam.CreateAwaySample(date);
+
+			if((homeSample.Count != 0)&&(awaySample.Count != 0))
 			{
                 lgavghome_goals = league.GetAverageHomeGoals(date);
 				lgavgaway_goals = league.GetAverageAwayGoals(date);
@@ -365,22 +365,25 @@ namespace BettingPredictorV3.DataStructures
 				lgavghome_conceded = lgavgaway_goals;
 				lgavgaway_conceded = lgavghome_goals;
 
-				home_opp_sample = homeTeam.CreateHomeOppositionSample(date);
-				away_opp_sample = awayTeam.CreateAwayOppositionSample(date);
+                homeOppSample = homeTeam.CreateHomeOppositionSample(date);
+                awayOppSample = awayTeam.CreateAwayOppositionSample(date);
 
-                home_sample = HomeWeightingFunction(home_sample);
-                away_sample = AwayWeightingFunction(away_sample);
+                homeSample = HomeWeightingFunction(homeSample);
+                awaySample = AwayWeightingFunction(awaySample);
 
 				// calculates a home attacking strength and defence strength
-                CalculateStrengths(home_sample, away_sample, home_opp_sample, away_opp_sample,alpha,beta);
+                CalculateStrengths(homeSample, awaySample, homeOppSample, awayOppSample, alpha,beta);
 
                 predictedGoalDifference = predictedHomeGoals - predictedAwayGoals;
 
                 homeResidual = predictedHomeGoals - homeGoals;
                 awayResidual = predictedAwayGoals - awayResidual;
 
-                averageHomeResidual = homeTeam.GetResiduals(DateTime.Now).Average(); 
-                averageAwayResidual = awayTeam.GetResiduals(DateTime.Now).Average();
+                List<double> homeResiduals = homeTeam.GetResiduals(DateTime.Now);
+                averageHomeResidual = homeResiduals.Count > 0 ? homeResiduals.Average() : 0.0;
+
+                List<double> awayResiduals = homeTeam.GetResiduals(DateTime.Now);
+                averageAwayResidual = awayResiduals.Count > 0 ? awayResiduals.Average() : 0.0;
 
                 CalculateBothToScore();
                 //// generate a large sample of simulated results

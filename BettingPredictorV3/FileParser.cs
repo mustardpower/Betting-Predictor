@@ -120,13 +120,13 @@ namespace BettingPredictorV3
                 if (newLeague)
                 {
                     DateTime kickOffTime = Convert.ToDateTime(fixtureData[3]);
-                    date = new DateTime(2000 + int.Parse(dateParams[2]), int.Parse(dateParams[1]), int.Parse(dateParams[0]));
+                    date = new DateTime(int.Parse(dateParams[2]), int.Parse(dateParams[1]), int.Parse(dateParams[0]));
                     date = date.AddHours(kickOffTime.Hour);
                     date = date.AddMinutes(kickOffTime.Minute);
                 }
                 else
                 {
-                    date = new DateTime(2000 + int.Parse(dateParams[2]), int.Parse(dateParams[1]), int.Parse(dateParams[0]));
+                    date = new DateTime(int.Parse(dateParams[2]), int.Parse(dateParams[1]), int.Parse(dateParams[0]));
                 }
 
                 String homeTeamName = newLeague ? fixtureData[4] : fixtureData[2];
