@@ -25,8 +25,8 @@ namespace BettingPredictorV3.DataStructures
         private double averageAwayResidual;
         private double bothToScore;   // probability that both teams score in the fixture
 
-        private int homeForm;
-        private int awayForm;
+        public int HomeForm { get; set; }
+        public int AwayForm { get; set; }
 
         public List<Bookmaker> odds;
         public Bookmaker bestHomeOdds;
@@ -349,8 +349,8 @@ namespace BettingPredictorV3.DataStructures
             double lgavgaway_conceded;
 
             CalculateGoalsPerGame();
-            homeForm = homeTeam.CalculateForm(date);
-            awayForm = awayTeam.CalculateForm(date);
+            HomeForm = homeTeam.CalculateForm(date);
+            AwayForm = awayTeam.CalculateForm(date);
 
             homeSample = homeTeam.CreateHomeSample(date);   // create the samples
             awaySample = awayTeam.CreateAwaySample(date);
