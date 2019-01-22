@@ -32,10 +32,11 @@ namespace BettingPredictorV3
             bookmakers.Add("Bet 365"); 
             bookmakers.Add("BetWin");
             bookmakers.Add("InterWetten");
-            bookmakers.Add("Ladbrokes");
+            //bookmakers.Add("Ladbrokes");
             bookmakers.Add("Pinnacle Sport");
             bookmakers.Add("William Hill");
-            bookmakers.Add("Stan James");
+            bookmakers.Add("Victor Chandler");
+            //bookmakers.Add("Stan James");
             bookmakers.Add("Best Odds");
             return bookmakers;
         }

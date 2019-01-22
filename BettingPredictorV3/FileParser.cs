@@ -158,14 +158,16 @@ namespace BettingPredictorV3
                             double.Parse(fixtureData[15])));
                         bookmakers.Add(new Bookmaker("InterWetten", double.Parse(fixtureData[16]), double.Parse(fixtureData[17]),
                             double.Parse(fixtureData[18])));
-                        bookmakers.Add(new Bookmaker("Ladbrokes", double.Parse(fixtureData[19]), double.Parse(fixtureData[20]),
+                        /*bookmakers.Add(new Bookmaker("Ladbrokes", double.Parse(fixtureData[19]), double.Parse(fixtureData[20]),
+                            double.Parse(fixtureData[21])));*/
+                        bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixtureData[19]), double.Parse(fixtureData[20]),
                             double.Parse(fixtureData[21])));
-                        bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixtureData[22]), double.Parse(fixtureData[23]),
+                        bookmakers.Add(new Bookmaker("William Hill", double.Parse(fixtureData[22]), double.Parse(fixtureData[23]),
                             double.Parse(fixtureData[24])));
-                        bookmakers.Add(new Bookmaker("William Hill", double.Parse(fixtureData[25]), double.Parse(fixtureData[26]),
+                        bookmakers.Add(new Bookmaker("Victor Chandler", double.Parse(fixtureData[25]), double.Parse(fixtureData[26]),
                             double.Parse(fixtureData[27])));
-                        bookmakers.Add(new Bookmaker("Stan James", double.Parse(fixtureData[28]), double.Parse(fixtureData[29]),
-                            double.Parse(fixtureData[30])));
+                        /*bookmakers.Add(new Bookmaker("Stan James", double.Parse(fixtureData[28]), double.Parse(fixtureData[29]),
+                            double.Parse(fixtureData[30])));*/
                     }
 
 

@@ -18,9 +18,8 @@ namespace BettingPredictorV3
             if(DatabaseSettings.BookmakersUsed.IndexOf("Bet 365") > -1) { bet365Checkbox.Checked = true; }
             if (DatabaseSettings.BookmakersUsed.IndexOf("InterWetten") > -1) { interwettenCheckbox.Checked = true; }
             if (DatabaseSettings.BookmakersUsed.IndexOf("BetWin") > -1) { betWinCheckbox.Checked = true; }
-            if (DatabaseSettings.BookmakersUsed.IndexOf("Stan James") > -1) { stanJamesCheckbox.Checked = true; }
             if (DatabaseSettings.BookmakersUsed.IndexOf("William Hill") > -1) { williamHillCheckbox.Checked = true; }
-            if (DatabaseSettings.BookmakersUsed.IndexOf("Ladbrokes") > -1) { ladbrokesCheckbox.Checked = true; }
+            if (DatabaseSettings.BookmakersUsed.IndexOf("Victor Chandler") > -1) { victorChandlerCheckbox.Checked = true; }
             if (DatabaseSettings.BookmakersUsed.IndexOf("Pinnacle Sport") > -1) { pinnacleSportCheckbox.Checked = true; }
         }
 
@@ -31,9 +30,8 @@ namespace BettingPredictorV3
             if (bet365Checkbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("Bet 365"); }
             if (interwettenCheckbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("InterWetten"); }
             if (betWinCheckbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("BetWin"); }
-            if (stanJamesCheckbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("Stan James"); }
+            if (victorChandlerCheckbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("Victor Chandler"); }
             if (williamHillCheckbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("William Hill"); }
-            if (ladbrokesCheckbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("Ladbrokes"); }
             if (pinnacleSportCheckbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("Pinnacle Sport"); }
 
             DatabaseSettings.BookmakersUsed = bookmakersSelected;

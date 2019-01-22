@@ -33,9 +33,8 @@
             this.bet365Checkbox = new System.Windows.Forms.CheckBox();
             this.interwettenCheckbox = new System.Windows.Forms.CheckBox();
             this.betWinCheckbox = new System.Windows.Forms.CheckBox();
-            this.stanJamesCheckbox = new System.Windows.Forms.CheckBox();
+            this.victorChandlerCheckbox = new System.Windows.Forms.CheckBox();
             this.williamHillCheckbox = new System.Windows.Forms.CheckBox();
-            this.ladbrokesCheckbox = new System.Windows.Forms.CheckBox();
             this.pinnacleSportCheckbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
@@ -89,15 +88,15 @@
             this.betWinCheckbox.Text = "BetWin";
             this.betWinCheckbox.UseVisualStyleBackColor = true;
             // 
-            // stanJamesCheckbox
+            // victorChandlerCheckbox
             // 
-            this.stanJamesCheckbox.AutoSize = true;
-            this.stanJamesCheckbox.Location = new System.Drawing.Point(52, 187);
-            this.stanJamesCheckbox.Name = "stanJamesCheckbox";
-            this.stanJamesCheckbox.Size = new System.Drawing.Size(81, 17);
-            this.stanJamesCheckbox.TabIndex = 12;
-            this.stanJamesCheckbox.Text = "Stan James";
-            this.stanJamesCheckbox.UseVisualStyleBackColor = true;
+            this.victorChandlerCheckbox.AutoSize = true;
+            this.victorChandlerCheckbox.Location = new System.Drawing.Point(52, 187);
+            this.victorChandlerCheckbox.Name = "victorChandlerCheckbox";
+            this.victorChandlerCheckbox.Size = new System.Drawing.Size(98, 17);
+            this.victorChandlerCheckbox.TabIndex = 12;
+            this.victorChandlerCheckbox.Text = "Victor Chandler";
+            this.victorChandlerCheckbox.UseVisualStyleBackColor = true;
             // 
             // williamHillCheckbox
             // 
@@ -109,20 +108,10 @@
             this.williamHillCheckbox.Text = "William Hill";
             this.williamHillCheckbox.UseVisualStyleBackColor = true;
             // 
-            // ladbrokesCheckbox
-            // 
-            this.ladbrokesCheckbox.AutoSize = true;
-            this.ladbrokesCheckbox.Location = new System.Drawing.Point(220, 107);
-            this.ladbrokesCheckbox.Name = "ladbrokesCheckbox";
-            this.ladbrokesCheckbox.Size = new System.Drawing.Size(76, 17);
-            this.ladbrokesCheckbox.TabIndex = 14;
-            this.ladbrokesCheckbox.Text = "Ladbrokes";
-            this.ladbrokesCheckbox.UseVisualStyleBackColor = true;
-            // 
             // pinnacleSportCheckbox
             // 
             this.pinnacleSportCheckbox.AutoSize = true;
-            this.pinnacleSportCheckbox.Location = new System.Drawing.Point(220, 147);
+            this.pinnacleSportCheckbox.Location = new System.Drawing.Point(220, 107);
             this.pinnacleSportCheckbox.Name = "pinnacleSportCheckbox";
             this.pinnacleSportCheckbox.Size = new System.Drawing.Size(95, 17);
             this.pinnacleSportCheckbox.TabIndex = 15;
@@ -135,9 +124,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(407, 319);
             this.Controls.Add(this.pinnacleSportCheckbox);
-            this.Controls.Add(this.ladbrokesCheckbox);
             this.Controls.Add(this.williamHillCheckbox);
-            this.Controls.Add(this.stanJamesCheckbox);
+            this.Controls.Add(this.victorChandlerCheckbox);
             this.Controls.Add(this.betWinCheckbox);
             this.Controls.Add(this.interwettenCheckbox);
             this.Controls.Add(this.bet365Checkbox);
@@ -157,9 +145,8 @@
         private System.Windows.Forms.CheckBox bet365Checkbox;
         private System.Windows.Forms.CheckBox interwettenCheckbox;
         private System.Windows.Forms.CheckBox betWinCheckbox;
-        private System.Windows.Forms.CheckBox stanJamesCheckbox;
+        private System.Windows.Forms.CheckBox victorChandlerCheckbox;
         private System.Windows.Forms.CheckBox williamHillCheckbox;
-        private System.Windows.Forms.CheckBox ladbrokesCheckbox;
         private System.Windows.Forms.CheckBox pinnacleSportCheckbox;
     }
 }
