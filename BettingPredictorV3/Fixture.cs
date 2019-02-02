@@ -546,5 +546,11 @@ namespace BettingPredictorV3.DataStructures
 
             return prob;
         }
+
+        public override string ToString()
+        {
+            return League.LeagueID + "," + Date.ToString() + "," + HomeTeam.Name + "," + AwayTeam.Name + ","
+                + PredictedGoalDifference + "," + PredictedHomeGoals + "," + PredictedAwayGoals + "," + BothToScore;
+        }
 	}
 }

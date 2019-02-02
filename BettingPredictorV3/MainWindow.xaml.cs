@@ -48,42 +48,13 @@ namespace BettingPredictorV3
             const float minValue = -3.0f;
             const float maxValue = 3.0f;
             const int noOfIntervals = 60;
-            CalculateProfitIntervals(previousFixtures, minValue, maxValue, noOfIntervals);
+            database.CalculateProfitIntervals(previousFixtures, minValue, maxValue, noOfIntervals);
 
         }
 
         private void DataGrid_ProfitLossReport_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Fixture> previousFixtures = database.GetPreviousResults();
-            const float min = -3.0f;
-            const float max = 3.0f;
-            const int numberOfSteps = 40;
-            List<ProfitLossInterval> profitLossIntervals = CalculateProfitIntervals(previousFixtures, min, max, numberOfSteps);
-            dataGrid_ProfitLossReport.ItemsSource = profitLossIntervals;
-        }
-
-        public List<ProfitLossInterval> CalculateProfitIntervals(List<Fixture> previousFixtures, float min, float max, int n)
-        {
-            float h = ((max-min)/n); // step size of each interval
-            float x1 = min;
-            float x2 = x1 + h;
-            List<Fixture> intervalFixtures = new List<Fixture>();
-            List<ProfitLossInterval> profitLossIntervals = new List<ProfitLossInterval>();
-            for (int i = 0; i < n; i++)
-            {
-                intervalFixtures = FilterForChosenGD(previousFixtures, x1, x2);
-                ProfitLossInterval homeInterval = CalculateHomeGameProfit(intervalFixtures);
-                ProfitLossInterval awayInterval = CalculateAwayGameProfit(intervalFixtures);
-                x1 = x2;
-                x2 += h;
-
-                homeInterval.setRange(x1, x2);
-                awayInterval.setRange(x1, x2);
-                profitLossIntervals.Add(homeInterval);
-                profitLossIntervals.Add(awayInterval);
-            }
-
-            return profitLossIntervals;
+            dataGrid_ProfitLossReport.ItemsSource = database.CalculateProfitLossIntervals();
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -149,8 +120,8 @@ namespace BettingPredictorV3
 
                 queriedFixtures = FilterForChosenGD(queriedFixtures);
                 dataGrid_PreviousFixtures.ItemsSource = queriedFixtures;
-                CalculateHomeGameProfit(queriedFixtures);
-                CalculateAwayGameProfit(queriedFixtures);
+                Database.CalculateHomeGameProfit(queriedFixtures);
+                Database.CalculateAwayGameProfit(queriedFixtures);
             }
         }
 
@@ -184,12 +155,25 @@ namespace BettingPredictorV3
             return aFixtureList.ToList();
         }
 
-        public List<Fixture> FilterForChosenGD(IEnumerable<Fixture> aFixtureList, double minGD, double maxGD)
+        private void CreateBet(object sender, RoutedEventArgs e)
         {
-            aFixtureList = aFixtureList.Where(x => x.PredictedGoalDifference > minGD);
-            aFixtureList = aFixtureList.Where(x => x.PredictedGoalDifference < maxGD);
+            var selectedTeams = new List<Team>();
+            var profitableIntervals = database.CalculateProfitLossIntervals().Where(x => x.profitYield > 0.05);
+            
+            foreach(var interval in profitableIntervals)
+            {
+                var relevantFixtures = database.FixtureList.Where(x => interval.Includes(x.PredictedGoalDifference));
+                if (interval.homeOrAway == "Home")
+                {
+                    selectedTeams.AddRange(relevantFixtures.Select(x => x.HomeTeam));
+                }
+                else
+                {
+                    selectedTeams.AddRange(relevantFixtures.Select(x => x.AwayTeam));
+                }
+            }
 
-            return aFixtureList.ToList();
+            selectedTeams.ToCsv("BET SLIP.csv");
         }
 
         private void GridToCSV(object sender, RoutedEventArgs e)
@@ -211,72 +195,6 @@ namespace BettingPredictorV3
             {
                 System.Windows.MessageBox.Show(ex.Message);
             }
-        }
-
-        private ProfitLossInterval CalculateHomeGameProfit(List<Fixture> fixtures)
-        {
-            double profit = 0.0;
-            int ignoredTeams = 0;
-            Fixture max_odds_fixture = new Fixture
-            {
-                bestHomeOdds = new Bookmaker("bookie", 0.0, 0.0, 0.0)
-            };
-
-            foreach (Fixture fixture in fixtures)
-            {
-                if (fixture.BestHomeOdds == null)
-                {
-                    ignoredTeams++;
-                }
-                else
-                {
-                    if (fixture.HomeGoals > fixture.AwayGoals)
-                    {
-                        if (max_odds_fixture.BestHomeOdds.HomeOdds < fixture.BestHomeOdds.HomeOdds)
-                        {
-                            max_odds_fixture = fixture;
-                        }
-                        profit += fixture.BestHomeOdds.HomeOdds - 1;
-                    }
-                    else
-                    {
-                        profit--;
-                    }
-                }
-            }
-
-            double yield = profit / fixtures.Count;
-            string intervalName = "Test interval name";
-            return new ProfitLossInterval(intervalName, "Home", fixtures.Count, profit, yield);
-        }
-
-        private ProfitLossInterval CalculateAwayGameProfit(List<Fixture> fixtures)
-        {
-            double profit = 0.0;
-            int ignoredTeams = 0;
-
-            foreach (Fixture fixture in fixtures)
-            {
-                if (fixture.BestAwayOdds == null)
-                {
-                    ignoredTeams++;
-                }
-                else
-                {
-                    if (fixture.HomeGoals < fixture.AwayGoals)
-                    {
-                        profit += (fixture.BestAwayOdds.AwayOdds - 1);
-                    }
-                    else
-                    {
-                        profit--;
-                    }
-                }
-            }
-
-            double yield = profit / fixtures.Count;
-            string intervalName = "Test interval name";
-            return new ProfitLossInterval(intervalName, "Away", fixtures.Count, profit, yield);
         }
 
         private void ShowAbout(object sender, RoutedEventArgs e)

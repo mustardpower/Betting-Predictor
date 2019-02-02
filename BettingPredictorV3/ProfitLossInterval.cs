@@ -35,5 +35,10 @@ namespace BettingPredictorV3
         {
             return "Min: " + min.ToString() + " Max: " + max.ToString();
         }
+
+        public bool Includes(double value)
+        {
+            return value >= min && value <= max;
+        }
     }
 }

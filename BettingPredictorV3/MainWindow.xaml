@@ -11,6 +11,7 @@
             <MenuItem Header="_File">
                 <MenuItem Header="Save To CSV..." Click="GridToCSV"></MenuItem>
                 <MenuItem Header="Load From CSV..." Click="CSVToGrid"></MenuItem>
+                <MenuItem Header="Create Bet..." Click="CreateBet"></MenuItem>
             </MenuItem>
             <MenuItem Header="_About" Click="ShowAbout"></MenuItem>
         </Menu>

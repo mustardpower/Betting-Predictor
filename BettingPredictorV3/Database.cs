@@ -91,6 +91,113 @@ namespace BettingPredictorV3
             }
         }
 
+        internal List<ProfitLossInterval> CalculateProfitLossIntervals()
+        {
+            List<Fixture> previousFixtures = GetPreviousResults();
+            const float min = -3.0f;
+            const float max = 3.0f;
+            const int numberOfSteps = 40;
+            return CalculateProfitIntervals(previousFixtures, min, max, numberOfSteps);
+        }
+
+        public List<Fixture> FilterForChosenGD(IEnumerable<Fixture> aFixtureList, double minGD, double maxGD)
+        {
+            aFixtureList = aFixtureList.Where(x => x.PredictedGoalDifference > minGD);
+            aFixtureList = aFixtureList.Where(x => x.PredictedGoalDifference < maxGD);
+
+            return aFixtureList.ToList();
+        }
+
+        internal static ProfitLossInterval CalculateHomeGameProfit(List<Fixture> fixtures)
+        {
+            double profit = 0.0;
+            int ignoredTeams = 0;
+            Fixture max_odds_fixture = new Fixture
+            {
+                bestHomeOdds = new Bookmaker("bookie", 0.0, 0.0, 0.0)
+            };
+
+            foreach (Fixture fixture in fixtures)
+            {
+                if (fixture.BestHomeOdds == null)
+                {
+                    ignoredTeams++;
+                }
+                else
+                {
+                    if (fixture.HomeGoals > fixture.AwayGoals)
+                    {
+                        if (max_odds_fixture.BestHomeOdds.HomeOdds < fixture.BestHomeOdds.HomeOdds)
+                        {
+                            max_odds_fixture = fixture;
+                        }
+                        profit += fixture.BestHomeOdds.HomeOdds - 1;
+                    }
+                    else
+                    {
+                        profit--;
+                    }
+                }
+            }
+
+            double yield = profit / fixtures.Count;
+            string intervalName = "Test interval name";
+            return new ProfitLossInterval(intervalName, "Home", fixtures.Count, profit, yield);
+        }
+
+        internal static ProfitLossInterval CalculateAwayGameProfit(List<Fixture> fixtures)
+        {
+            double profit = 0.0;
+            int ignoredTeams = 0;
+
+            foreach (Fixture fixture in fixtures)
+            {
+                if (fixture.BestAwayOdds == null)
+                {
+                    ignoredTeams++;
+                }
+                else
+                {
+                    if (fixture.HomeGoals < fixture.AwayGoals)
+                    {
+                        profit += (fixture.BestAwayOdds.AwayOdds - 1);
+                    }
+                    else
+                    {
+                        profit--;
+                    }
+                }
+            }
+
+            double yield = profit / fixtures.Count;
+            string intervalName = "Test interval name";
+            return new ProfitLossInterval(intervalName, "Away", fixtures.Count, profit, yield);
+        }
+
+        internal List<ProfitLossInterval> CalculateProfitIntervals(List<Fixture> previousFixtures, float min, float max, int n)
+        {
+            float h = ((max - min) / n); // step size of each interval
+            float x1 = min;
+            float x2 = x1 + h;
+            List<Fixture> intervalFixtures = new List<Fixture>();
+            List<ProfitLossInterval> profitLossIntervals = new List<ProfitLossInterval>();
+            for (int i = 0; i < n; i++)
+            {
+                intervalFixtures = FilterForChosenGD(previousFixtures, x1, x2);
+                ProfitLossInterval homeInterval = CalculateHomeGameProfit(intervalFixtures);
+                ProfitLossInterval awayInterval = CalculateAwayGameProfit(intervalFixtures);
+                x1 = x2;
+                x2 += h;
+
+                homeInterval.setRange(x1, x2);
+                awayInterval.setRange(x1, x2);
+                profitLossIntervals.Add(homeInterval);
+                profitLossIntervals.Add(awayInterval);
+            }
+
+            return profitLossIntervals;
+        }
+
         public void AddTeam(Team team)
         {
             foreach (League league in leagues)
