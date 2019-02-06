@@ -157,10 +157,29 @@ namespace BettingPredictorV3
 
         private void CreateBet(object sender, RoutedEventArgs e)
         {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "BET SLIP"; // Default file name
+            dlg.DefaultExt = ".csv"; // Default file extension
+            dlg.Filter = "CSV (Comma delimited) (.csv)|*.csv"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                var selectedTeams = GetTeamsForBetSlip(0.05);
+                selectedTeams.ToCsv(dlg.FileName);
+            }
+        }
+
+        public List<Team> GetTeamsForBetSlip(double profitThreshold)
+        {
             var selectedTeams = new List<Team>();
-            var profitableIntervals = database.CalculateProfitLossIntervals().Where(x => x.profitYield > 0.05);
-            
-            foreach(var interval in profitableIntervals)
+            var profitableIntervals = database.CalculateProfitLossIntervals().Where(x => x.profitYield > profitThreshold);
+
+            foreach (var interval in profitableIntervals)
             {
                 var relevantFixtures = database.FixtureList.Where(x => interval.Includes(x.PredictedGoalDifference));
                 if (interval.homeOrAway == "Home")
@@ -173,7 +192,7 @@ namespace BettingPredictorV3
                 }
             }
 
-            selectedTeams.ToCsv("BET SLIP.csv");
+            return selectedTeams;
         }
 
         private void GridToCSV(object sender, RoutedEventArgs e)
