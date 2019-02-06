@@ -25,16 +25,31 @@ namespace BettingPredictorV3
             int fileNumber = 0;
             double progressAmount = 0.0;
 
-            foreach (String file in database.HistoryFiles)          // download and parse previous results
-            {
-                LoadHistoricalFile(file);
-                fileNumber++;
-                progressAmount = (double)fileNumber / (double)database.HistoryFiles.Count;
-                splash.SetProgress(progressAmount);
-                splash.SetText(System.String.Format("Loading historical data file number: {0} / {1} File Name: {2}", fileNumber, database.HistoryFiles.Count, file));
-            }
-
             LoadUpcomingFixturesFile();
+
+            // Only count the leagues that have upcoming fixtures
+            var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
+            int totalNumberOfFiles = relevantFiles.Sum(l => l.Value.Distinct().Count());
+
+            foreach (String leagueCode in database.LeagueCodes)          // download and parse previous results
+            {
+                try
+                {
+                    var leagueFiles = database.HistoryFiles[leagueCode];
+                    foreach (var file in leagueFiles)
+                    {
+                        LoadHistoricalFile(file);
+                        fileNumber++;
+                        progressAmount = (double)fileNumber / (double)totalNumberOfFiles;
+                        splash.SetProgress(progressAmount);
+                        splash.SetText(System.String.Format("Loading historical data file number: {0} / {1} File Name: {2}", fileNumber, totalNumberOfFiles, file));
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
 
         public void LoadHistoricalFile(String aFile)
