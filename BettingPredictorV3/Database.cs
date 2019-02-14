@@ -136,7 +136,7 @@ namespace BettingPredictorV3
             int ignoredTeams = 0;
             Fixture max_odds_fixture = new Fixture
             {
-                bestHomeOdds = new Bookmaker("bookie", 0.0, 0.0, 0.0)
+                BestHomeOdds = new Bookmaker("bookie", 0.0, 0.0, 0.0)
             };
 
             foreach (Fixture fixture in fixtures)

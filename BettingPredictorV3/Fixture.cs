@@ -29,9 +29,6 @@ namespace BettingPredictorV3.DataStructures
         public int AwayForm { get; set; }
 
         public List<Bookmaker> odds;
-        public Bookmaker bestHomeOdds;
-        public Bookmaker bestDrawOdds;
-        public Bookmaker bestAwayOdds;
 
         public Fixture()
         {
@@ -140,29 +137,11 @@ namespace BettingPredictorV3.DataStructures
             } 
         }
 
-        public Bookmaker BestHomeOdds
-        {
-            get
-            {
-                return bestHomeOdds;
-            }
-        }
+        public Bookmaker BestHomeOdds { get; set; }
 
-        public Bookmaker BestDrawOdds
-        {
-            get
-            {
-                return bestDrawOdds;
-            }
-        }
+        public Bookmaker BestDrawOdds { get; set; }
 
-        public Bookmaker BestAwayOdds
-        {
-            get
-            {
-                return bestAwayOdds;
-            }
-        }
+        public Bookmaker BestAwayOdds { get; set; }
 
         public double PredictedHomeGoals
         {
@@ -459,27 +438,28 @@ namespace BettingPredictorV3.DataStructures
 
         public void FindBestOdds()
         {
-            double home_odds = 0 ;
-            double draw_odds = 0 ;
-            double away_odds = 0 ;
-            foreach (Bookmaker bookie in odds)
+            if(odds.Count() > 0)
             {
-                if (bookie.HomeOdds > home_odds)
-                {
-                    home_odds = bookie.HomeOdds;
-                    bestHomeOdds = bookie;
-                }
+                BestHomeOdds = odds.First();
+                BestDrawOdds = odds.First();
+                BestAwayOdds = odds.First();
 
-                if (bookie.DrawOdds > draw_odds)
+                foreach (Bookmaker bookie in odds)
                 {
-                    draw_odds = bookie.DrawOdds;
-                    bestDrawOdds = bookie;
-                }
+                    if (bookie.HomeOdds > BestHomeOdds.HomeOdds)
+                    {
+                        BestHomeOdds = bookie;
+                    }
 
-                if (bookie.AwayOdds > away_odds)
-                {
-                    away_odds = bookie.AwayOdds;
-                    bestAwayOdds = bookie;
+                    if (bookie.DrawOdds > BestDrawOdds.DrawOdds)
+                    {
+                        BestDrawOdds = bookie;
+                    }
+
+                    if (bookie.AwayOdds > BestAwayOdds.AwayOdds)
+                    {
+                        BestAwayOdds = bookie;
+                    }
                 }
             }
         }
