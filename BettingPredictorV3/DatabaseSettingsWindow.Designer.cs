@@ -132,7 +132,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "DatabaseSettingsWindow";
-            this.Text = "DatabaseSettingsWindow";
+            this.Text = "Select Bookmakers";
             this.ResumeLayout(false);
             this.PerformLayout();
 
