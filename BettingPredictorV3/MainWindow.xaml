@@ -39,6 +39,7 @@
                         <DataGridTextColumn Header="Best Draw Bookmaker" Binding="{Binding Path=BestDrawOdds.Name}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Best Away Odds" Binding="{Binding Path=BestAwayOdds.AwayOdds}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Best Away Bookmaker" Binding="{Binding Path=BestAwayOdds.Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Arbitrage Score" Binding="{Binding Path=Arbitrage}"></DataGridTextColumn>
                         <!--<DataGridTextColumn Header="Avg Home Residual Error" Binding="{Binding Path=average_home_residual}"></DataGridTextColumn>
                      <DataGridTextColumn Header="Avg Away Residual Error" Binding="{Binding Path=average_away_residual}"></DataGridTextColumn>-->
                     </DataGrid.Columns>

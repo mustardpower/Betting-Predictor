@@ -173,6 +173,7 @@ namespace BettingPredictorV3.DataStructures
         public double Away_residual { get => awayResidual; set => awayResidual = value; }
         public double AverageHomeResidual { get => averageHomeResidual; set => averageHomeResidual = value; }
         public double AverageAwayResidual { get => averageAwayResidual; set => averageAwayResidual = value; }
+        public double Arbitrage { get; private set; }
 
         public List<double> HomeWeightingFunction(List<double> sample)
         {
@@ -461,7 +462,20 @@ namespace BettingPredictorV3.DataStructures
                         BestAwayOdds = bookie;
                     }
                 }
+
+                FindArbitrage();
             }
+        }
+
+        public void FindArbitrage()
+        {
+            Arbitrage = 0.0;
+
+            double homeProbability = 1 / BestHomeOdds.HomeOdds;
+            double drawProbability = 1 / BestDrawOdds.DrawOdds;
+            double awayProbability = 1 / BestAwayOdds.AwayOdds;
+
+            Arbitrage = homeProbability + drawProbability + awayProbability;
         }
 
         public double HomeWinProbability()
