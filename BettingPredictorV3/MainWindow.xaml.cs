@@ -169,30 +169,27 @@ namespace BettingPredictorV3
             if (result == true)
             {
                 // Save document
-                var selectedTeams = GetTeamsForBetSlip(0.05);
-                selectedTeams.ToCsv(dlg.FileName);
-            }
-        }
+                var csvRows = new[] { new { FixtureDate = DateTime.Now, LeagueID = "LeagueID", TeamName = "Team Name" } }.ToList();
+                var profitableIntervals = database.CalculateProfitLossIntervals().Where(x => x.profitYield > 0.05);
 
-        public List<Team> GetTeamsForBetSlip(double profitThreshold)
-        {
-            var selectedTeams = new List<Team>();
-            var profitableIntervals = database.CalculateProfitLossIntervals().Where(x => x.profitYield > profitThreshold);
-
-            foreach (var interval in profitableIntervals)
-            {
-                var relevantFixtures = database.FixtureList.Where(x => interval.Includes(x.PredictedGoalDifference));
-                if (interval.homeOrAway == "Home")
+                foreach (var interval in profitableIntervals)
                 {
-                    selectedTeams.AddRange(relevantFixtures.Select(x => x.HomeTeam));
+                    var relevantFixtures = database.FixtureList.Where(x => interval.Includes(x.PredictedGoalDifference));
+                    if (interval.homeOrAway == "Home")
+                    {
+                        csvRows.AddRange(relevantFixtures.Select(x => new { FixtureDate = x.Date, LeagueID = x.LeagueID, TeamName = x.HomeTeam.Name }));
+                    }
+                    else
+                    {
+                        csvRows.AddRange(relevantFixtures.Select(x => new { FixtureDate = x.Date, LeagueID = x.LeagueID, TeamName = x.AwayTeam.Name }));
+                    }
                 }
-                else
-                {
-                    selectedTeams.AddRange(relevantFixtures.Select(x => x.AwayTeam));
-                }
-            }
 
-            return selectedTeams;
+                CsvDefinition csvDefinition = new CsvDefinition();
+                csvDefinition.FieldSeparator = ',';
+                csvDefinition.Columns = new List<string>{ "FixtureDate", "LeagueID", "TeamName" };
+                csvRows.ToCsv(dlg.FileName, csvDefinition);
+            }
         }
 
         private void GridToCSV(object sender, RoutedEventArgs e)
