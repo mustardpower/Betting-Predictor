@@ -481,19 +481,19 @@ namespace BettingPredictorV3.DataStructures
         public double HomeWinProbability()
         {
             double prob = 0.0;
-            double h_prob, a_prob;
-            const int MAX_GOALS = 9;
+            double hProb, aProb;
+            const int MaxGoals = 9;
 
-            for (int h = 0; h < MAX_GOALS ; h++)
+            for (int h = 0; h < MaxGoals ; h++)
             {
                 for (int a = 0;a < h; a++)
                 {
                     // calc poisson prob of h goals given rate of predicted home goals
                     // calc poisson prob of a goals given rate of predicted away goals
                     // multiply and add to total probability
-                    h_prob = StatsLib.poissonPDF(predictedHomeGoals, h);
-                    a_prob = StatsLib.poissonPDF(predictedAwayGoals, a);
-                    prob += h_prob * a_prob;
+                    hProb = StatsLib.poissonPDF(predictedHomeGoals, h);
+                    aProb = StatsLib.poissonPDF(predictedAwayGoals, a);
+                    prob += hProb * aProb;
                 }
             }
 
@@ -503,19 +503,19 @@ namespace BettingPredictorV3.DataStructures
         public double AwayWinProbability()
         {
             double prob = 0.0;
-            double h_prob, a_prob;
-            const int MAX_GOALS = 9;
+            double hProb, aProb;
+            const int MaxGoals = 9;
 
-            for (int a = 0; a < MAX_GOALS; a++)
+            for (int a = 0; a < MaxGoals; a++)
             {
                 for (int h = 0; h < a; h++)
                 {
                     // calc poisson prob of h goals given rate of predicted home goals
                     // calc poisson prob of a goals given rate of predicted away goals
                     // multiply and add to total probability
-                    h_prob = StatsLib.poissonPDF(predictedHomeGoals, h);
-                    a_prob = StatsLib.poissonPDF(predictedAwayGoals, a);
-                    prob += h_prob * a_prob;
+                    hProb = StatsLib.poissonPDF(predictedHomeGoals, h);
+                    aProb = StatsLib.poissonPDF(predictedAwayGoals, a);
+                    prob += hProb * aProb;
                 }
             }
 
@@ -525,17 +525,17 @@ namespace BettingPredictorV3.DataStructures
         public double DrawProbability()
         {
             double prob = 0.0;
-            double h_prob, a_prob;
-            const int MAX_GOALS = 9;
+            double hProb, aProb;
+            const int MaxGoals = 9;
 
-            for (int x = 0; x < MAX_GOALS; x++)
+            for (int x = 0; x < MaxGoals; x++)
             {
                 // calc poisson prob of h goals given rate of predicted home goals
                 // calc poisson prob of a goals given rate of predicted away goals
                 // multiply and add to total probability
-                h_prob = StatsLib.poissonPDF(predictedHomeGoals, x);
-                a_prob = StatsLib.poissonPDF(predictedAwayGoals, x);
-                prob += h_prob * a_prob;
+                hProb = StatsLib.poissonPDF(predictedHomeGoals, x);
+                aProb = StatsLib.poissonPDF(predictedAwayGoals, x);
+                prob += hProb * aProb;
             }
 
             return prob;
