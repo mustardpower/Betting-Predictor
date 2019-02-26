@@ -174,6 +174,9 @@ namespace BettingPredictorV3.DataStructures
         public double AverageHomeResidual { get => averageHomeResidual; set => averageHomeResidual = value; }
         public double AverageAwayResidual { get => averageAwayResidual; set => averageAwayResidual = value; }
         public double Arbitrage { get; private set; }
+        public double KellyCriterionHome { get; private set; }
+        public double KellyCriterionDraw { get; private set; }
+        public double KellyCriterionAway { get; private set; }
 
         public List<double> HomeWeightingFunction(List<double> sample)
         {
@@ -366,10 +369,12 @@ namespace BettingPredictorV3.DataStructures
                 averageAwayResidual = awayResiduals.Count > 0 ? awayResiduals.Average() : 0.0;
 
                 CalculateBothToScore();
+                CalculateKellyCriterion();
+
                 //// generate a large sample of simulated results
                 //simulated_sample = generateSimulatedResults();
-                //fixture_it->calculateProfit(simulated_sample,home_goals,away_goals,home_form,away_form);
-			}
+                //fixture_it->calculateProfit(simulated_sample,home_goals,away_goals,home_form,away_form); 
+            }
 		}
 
         public void CalculateBothToScore()
@@ -409,6 +414,33 @@ namespace BettingPredictorV3.DataStructures
         //    }
         //    return simulated_sample;
         //}
+
+        public void CalculateKellyCriterion()
+        {
+            if(BestHomeOdds != null)
+            {
+                double b = BestHomeOdds.HomeOdds - 1;
+                double p = HomeWinProbability();
+                double q = 1.0 - p;
+                KellyCriterionHome = ((b * p) - q) / b;
+            }
+
+            if(BestDrawOdds != null)
+            {
+                double b = BestDrawOdds.DrawOdds - 1;
+                double p = DrawProbability();
+                double q = 1.0 - p;
+                KellyCriterionDraw = ((b * p) - q) / b;
+            }
+
+            if(BestAwayOdds != null)
+            {
+                double b = BestAwayOdds.AwayOdds - 1;
+                double p = AwayWinProbability();
+                double q = 1.0 - p;
+                KellyCriterionAway = ((b * p) - q) / b;
+            }
+        }
 
         public void CalculateStrengths(List<double> home_sample, List<double> away_sample, List<double> home_opp_sample, List<double> away_opp_sample,double alpha,double beta)
         {

@@ -35,10 +35,13 @@
                         <DataGridTextColumn Header="Both teams to score" Binding="{Binding Path=BothToScore}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Best Home Odds" Binding="{Binding Path=BestHomeOdds.HomeOdds}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Best Home Bookmaker" Binding="{Binding Path=BestHomeOdds.Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Home Kelly Criterion" Binding="{Binding Path=KellyCriterionHome}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Best Draw Odds" Binding="{Binding Path=BestDrawOdds.DrawOdds}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Best Draw Bookmaker" Binding="{Binding Path=BestDrawOdds.Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Draw Kelly Criterion" Binding="{Binding Path=KellyCriterionDraw}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Best Away Odds" Binding="{Binding Path=BestAwayOdds.AwayOdds}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Best Away Bookmaker" Binding="{Binding Path=BestAwayOdds.Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Away Kelly Criterion" Binding="{Binding Path=KellyCriterionAway}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Arbitrage Score" Binding="{Binding Path=Arbitrage}"></DataGridTextColumn>
                         <!--<DataGridTextColumn Header="Avg Home Residual Error" Binding="{Binding Path=average_home_residual}"></DataGridTextColumn>
                      <DataGridTextColumn Header="Avg Away Residual Error" Binding="{Binding Path=average_away_residual}"></DataGridTextColumn>-->

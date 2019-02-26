@@ -169,26 +169,26 @@ namespace BettingPredictorV3
             if (result == true)
             {
                 // Save document
-                var csvRows = new[] { new { FixtureDate = DateTime.Now, LeagueID = "LeagueID", TeamName = "Team Name" } }.ToList();
-                var profitableIntervals = database.CalculateProfitLossIntervals().Where(x => x.profitYield > 0.05);
-
-                foreach (var interval in profitableIntervals)
-                {
-                    var relevantFixtures = database.FixtureList.Where(x => interval.Includes(x.PredictedGoalDifference));
-                    if (interval.homeOrAway == "Home")
-                    {
-                        csvRows.AddRange(relevantFixtures.Select(x => new { FixtureDate = x.Date, LeagueID = x.LeagueID, TeamName = x.HomeTeam.Name }));
-                    }
-                    else
-                    {
-                        csvRows.AddRange(relevantFixtures.Select(x => new { FixtureDate = x.Date, LeagueID = x.LeagueID, TeamName = x.AwayTeam.Name }));
-                    }
-                }
+                var csvRows = new[] { new { FixtureDate = DateTime.Now, LeagueID = "LeagueID", TeamName = "Team Name", KellyCriterion = 0.0} }.ToList();
+                const double threashold = 0.01;
+                var homeFixtures = database.FixtureList.Where(x => x.KellyCriterionHome > threashold);
+                csvRows.AddRange(homeFixtures.Select(x => new { FixtureDate = x.Date, LeagueID = x.LeagueID, TeamName = x.HomeTeam.Name, KellyCriterion = x.KellyCriterionHome }));
+                var awayFixtures = database.FixtureList.Where(x => x.KellyCriterionAway > threashold);
+                csvRows.AddRange(awayFixtures.Select(x => new { FixtureDate = x.Date, LeagueID = x.LeagueID, TeamName = x.AwayTeam.Name, KellyCriterion = x.KellyCriterionAway }));
+                csvRows.RemoveAt(0); // remove dummy anonymous object
 
                 CsvDefinition csvDefinition = new CsvDefinition();
                 csvDefinition.FieldSeparator = ',';
-                csvDefinition.Columns = new List<string>{ "FixtureDate", "LeagueID", "TeamName" };
-                csvRows.ToCsv(dlg.FileName, csvDefinition);
+                csvDefinition.Columns = new List<string>{ "FixtureDate", "LeagueID", "TeamName", "KellyCriterion" };
+
+                try
+                {
+                    csvRows.ToCsv(dlg.FileName, csvDefinition);
+                }
+                catch(IOException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
