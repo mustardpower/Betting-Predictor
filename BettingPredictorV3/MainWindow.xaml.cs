@@ -169,17 +169,17 @@ namespace BettingPredictorV3
             if (result == true)
             {
                 // Save document
-                var csvRows = new[] { new { FixtureDate = DateTime.Now, LeagueID = "LeagueID", TeamName = "Team Name", KellyCriterion = 0.0} }.ToList();
+                var csvRows = new[] { new { FixtureDate = DateTime.Now, LeagueID = "LeagueID", TeamName = "Team Name", KellyCriterion = 0.0, Bookie = "Bookmaker" } }.ToList();
                 const double threashold = 0.01;
                 var homeFixtures = database.FixtureList.Where(x => x.KellyCriterionHome > threashold);
-                csvRows.AddRange(homeFixtures.Select(x => new { FixtureDate = x.Date, LeagueID = x.LeagueID, TeamName = x.HomeTeam.Name, KellyCriterion = x.KellyCriterionHome }));
+                csvRows.AddRange(homeFixtures.Select(x => new { FixtureDate = x.Date, LeagueID = x.LeagueID, TeamName = x.HomeTeam.Name, KellyCriterion = x.KellyCriterionHome, Bookie = x.BestHomeOdds.Name }));
                 var awayFixtures = database.FixtureList.Where(x => x.KellyCriterionAway > threashold);
-                csvRows.AddRange(awayFixtures.Select(x => new { FixtureDate = x.Date, LeagueID = x.LeagueID, TeamName = x.AwayTeam.Name, KellyCriterion = x.KellyCriterionAway }));
+                csvRows.AddRange(awayFixtures.Select(x => new { FixtureDate = x.Date, LeagueID = x.LeagueID, TeamName = x.AwayTeam.Name, KellyCriterion = x.KellyCriterionAway, Bookie = x.BestAwayOdds.Name }));
                 csvRows.RemoveAt(0); // remove dummy anonymous object
 
                 CsvDefinition csvDefinition = new CsvDefinition();
                 csvDefinition.FieldSeparator = ',';
-                csvDefinition.Columns = new List<string>{ "FixtureDate", "LeagueID", "TeamName", "KellyCriterion" };
+                csvDefinition.Columns = new List<string>{ "FixtureDate", "LeagueID", "TeamName", "KellyCriterion", "Bookie" };
 
                 try
                 {
