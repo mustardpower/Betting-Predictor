@@ -26,7 +26,7 @@
                   Margin="12,293,0,0" Name="awayFixturesGrid" Loaded="AwayTeamFixtures_Loaded"
                   VerticalAlignment="Top" Width="1100" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=date}" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}" ></DataGridTextColumn>
                 <DataGridTextColumn Header="Home Team" Binding="{Binding Path=HomeTeam.Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Away Team" Binding="{Binding Path=AwayTeam.Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Home Goals" Binding="{Binding Path=HomeGoals}"></DataGridTextColumn>
