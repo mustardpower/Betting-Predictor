@@ -36,11 +36,13 @@ namespace BettingPredictorV3
 
             DatabaseSettings.BookmakersUsed = bookmakersSelected;
 
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
         private void cancel(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
     }

@@ -32,19 +32,22 @@ namespace BettingPredictorV3
         internal ApplicationInitializeDelegate ApplicationInitialize;
         private void _applicationInitialize(Splash splashWindow)
         {
-            new DatabaseSettingsWindow().ShowDialog();
-            FileParser fileParser = new FileParser();
-            database.ClearData();
-            
-            fileParser.PopulateDatabase(database, splashWindow);
-
-            PredictResults();
-            // Create the main window, but on the UI thread.
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
+            System.Windows.Forms.DialogResult result = new DatabaseSettingsWindow().ShowDialog();
+            if(result == System.Windows.Forms.DialogResult.OK)
             {
-                MainWindow = new MainWindow(database);
-                MainWindow.Show();
-            });
+                FileParser fileParser = new FileParser();
+                database.ClearData();
+
+                fileParser.PopulateDatabase(database, splashWindow);
+
+                PredictResults();
+                // Create the main window, but on the UI thread.
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
+                {
+                    MainWindow = new MainWindow(database);
+                    MainWindow.Show();
+                });
+            }
         }
         private void PredictResults()
         {
