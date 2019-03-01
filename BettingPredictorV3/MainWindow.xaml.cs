@@ -7,6 +7,8 @@ using System.IO;
 using CsvFiles;
 using System.ComponentModel;
 using BettingPredictorV3.DataStructures;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace BettingPredictorV3
 {
@@ -24,17 +26,27 @@ namespace BettingPredictorV3
             database = aDatabase;
         }
 
-        public void DataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)
+        public List<Fixture> GetDefaultUpcomingFixtures()
         {
             List<Fixture> upcomingFixtures = new List<Fixture>();
             upcomingFixtures = database.FixtureList;
             // remove teams with less than a season of results
             upcomingFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
             upcomingFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+            return upcomingFixtures;
+        }
 
+        public void RefreshUpcomingFixturesTab()
+        {
+            var upcomingFixtures = GetDefaultUpcomingFixtures();
             dataGrid_UpcomingFixtures.ItemsSource = upcomingFixtures;
             leaguesComboBox.ItemsSource = database.Leagues;
             dateComboBox.ItemsSource = upcomingFixtures.Select(x => x.Date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
+        }
+
+        public void DataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)
+        {
+            RefreshUpcomingFixturesTab();
         }
 
         private void DataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
@@ -192,24 +204,59 @@ namespace BettingPredictorV3
             }
         }
 
-        private void GridToCSV(object sender, RoutedEventArgs e)
+        private void LoadDatabase(object sender, RoutedEventArgs e)
         {
-            // get objects in the datagrid
-            IEnumerable<Fixture> fixtures = (IEnumerable<Fixture>)dataGrid_UpcomingFixtures.ItemsSource;
-            fixtures.ToCsv("TEST.csv");
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.FileName = "Database.bpdb"; // Default file name
+            dlg.DefaultExt = ".bpdb"; // Default file extension
+            dlg.Filter = "Betting Predictor Database (.dpdb)|*.bpdb"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if(result == true)
+            {
+                using (FileStream fs = new FileStream(dlg.FileName, FileMode.Open))
+                {
+                    try
+                    {
+                        BinaryFormatter binaryFormatter = new BinaryFormatter();
+                        database = (Database)binaryFormatter.Deserialize(fs);
+                    }
+                    catch (SerializationException ex)
+                    {
+                        MessageBox.Show("Failed to deserialize. Reason: " + ex.Message);
+                    }
+
+                    RefreshUpcomingFixturesTab();
+                }
+            }
         }
 
-        private void CSVToGrid(object sender, RoutedEventArgs e)
+        private void SaveDatabase(object sender, RoutedEventArgs e)
         {
-            // get objects in file and place in data grid
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Database"; // Default file name
+            dlg.DefaultExt = ".bpdb"; // Default file extension
+            dlg.Filter = "Betting Predictor Database (.dpdb)|*.bpdb"; // Filter files by extension
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
 
-            try
+            // Process save file dialog box results
+            if (result == true)
             {
-                dataGrid_UpcomingFixtures.ItemsSource = CsvFile.Read<Fixture>("TEST.csv");
-            }
-            catch(FileNotFoundException ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
+                using (FileStream fs = new FileStream(dlg.FileName, FileMode.Create))
+                {
+                    try
+                    {
+                        BinaryFormatter binaryFormatter = new BinaryFormatter();
+                        binaryFormatter.Serialize(fs, database);
+                    }
+                    catch (SerializationException ex)
+                    {
+                        MessageBox.Show("Failed to serialize. Reason: " + ex.Message);
+                    }
+                }
             }
         }
 

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace BettingPredictorV3
 {
+    [Serializable]
     public class Bookmaker
     {
         private string name;

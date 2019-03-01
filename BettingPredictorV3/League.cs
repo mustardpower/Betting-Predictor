@@ -5,6 +5,7 @@ using System.Text;
 
 namespace BettingPredictorV3.DataStructures
 {
+    [Serializable]
     public class League
     {
         private String league_ID;

@@ -9,8 +9,8 @@
         </Grid.RowDefinitions>
         <Menu IsMainMenu="True" Margin="0,0,10,87">
             <MenuItem Header="_File">
-                <MenuItem Header="Save To CSV..." Click="GridToCSV"></MenuItem>
-                <MenuItem Header="Load From CSV..." Click="CSVToGrid"></MenuItem>
+                <MenuItem Header="Load..." Click="LoadDatabase"></MenuItem>
+                <MenuItem Header="Save..." Click="SaveDatabase"></MenuItem>
                 <MenuItem Header="Create Bet..." Click="CreateBet"></MenuItem>
             </MenuItem>
             <MenuItem Header="_About" Click="ShowAbout"></MenuItem>

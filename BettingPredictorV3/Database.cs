@@ -11,6 +11,7 @@ using BettingPredictorV3.DataStructures;
 
 namespace BettingPredictorV3
 {
+    [Serializable]
     public class Database
     {
         private List<League> leagues;   // list of all the leagues stored
