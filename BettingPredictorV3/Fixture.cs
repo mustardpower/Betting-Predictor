@@ -24,6 +24,9 @@ namespace BettingPredictorV3.DataStructures
         private double averageHomeResidual;
         private double averageAwayResidual;
         private double bothToScore;   // probability that both teams score in the fixture
+        private double? homeWinProbabilty;
+        private double? drawProbability;
+        private double? awayWinProbability;
 
         public int HomeForm { get; set; }
         public int AwayForm { get; set; }
@@ -177,6 +180,45 @@ namespace BettingPredictorV3.DataStructures
         public double KellyCriterionHome { get; private set; }
         public double KellyCriterionDraw { get; private set; }
         public double KellyCriterionAway { get; private set; }
+
+        public double HomeWinProbability {
+            get
+            {
+                if (homeWinProbabilty == null)
+                {
+                    homeWinProbabilty = CalculateHomeWinProbability();
+                }
+
+                return (double)homeWinProbabilty;
+            }
+        }
+
+        public double DrawProbability
+        {
+            get
+            {
+                if (drawProbability == null)
+                {
+                    drawProbability = CalculateDrawProbability();
+                }
+
+                return (double)drawProbability;
+            }
+        }
+
+        public double AwayWinProbability
+        {
+            get
+            {
+                if (awayWinProbability == null)
+                {
+                    awayWinProbability = CalculateAwayWinProbability();
+                }
+
+                return (double)awayWinProbability;
+            }
+        }
+
 
         public List<double> HomeWeightingFunction(List<double> sample)
         {
@@ -420,7 +462,7 @@ namespace BettingPredictorV3.DataStructures
             if(BestHomeOdds != null)
             {
                 double b = BestHomeOdds.HomeOdds - 1;
-                double p = HomeWinProbability();
+                double p = HomeWinProbability;
                 double q = 1.0 - p;
                 KellyCriterionHome = ((b * p) - q) / b;
             }
@@ -428,7 +470,7 @@ namespace BettingPredictorV3.DataStructures
             if(BestDrawOdds != null)
             {
                 double b = BestDrawOdds.DrawOdds - 1;
-                double p = DrawProbability();
+                double p = DrawProbability;
                 double q = 1.0 - p;
                 KellyCriterionDraw = ((b * p) - q) / b;
             }
@@ -436,7 +478,7 @@ namespace BettingPredictorV3.DataStructures
             if(BestAwayOdds != null)
             {
                 double b = BestAwayOdds.AwayOdds - 1;
-                double p = AwayWinProbability();
+                double p = AwayWinProbability;
                 double q = 1.0 - p;
                 KellyCriterionAway = ((b * p) - q) / b;
             }
@@ -510,7 +552,7 @@ namespace BettingPredictorV3.DataStructures
             Arbitrage = homeProbability + drawProbability + awayProbability;
         }
 
-        public double HomeWinProbability()
+        public double CalculateHomeWinProbability()
         {
             double prob = 0.0;
             double hProb, aProb;
@@ -532,7 +574,7 @@ namespace BettingPredictorV3.DataStructures
             return prob;
         }
 
-        public double AwayWinProbability()
+        public double CalculateAwayWinProbability()
         {
             double prob = 0.0;
             double hProb, aProb;
@@ -554,7 +596,7 @@ namespace BettingPredictorV3.DataStructures
             return prob;
         }
 
-        public double DrawProbability()
+        public double CalculateDrawProbability()
         {
             double prob = 0.0;
             double hProb, aProb;

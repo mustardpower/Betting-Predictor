@@ -59,9 +59,9 @@ namespace BettingPredictorV3
         {
             if (selectedFixture != null)
             {
-                homeProbability.Content = Math.Round(selectedFixture.HomeWinProbability(),4);
-                drawProbability.Content = Math.Round(selectedFixture.DrawProbability(), 4);
-                awayProbability.Content = Math.Round(selectedFixture.AwayWinProbability(), 4);
+                homeProbability.Content = Math.Round(selectedFixture.HomeWinProbability,4);
+                drawProbability.Content = Math.Round(selectedFixture.DrawProbability, 4);
+                awayProbability.Content = Math.Round(selectedFixture.AwayWinProbability, 4);
             }
         }
     }
