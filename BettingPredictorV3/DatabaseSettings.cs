@@ -40,5 +40,7 @@ namespace BettingPredictorV3
             bookmakers.Add("Best Odds");
             return bookmakers;
         }
+
+        static public bool IgnorePlayedFixtures { get; set; }
     }
 }

@@ -144,6 +144,14 @@ namespace BettingPredictorV3
                     date = new DateTime(int.Parse(dateParams[2]), int.Parse(dateParams[1]), int.Parse(dateParams[0]));
                 }
 
+                if(DatabaseSettings.IgnorePlayedFixtures)
+                {
+                    if(date < DateTime.Today)
+                    {
+                        continue;
+                    }
+                }
+
                 String homeTeamName = newLeague ? fixtureData[4] : fixtureData[2];
                 String awayTeamName = newLeague ? fixtureData[5] : fixtureData[3];
 

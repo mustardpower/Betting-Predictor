@@ -36,6 +36,8 @@ namespace BettingPredictorV3
 
             DatabaseSettings.BookmakersUsed = bookmakersSelected;
 
+            DatabaseSettings.IgnorePlayedFixtures = ignoredPlayedFixturesCheckbox.Checked;
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
