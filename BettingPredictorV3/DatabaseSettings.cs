@@ -42,5 +42,7 @@ namespace BettingPredictorV3
         }
 
         static public bool IgnorePlayedFixtures { get; set; }
+
+        static public bool PopulateDatabase { get; set; }
     }
 }

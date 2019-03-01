@@ -35,7 +35,7 @@ namespace BettingPredictorV3
             if (pinnacleSportCheckbox.CheckState == CheckState.Checked) { bookmakersSelected.Add("Pinnacle Sport"); }
 
             DatabaseSettings.BookmakersUsed = bookmakersSelected;
-
+            DatabaseSettings.PopulateDatabase = populateDatabaseCheckBox.Checked;
             DatabaseSettings.IgnorePlayedFixtures = ignoredPlayedFixturesCheckbox.Checked;
 
             this.DialogResult = DialogResult.OK;

@@ -35,12 +35,14 @@ namespace BettingPredictorV3
             System.Windows.Forms.DialogResult result = new DatabaseSettingsWindow().ShowDialog();
             if(result == System.Windows.Forms.DialogResult.OK)
             {
-                FileParser fileParser = new FileParser();
-                database.ClearData();
+                if (DatabaseSettings.PopulateDatabase)
+                {
+                    FileParser fileParser = new FileParser();
+                    database.ClearData();
+                    fileParser.PopulateDatabase(database, splashWindow);
+                    PredictResults();
+                }
 
-                fileParser.PopulateDatabase(database, splashWindow);
-
-                PredictResults();
                 // Create the main window, but on the UI thread.
                 Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
                 {

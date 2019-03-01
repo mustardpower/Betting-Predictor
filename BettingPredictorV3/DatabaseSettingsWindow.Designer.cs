@@ -38,6 +38,7 @@
             this.pinnacleSportCheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ignoredPlayedFixturesCheckbox = new System.Windows.Forms.CheckBox();
+            this.populateDatabaseCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -139,18 +140,29 @@
             // ignoredPlayedFixturesCheckbox
             // 
             this.ignoredPlayedFixturesCheckbox.AutoSize = true;
-            this.ignoredPlayedFixturesCheckbox.Location = new System.Drawing.Point(36, 29);
+            this.ignoredPlayedFixturesCheckbox.Location = new System.Drawing.Point(36, 21);
             this.ignoredPlayedFixturesCheckbox.Name = "ignoredPlayedFixturesCheckbox";
             this.ignoredPlayedFixturesCheckbox.Size = new System.Drawing.Size(126, 17);
             this.ignoredPlayedFixturesCheckbox.TabIndex = 17;
             this.ignoredPlayedFixturesCheckbox.Text = "Ignore played fixtures";
             this.ignoredPlayedFixturesCheckbox.UseVisualStyleBackColor = true;
             // 
+            // populateDatabaseCheckBox
+            // 
+            this.populateDatabaseCheckBox.AutoSize = true;
+            this.populateDatabaseCheckBox.Location = new System.Drawing.Point(36, 44);
+            this.populateDatabaseCheckBox.Name = "populateDatabaseCheckBox";
+            this.populateDatabaseCheckBox.Size = new System.Drawing.Size(115, 17);
+            this.populateDatabaseCheckBox.TabIndex = 18;
+            this.populateDatabaseCheckBox.Text = "Populate database";
+            this.populateDatabaseCheckBox.UseVisualStyleBackColor = true;
+            // 
             // DatabaseSettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(407, 319);
+            this.Controls.Add(this.populateDatabaseCheckBox);
             this.Controls.Add(this.ignoredPlayedFixturesCheckbox);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -176,5 +188,6 @@
         private System.Windows.Forms.CheckBox pinnacleSportCheckbox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox ignoredPlayedFixturesCheckbox;
+        private System.Windows.Forms.CheckBox populateDatabaseCheckBox;
     }
 }
