@@ -55,9 +55,6 @@ namespace BettingPredictorV3
         {
             double alpha, beta;
 
-            List<double> errors = new List<double>();
-            List<double> beta_values = new List<double>();
-
             do
             {
                 alpha = database.GetAlphaValue();
@@ -65,15 +62,6 @@ namespace BettingPredictorV3
                 database.PredictResults(alpha, beta);
             }
             while ((Math.Abs(alpha) > Math.Abs(database.GetAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.GetBetaValue()))));
-
-
-            List<double> home_residuals = database.GetHomeResiduals(DateTime.Now);
-            List<double> away_residuals = database.GetAwayResiduals(DateTime.Now);
-
-            home_residuals.RemoveAll(x => Double.IsNaN(x));
-            double home_average_error = home_residuals.Average();
-            away_residuals.RemoveAll(x => Double.IsNaN(x));
-            double away_average_error = away_residuals.Average();
         }
     }
 }
