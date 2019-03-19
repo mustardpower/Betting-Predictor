@@ -20,27 +20,28 @@ namespace BettingPredictorV3
     /// </summary>
     public partial class FixtureWindow : Window
     {
-        private Fixture selectedFixture;
+        public Fixture SelectedFixture { get; set; }
+
         public FixtureWindow(Fixture aFixture)
         {
             InitializeComponent();
-            selectedFixture = aFixture;
-            CalculateResultProbabilities();
+            SelectedFixture = aFixture;
+            DataContext = SelectedFixture;
         }
 
         private void HomeTeamFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            if(selectedFixture != null)
+            if(SelectedFixture != null)
             {
-                homeFixturesGrid.ItemsSource = selectedFixture.HomeTeam.Fixtures;
+                homeFixturesGrid.ItemsSource = SelectedFixture.HomeTeam.Fixtures;
             }
         }
 
         private void AwayTeamFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            if (selectedFixture != null)
+            if (SelectedFixture != null)
             {
-                awayFixturesGrid.ItemsSource = selectedFixture.AwayTeam.Fixtures;
+                awayFixturesGrid.ItemsSource = SelectedFixture.AwayTeam.Fixtures;
             }
         }
 
@@ -52,16 +53,6 @@ namespace BettingPredictorV3
                     e.CellStyle.BackColor = System.Drawing.Color.Blue;
                 if ((int)e.Value > 2)
                     e.CellStyle.BackColor = System.Drawing.Color.Red;
-            }
-        }
-        
-        public void CalculateResultProbabilities()
-        {
-            if (selectedFixture != null)
-            {
-                homeProbability.Content = Math.Round(selectedFixture.HomeWinProbability,4);
-                drawProbability.Content = Math.Round(selectedFixture.DrawProbability, 4);
-                awayProbability.Content = Math.Round(selectedFixture.AwayWinProbability, 4);
             }
         }
     }

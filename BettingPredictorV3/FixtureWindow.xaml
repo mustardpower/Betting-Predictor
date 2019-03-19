@@ -45,8 +45,8 @@
         <Label Content="Home Win Probability:" Height="28" HorizontalAlignment="Left" Margin="36,495,0,0" Name="label3" VerticalAlignment="Top" Width="135" />
         <Label Content="Draw Probability:" Height="28" HorizontalAlignment="Left" Margin="367,495,0,0" Name="label4" VerticalAlignment="Top" Width="135" />
         <Label Content="Away Win Probability:" Height="28" HorizontalAlignment="Left" Margin="678,495,0,0" Name="label5" VerticalAlignment="Top" Width="135" />
-        <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="187,495,0,0" Name="homeProbability" VerticalAlignment="Top" />
-        <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="489,495,0,0" Name="drawProbability" VerticalAlignment="Top" Width="46" />
-        <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="819,495,0,0" Name="awayProbability" VerticalAlignment="Top" Width="50" />
+        <Label Content="{Binding Path=HomeWinProbability}" Height="28" HorizontalAlignment="Left" Margin="187,495,0,0" Name="homeProbability" VerticalAlignment="Top" />
+        <Label Content="{Binding Path=DrawProbability}" Height="28" HorizontalAlignment="Left" Margin="489,495,0,0" Name="drawProbability" VerticalAlignment="Top" Width="184" />
+        <Label Content="{Binding Path=AwayWinProbability}" Height="28" HorizontalAlignment="Left" Margin="819,495,0,0" Name="awayProbability" VerticalAlignment="Top" Width="174" />
     </Grid>
 </Window>
