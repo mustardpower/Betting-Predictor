@@ -1,24 +1,41 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BettingPredictorV3", "BettingPredictorV3\BettingPredictorV3.csproj", "{53F30620-043E-4D6C-8D71-6A07F346CA54}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA773B83-3911-4601-8B11-771D5E611816}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BettingPredictorV3Tests", "BettingPredictorV3Tests1\BettingPredictorV3Tests.csproj", "{514EB02F-1502-4DCF-BC7B-1EBB4D308F36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53F30620-043E-4D6C-8D71-6A07F346CA54}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{53F30620-043E-4D6C-8D71-6A07F346CA54}.Debug|x86.ActiveCfg = Debug|x86
 		{53F30620-043E-4D6C-8D71-6A07F346CA54}.Debug|x86.Build.0 = Debug|x86
+		{53F30620-043E-4D6C-8D71-6A07F346CA54}.Release|Any CPU.ActiveCfg = Release|x86
 		{53F30620-043E-4D6C-8D71-6A07F346CA54}.Release|x86.ActiveCfg = Release|x86
 		{53F30620-043E-4D6C-8D71-6A07F346CA54}.Release|x86.Build.0 = Release|x86
+		{514EB02F-1502-4DCF-BC7B-1EBB4D308F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{514EB02F-1502-4DCF-BC7B-1EBB4D308F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{514EB02F-1502-4DCF-BC7B-1EBB4D308F36}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{514EB02F-1502-4DCF-BC7B-1EBB4D308F36}.Debug|x86.Build.0 = Debug|Any CPU
+		{514EB02F-1502-4DCF-BC7B-1EBB4D308F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{514EB02F-1502-4DCF-BC7B-1EBB4D308F36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{514EB02F-1502-4DCF-BC7B-1EBB4D308F36}.Release|x86.ActiveCfg = Release|Any CPU
+		{514EB02F-1502-4DCF-BC7B-1EBB4D308F36}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DCC82D21-B163-4456-BB67-6DE225620C74}
 	EndGlobalSection
 EndGlobal

@@ -8,12 +8,12 @@ namespace BettingPredictorV3.DataStructures
     [Serializable]
     public class League
     {
-        private String league_ID;
-        private List<Team> teams = new List<Team>();
+        private string league_ID;
 
         public League(String league_ID)
         {
             this.league_ID = league_ID;
+            Teams = new List<Team>();
         }
 
         public String LeagueID
@@ -28,17 +28,19 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
+        public List<Team> Teams { get; set; }
+
         public void AddTeam(Team team)
         {
-            if (teams.Find(x => x.Name == team.Name) == null)
+            if (Teams.Find(x => x.Name == team.Name) == null)
             {
-                teams.Add(team);
+                Teams.Add(team);
             }
         }
 
         public Team GetTeam(String name)
         {
-            foreach (Team team in teams)
+            foreach (Team team in Teams)
             {
                 if (team.Name == name)
                 {
@@ -51,13 +53,13 @@ namespace BettingPredictorV3.DataStructures
 
         public void AddFixture(Fixture fixture)
         {
-            if (teams.Count(x => x.Name == fixture.HomeTeam.Name) == 0)
+            if (Teams.Count(x => x.Name == fixture.HomeTeam.Name) == 0)
             {
                 // if no match found then add team to the league
                 AddTeam(fixture.HomeTeam);
             }
 
-            foreach (Team team in teams)
+            foreach (Team team in Teams)
             {
                 if (team.Name == fixture.HomeTeam.Name)
                 {
@@ -98,6 +100,9 @@ namespace BettingPredictorV3.DataStructures
 
             /* Additional league data has been added at a later point, 
             these new leagues have less info in a different format */
+
+            Console.WriteLine("[{0}]", string.Join("\", \"", fixture_data));
+
             var newLeague = fixture_data.Length == 19; 
             var dateIndex = newLeague ? 3 : 1;
             var date_params = fixture_data[dateIndex].Split('/');
@@ -185,7 +190,7 @@ namespace BettingPredictorV3.DataStructures
 
         public void PredictResults(double alpha, double beta)
         {
-            foreach (Team team in teams)
+            foreach (Team team in Teams)
             {
                 team.PredictResults(alpha,beta);
             }
@@ -194,7 +199,7 @@ namespace BettingPredictorV3.DataStructures
         public List<Fixture> GetFixtures()
         {
             List<Fixture> fixtures = new List<Fixture>();
-            foreach (Team team in teams)
+            foreach (Team team in Teams)
             {
                 fixtures.AddRange(team.Fixtures);
             }
@@ -205,7 +210,7 @@ namespace BettingPredictorV3.DataStructures
         public List<Fixture> GetFixtures(DateTime date)
         {
             List<Fixture> fixtures = new List<Fixture>();
-            foreach (Team team in teams)
+            foreach (Team team in Teams)
             {
                 fixtures.AddRange(team.GetFixturesBefore(date));
             }
@@ -252,7 +257,7 @@ namespace BettingPredictorV3.DataStructures
         public List<double> GetHomeResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
-            foreach (Team team in teams)
+            foreach (Team team in Teams)
             {
                 residuals.AddRange(team.GetHomeResiduals(date));
             }
@@ -262,7 +267,7 @@ namespace BettingPredictorV3.DataStructures
         public List<double> GetAwayResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
-            foreach (Team team in teams)
+            foreach (Team team in Teams)
             {
                 residuals.AddRange(team.GetAwayResiduals(date));
             }

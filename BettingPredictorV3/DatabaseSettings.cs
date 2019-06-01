@@ -9,6 +9,11 @@ namespace BettingPredictorV3
     {
         static private List<string> bookmakersUsed;
 
+        static DatabaseSettings()
+        {
+            BookmakersUsed = new List<string>();
+        }
+
         static public List<string> BookmakersUsed
         {
             get
