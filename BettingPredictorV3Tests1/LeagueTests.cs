@@ -38,10 +38,18 @@ namespace BettingPredictorV3.DataStructures.Tests
             Assert.AreEqual(league.Teams.Count, 2);
 
             Fixture fixture = league.GetFixtures().First();
+
+            Assert.AreEqual(fixture.League, league);
+            Assert.AreEqual(fixture.LeagueID, "SP2");
+            Assert.AreEqual(fixture.Date.Day, 16);
+            Assert.AreEqual(fixture.Date.Month, 8);
+            Assert.AreEqual(fixture.Date.Year, 2013);
+
             Assert.AreEqual(fixture.HomeTeam.Name, "Girona");
             Assert.AreEqual(fixture.AwayTeam.Name, "Alaves");
             Assert.AreEqual(fixture.HomeGoals, 1);
             Assert.AreEqual(fixture.AwayGoals, 0);
+            
         }
     }
 }
