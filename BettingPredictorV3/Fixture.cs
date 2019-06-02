@@ -32,7 +32,7 @@ namespace BettingPredictorV3.DataStructures
         public int HomeForm { get; set; }
         public int AwayForm { get; set; }
 
-        public List<Bookmaker> odds;
+        public List<Bookmaker> Odds { get; set; }
 
         public Fixture()
         {
@@ -45,7 +45,7 @@ namespace BettingPredictorV3.DataStructures
             this.homeTeam = home_team;
             this.awayTeam = away_team;
             this.referee = referee;
-            this.odds = odds;
+            this.Odds = odds;
             predictedHomeGoals = 0;
             predictedAwayGoals = 0;
             bothToScore = 0.0;
@@ -61,7 +61,7 @@ namespace BettingPredictorV3.DataStructures
             this.homeGoals = home_goals;
             this.awayGoals = away_goals;
             this.referee = referee;
-            this.odds = odds;
+            this.Odds = odds;
             predictedHomeGoals = 0;
             predictedAwayGoals = 0;
 
@@ -514,13 +514,13 @@ namespace BettingPredictorV3.DataStructures
 
         public void FindBestOdds()
         {
-            if(odds.Count() > 0)
+            if(Odds.Count() > 0)
             {
-                BestHomeOdds = odds.First();
-                BestDrawOdds = odds.First();
-                BestAwayOdds = odds.First();
+                BestHomeOdds = Odds.First();
+                BestDrawOdds = Odds.First();
+                BestAwayOdds = Odds.First();
 
-                foreach (Bookmaker bookie in odds)
+                foreach (Bookmaker bookie in Odds)
                 {
                     if (bookie.HomeOdds > BestHomeOdds.HomeOdds)
                     {

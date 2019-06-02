@@ -5,13 +5,13 @@ using System.Text;
 
 namespace BettingPredictorV3
 {
-    static class DatabaseSettings
+    public static class DatabaseSettings
     {
         static private List<string> bookmakersUsed;
 
         static DatabaseSettings()
         {
-            BookmakersUsed = new List<string>();
+            BookmakersUsed = DefaultBookmakers();
         }
 
         static public List<string> BookmakersUsed
