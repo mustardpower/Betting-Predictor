@@ -7,13 +7,18 @@ using System.Windows.Forms;
 
 namespace BettingPredictorV3
 {
-    class FileParser : IFileParser
+    public class FileParser : IFileParser
     {
-        Database database;
+        public Database Database { get; set; }
+
+        public FileParser()
+        {
+            Database = new Database();
+        }
 
         public Database PopulateDatabase(Database database, Splash splash)
         {
-            this.database = database;
+            Database = database;
 
             ParseFiles(database, splash);
 
@@ -81,7 +86,7 @@ namespace BettingPredictorV3
         {
             using (WebClient client = new WebClient())         // download upcoming fixture list
             {
-                foreach (String fixturesFile in database.FixtureFiles)
+                foreach (String fixturesFile in Database.FixtureFiles)
                 {
                     String htmlCode = client.DownloadString(fixturesFile);
                     ParseUpcomingFixtures(htmlCode);
@@ -102,7 +107,7 @@ namespace BettingPredictorV3
                 if (league_code.Length > 0)
                 {
                     Console.WriteLine(league_code + ": " + fixtureData.Length);
-                    database.AddLeague(league_code, fixtureData);
+                    Database.AddLeague(league_code, fixtureData);
                 }
             }
         }
@@ -132,19 +137,22 @@ namespace BettingPredictorV3
                 var dateParams = fixtureData[dateIndex].Split('/');
 
                 DateTime date;
+                DateTime kickOffTime;
                 if (newLeague)
                 {
-                    DateTime kickOffTime = Convert.ToDateTime(fixtureData[3]);
+                    kickOffTime = Convert.ToDateTime(fixtureData[3]);
                     date = new DateTime(int.Parse(dateParams[2]), int.Parse(dateParams[1]), int.Parse(dateParams[0]));
-                    date = date.AddHours(kickOffTime.Hour);
-                    date = date.AddMinutes(kickOffTime.Minute);
                 }
                 else
                 {
+                    kickOffTime = Convert.ToDateTime(fixtureData[2]);
                     date = new DateTime(int.Parse(dateParams[2]), int.Parse(dateParams[1]), int.Parse(dateParams[0]));
                 }
 
-                if(DatabaseSettings.IgnorePlayedFixtures)
+                date = date.AddHours(kickOffTime.Hour);
+                date = date.AddMinutes(kickOffTime.Minute);
+
+                if (DatabaseSettings.IgnorePlayedFixtures)
                 {
                     if(date < DateTime.Today)
                     {
@@ -152,8 +160,8 @@ namespace BettingPredictorV3
                     }
                 }
 
-                String homeTeamName = newLeague ? fixtureData[4] : fixtureData[2];
-                String awayTeamName = newLeague ? fixtureData[5] : fixtureData[3];
+                string homeTeamName = newLeague ? fixtureData[4] : fixtureData[3];
+                string awayTeamName = newLeague ? fixtureData[5] : fixtureData[4];
 
                 for (int idx = 0; idx < fixtureData.Length; idx++)
                 {
@@ -208,7 +216,7 @@ namespace BettingPredictorV3
                     String a = ex.Message;
                 }
 
-                database.AddUpcomingFixture(leagueCode, date, homeTeamName, awayTeamName, odds);
+                Database.AddUpcomingFixture(leagueCode, date, homeTeamName, awayTeamName, odds);
             }
         }
     }

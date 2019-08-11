@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="LeagueTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FileParserUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
