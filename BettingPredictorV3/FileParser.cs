@@ -94,16 +94,16 @@ namespace BettingPredictorV3
             }
         }
 
-        public void ParseHistoricalData(String htmlCode)
+        public void ParseHistoricalData(string htmlCode)
         {
             int headings = htmlCode.IndexOf("\n");
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
             var fixtures = htmlCode.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (String fixture in fixtures)
+            foreach (string fixture in fixtures)
             {
                 var fixtureData = fixture.Split(new[] { ',' }, System.StringSplitOptions.None);
-                String league_code = fixtureData[0];
+                string league_code = fixtureData[0];
                 if (league_code.Length > 0)
                 {
                     Console.WriteLine(league_code + ": " + fixtureData.Length);
@@ -114,19 +114,23 @@ namespace BettingPredictorV3
 
         /* Reads in fixture data for upcoming fixtures. Obviously these will not have goals scored or conceded and will just be dates, team names and odds.
          * Teams from upcoming fixtures are not actually added to the database - if they do not already exist in the database the fixture will be ignored */
-        public void ParseUpcomingFixtures(String htmlCode)
+        public void ParseUpcomingFixtures(string htmlCode)
         {
-            List<Bookmaker> odds = new List<Bookmaker>();
             int headings = htmlCode.IndexOf("\n");
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
             var fixtures = htmlCode.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+            ParseUpcomingFixtures(fixtures);
+        }
 
-            foreach (String fixture in fixtures)
+        private void ParseUpcomingFixtures(string[] fixtures)
+        {
+            List<Bookmaker> odds = new List<Bookmaker>();
+            foreach (string fixture in fixtures)
             {
                 odds.Clear();
 
                 var fixtureData = fixture.Split(new[] { ',' }, System.StringSplitOptions.None);
-                String leagueCode = fixtureData[0];
+                string leagueCode = fixtureData[0];
                 if (leagueCode.Length == 0)
                 {
                     continue;
@@ -154,7 +158,7 @@ namespace BettingPredictorV3
 
                 if (DatabaseSettings.IgnorePlayedFixtures)
                 {
-                    if(date < DateTime.Today)
+                    if (date < DateTime.Today)
                     {
                         continue;
                     }
@@ -213,7 +217,7 @@ namespace BettingPredictorV3
                 }
                 catch (FormatException ex)
                 {
-                    String a = ex.Message;
+                    string a = ex.Message;
                 }
 
                 Database.AddUpcomingFixture(leagueCode, date, homeTeamName, awayTeamName, odds);
