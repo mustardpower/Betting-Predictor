@@ -70,11 +70,11 @@
                   Margin="22,70,0,0" Name="dataGrid_ProfitLossReport" Loaded="DataGrid_ProfitLossReport_Loaded"
                   VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Goal Difference Interval" Binding="{Binding Path=gdInterval}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Home / Away" Binding="{Binding Path=homeOrAway}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Number of Matches" Binding="{Binding Path=numberOfMatches}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Profit" Binding="{Binding Path=profit}" ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Yield (%)" Binding="{Binding Path=profitYield}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Goal Difference Interval" Binding="{Binding Path=GdInterval}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Home / Away" Binding="{Binding Path=HomeOrAway}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Number of Matches" Binding="{Binding Path=NumberOfMatches}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Profit" Binding="{Binding Path=Profit}" ></DataGridTextColumn>
+                        <DataGridTextColumn Header="Yield (%)" Binding="{Binding Path=ProfitYield}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

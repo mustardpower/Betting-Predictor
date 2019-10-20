@@ -212,8 +212,8 @@ namespace BettingPredictorV3
                 x1 = x2;
                 x2 += h;
 
-                homeInterval.setRange(x1, x2);
-                awayInterval.setRange(x1, x2);
+                homeInterval.SetRange(x1, x2);
+                awayInterval.SetRange(x1, x2);
                 profitLossIntervals.Add(homeInterval);
                 profitLossIntervals.Add(awayInterval);
             }
