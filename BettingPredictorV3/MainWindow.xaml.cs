@@ -64,9 +64,14 @@ namespace BettingPredictorV3
 
         }
 
-        private void DataGrid_ProfitLossReport_Loaded(object sender, RoutedEventArgs e)
+        private void DataGrid_HomeProfitLossReport_Loaded(object sender, RoutedEventArgs e)
         {
-            dataGrid_ProfitLossReport.ItemsSource = database.CalculateProfitLossIntervals();
+            dataGrid_HomeProfitLossReport.ItemsSource = database.CalculateProfitLossIntervals().Where(x => x.HomeOrAway == "Home");
+        }
+
+        private void DataGrid_AwayProfitLossReport_Loaded(object sender, RoutedEventArgs e)
+        {
+            dataGrid_AwayProfitLossReport.ItemsSource = database.CalculateProfitLossIntervals().Where(x => x.HomeOrAway == "Away");
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)

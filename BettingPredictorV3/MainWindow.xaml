@@ -66,17 +66,28 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Reports" Name="tabItem3">
-                <DataGrid AutoGenerateColumns="False" Height="719" HorizontalAlignment="Left"
-                  Margin="22,70,0,0" Name="dataGrid_ProfitLossReport" Loaded="DataGrid_ProfitLossReport_Loaded"
+                <StackPanel>
+                    <DataGrid AutoGenerateColumns="False" Height="220" HorizontalAlignment="Left"
+                  Margin="22,70,0,0" Name="dataGrid_HomeProfitLossReport" Loaded="DataGrid_HomeProfitLossReport_Loaded"
                   VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Goal Difference Interval" Binding="{Binding Path=GdInterval}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Home / Away" Binding="{Binding Path=HomeOrAway}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Number of Matches" Binding="{Binding Path=NumberOfMatches}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Profit" Binding="{Binding Path=Profit}" ></DataGridTextColumn>
-                        <DataGridTextColumn Header="Yield (%)" Binding="{Binding Path=ProfitYield}"></DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Goal Difference Interval" Binding="{Binding Path=GdInterval}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Number of Matches" Binding="{Binding Path=NumberOfMatches}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Profit" Binding="{Binding Path=Profit}" ></DataGridTextColumn>
+                            <DataGridTextColumn Header="Yield (%)" Binding="{Binding Path=ProfitYield}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid AutoGenerateColumns="False" Height="220" HorizontalAlignment="Left"
+                  Margin="22,70,0,0" Name="dataGrid_AwayProfitLossReport" Loaded="DataGrid_AwayProfitLossReport_Loaded"
+                  VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Goal Difference Interval" Binding="{Binding Path=GdInterval}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Number of Matches" Binding="{Binding Path=NumberOfMatches}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Profit" Binding="{Binding Path=Profit}" ></DataGridTextColumn>
+                            <DataGridTextColumn Header="Yield (%)" Binding="{Binding Path=ProfitYield}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
             </TabItem>
         </TabControl>
         <Button Content="Search" Height="32" HorizontalAlignment="Left" Margin="1045,331,0,0" Name="searchButton" Click="SearchButton_Click" VerticalAlignment="Top" Width="90" />

@@ -163,7 +163,7 @@ namespace BettingPredictorV3
                 }
             }
 
-            double yield = profit / fixtures.Count;
+            double yield = (profit / fixtures.Count) * 100.0;
             string intervalName = "Test interval name";
             return new ProfitLossInterval(intervalName, "Home", fixtures.Count, profit, yield);
         }
@@ -192,7 +192,7 @@ namespace BettingPredictorV3
                 }
             }
 
-            double yield = profit / fixtures.Count;
+            double yield = (profit / fixtures.Count) * 100.0;
             string intervalName = "Test interval name";
             return new ProfitLossInterval(intervalName, "Away", fixtures.Count, profit, yield);
         }
