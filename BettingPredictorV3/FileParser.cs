@@ -191,20 +191,20 @@ namespace BettingPredictorV3
                     }
                     else
                     {
-                        bookmakers.Add(new Bookmaker("Bet 365", double.Parse(fixtureData[10]), double.Parse(fixtureData[11]),
-                                double.Parse(fixtureData[12])));
-                        bookmakers.Add(new Bookmaker("BetWin", double.Parse(fixtureData[13]), double.Parse(fixtureData[14]),
-                            double.Parse(fixtureData[15])));
-                        bookmakers.Add(new Bookmaker("InterWetten", double.Parse(fixtureData[16]), double.Parse(fixtureData[17]),
-                            double.Parse(fixtureData[18])));
+                        bookmakers.Add(new Bookmaker("Bet 365", double.Parse(fixtureData[11]), double.Parse(fixtureData[12]),
+                                double.Parse(fixtureData[13])));
+                        bookmakers.Add(new Bookmaker("BetWin", double.Parse(fixtureData[14]), double.Parse(fixtureData[15]),
+                            double.Parse(fixtureData[16])));
+                        bookmakers.Add(new Bookmaker("InterWetten", double.Parse(fixtureData[17]), double.Parse(fixtureData[18]),
+                            double.Parse(fixtureData[19])));
                         /*bookmakers.Add(new Bookmaker("Ladbrokes", double.Parse(fixtureData[19]), double.Parse(fixtureData[20]),
                             double.Parse(fixtureData[21])));*/
-                        bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixtureData[19]), double.Parse(fixtureData[20]),
-                            double.Parse(fixtureData[21])));
-                        bookmakers.Add(new Bookmaker("William Hill", double.Parse(fixtureData[22]), double.Parse(fixtureData[23]),
-                            double.Parse(fixtureData[24])));
-                        bookmakers.Add(new Bookmaker("Victor Chandler", double.Parse(fixtureData[25]), double.Parse(fixtureData[26]),
-                            double.Parse(fixtureData[27])));
+                        bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixtureData[20]), double.Parse(fixtureData[21]),
+                            double.Parse(fixtureData[22])));
+                        bookmakers.Add(new Bookmaker("William Hill", double.Parse(fixtureData[23]), double.Parse(fixtureData[24]),
+                            double.Parse(fixtureData[25])));
+                        bookmakers.Add(new Bookmaker("Victor Chandler", double.Parse(fixtureData[26]), double.Parse(fixtureData[27]),
+                            double.Parse(fixtureData[28])));
                         /*bookmakers.Add(new Bookmaker("Stan James", double.Parse(fixtureData[28]), double.Parse(fixtureData[29]),
                             double.Parse(fixtureData[30])));*/
                     }

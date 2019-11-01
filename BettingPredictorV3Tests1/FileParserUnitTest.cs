@@ -21,13 +21,43 @@ B1,09 / 08 / 2019,19:30,Anderlecht,Mechelen,,,,,,,1.75,4.2,4,1.83,3.75,3.9,1.77,
 
             Fixture fixture = fileParser.Database.FixtureList.First();
 
-            Assert.AreEqual(fixture.LeagueID, "B1");
-            Assert.AreEqual(fixture.Date.Day, 9);
-            Assert.AreEqual(fixture.Date.Month, 8);
-            Assert.AreEqual(fixture.Date.Year, 2019);
+            Assert.AreEqual("B1", fixture.LeagueID);
+            Assert.AreEqual(9, fixture.Date.Day);
+            Assert.AreEqual(8, fixture.Date.Month);
+            Assert.AreEqual(2019, fixture.Date.Year);
 
-            Assert.AreEqual(fixture.HomeTeam.Name, "Anderlecht");
-            Assert.AreEqual(fixture.AwayTeam.Name, "Mechelen");
+            Assert.AreEqual("Anderlecht", fixture.HomeTeam.Name);
+            Assert.AreEqual("Mechelen", fixture.AwayTeam.Name);
+
+            Assert.AreEqual("Bet 365", fixture.Odds[0].Name);
+            Assert.AreEqual(1.75, fixture.Odds[0].HomeOdds);
+            Assert.AreEqual(4.2, fixture.Odds[0].DrawOdds);
+            Assert.AreEqual(4, fixture.Odds[0].AwayOdds);
+
+            Assert.AreEqual("BetWin", fixture.Odds[1].Name);
+            Assert.AreEqual(1.83, fixture.Odds[1].HomeOdds);
+            Assert.AreEqual(3.75, fixture.Odds[1].DrawOdds);
+            Assert.AreEqual(3.9, fixture.Odds[1].AwayOdds);
+
+            Assert.AreEqual("InterWetten", fixture.Odds[2].Name);
+            Assert.AreEqual(1.77, fixture.Odds[2].HomeOdds);
+            Assert.AreEqual(3.8, fixture.Odds[2].DrawOdds);
+            Assert.AreEqual(3.95, fixture.Odds[2].AwayOdds);
+
+            Assert.AreEqual("Pinnacle Sport", fixture.Odds[3].Name);
+            Assert.AreEqual(1.82, fixture.Odds[3].HomeOdds);
+            Assert.AreEqual(3.88, fixture.Odds[3].DrawOdds);
+            Assert.AreEqual(4.36, fixture.Odds[3].AwayOdds);
+
+            Assert.AreEqual("William Hill", fixture.Odds[4].Name);
+            Assert.AreEqual(1.75, fixture.Odds[4].HomeOdds);
+            Assert.AreEqual(3.8, fixture.Odds[4].DrawOdds);
+            Assert.AreEqual(4.2, fixture.Odds[4].AwayOdds);
+
+            Assert.AreEqual("Victor Chandler", fixture.Odds[5].Name);
+            Assert.AreEqual(1.75, fixture.Odds[5].HomeOdds);
+            Assert.AreEqual(4, fixture.Odds[5].DrawOdds);
+            Assert.AreEqual(4.2, fixture.Odds[5].AwayOdds);
         }
     }
 }
