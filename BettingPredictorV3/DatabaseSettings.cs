@@ -27,7 +27,10 @@ namespace BettingPredictorV3
 
                 // new leagues do not have odds for individual bookmakers
                 // so add placeholder for overall best odds
-                bookmakersUsed.Add("Best Odds"); 
+                if(bookmakersUsed.Count < 1)
+                {
+                    bookmakersUsed.Add("Best Odds");
+                }
             }
         }
 
