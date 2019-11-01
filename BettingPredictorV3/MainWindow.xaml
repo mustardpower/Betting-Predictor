@@ -67,8 +67,9 @@
             </TabItem>
             <TabItem Header="Reports" Name="tabItem3">
                 <StackPanel>
+                    <Label Height="30">Home Intervals</Label>
                     <DataGrid AutoGenerateColumns="False" Height="220" HorizontalAlignment="Left"
-                  Margin="22,70,0,0" Name="dataGrid_HomeProfitLossReport" Loaded="DataGrid_HomeProfitLossReport_Loaded"
+                  Margin="22,0,0,0" Name="dataGrid_HomeProfitLossReport" Loaded="DataGrid_HomeProfitLossReport_Loaded"
                   VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Goal Difference Interval" Binding="{Binding Path=GdInterval}"></DataGridTextColumn>
@@ -77,8 +78,9 @@
                             <DataGridTextColumn Header="Yield (%)" Binding="{Binding Path=ProfitYield}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Label Height="30">Away Intervals</Label>
                     <DataGrid AutoGenerateColumns="False" Height="220" HorizontalAlignment="Left"
-                  Margin="22,70,0,0" Name="dataGrid_AwayProfitLossReport" Loaded="DataGrid_AwayProfitLossReport_Loaded"
+                  Margin="22,0,0,0" Name="dataGrid_AwayProfitLossReport" Loaded="DataGrid_AwayProfitLossReport_Loaded"
                   VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Goal Difference Interval" Binding="{Binding Path=GdInterval}"></DataGridTextColumn>
