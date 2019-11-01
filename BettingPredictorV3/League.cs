@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -107,10 +108,21 @@ namespace BettingPredictorV3.DataStructures
             var dateIndex = newLeague ? 3 : 1;
             var date_params = fixture_data[dateIndex].Split('/');
             int yearParam = int.Parse(date_params[2]);
-            if(!newLeague) { yearParam += 2000; }
+            const int kMinimumYearPossible = 1990;
+            if (yearParam < kMinimumYearPossible)
+            {
+                yearParam += 2000;
+            }
             DateTime date = new DateTime(yearParam, int.Parse(date_params[1]), int.Parse(date_params[0]));
-            String home_team_name = newLeague ? fixture_data[5] : fixture_data[2];
-            String away_team_name = newLeague ? fixture_data[6] : fixture_data[3];
+            Debug.Assert(date.Year > 1990);
+            Debug.Assert(date.Year < 3000);
+
+            // kick off times were added for old leagues for the 2019/20 season
+            DateTime dateThatKickOffTimeWasAdded = new DateTime(2019, 7, 1);
+            int extraColumnOffset = date > dateThatKickOffTimeWasAdded ? 1 : 0;
+
+            String home_team_name = newLeague ? fixture_data[5] : fixture_data[2 + extraColumnOffset];
+            String away_team_name = newLeague ? fixture_data[6] : fixture_data[3 + extraColumnOffset];
 
             for (int idx = 0; idx < fixture_data.Length; idx++)
             {
@@ -142,15 +154,16 @@ namespace BettingPredictorV3.DataStructures
             int home_goals;
             int away_goals;
 
-            if(newLeague)
+            if (newLeague)
             {
                 home_goals = int.Parse(fixture_data[7]);
                 away_goals = int.Parse(fixture_data[8]);
             }
             else
             {
-                home_goals = int.Parse(fixture_data[4]);
-                away_goals = int.Parse(fixture_data[5]);
+                home_goals = int.Parse(fixture_data[4 + extraColumnOffset]);
+                away_goals = int.Parse(fixture_data[5 + extraColumnOffset]);
+                
             }
             
 
