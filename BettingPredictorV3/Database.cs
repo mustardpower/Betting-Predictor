@@ -343,7 +343,7 @@ namespace BettingPredictorV3
 
         public void SetHistoryFiles()
         {
-            List<string> yearCodes = new List<string> { "1314", "1415", "1516", "1617", "1718", "1819" };
+            List<string> yearCodes = new List<string> { "1415", "1516", "1617", "1718", "1819", "1920" };
             List<string> leagueCodes = new List<string>
             {
                 "E0", "E1", "E2", "E3", "EC", "SC0", "SC1", "SC2", "SC3",
@@ -355,7 +355,7 @@ namespace BettingPredictorV3
                 historyFiles.Add(leagueCode, new List<string>());
                 foreach (string yearCode in yearCodes)
                 {
-                    historyFiles[leagueCode].Add(String.Format("http://www.football-data.co.uk/mmz4281/{0}/{1}.csv", yearCode, leagueCode));
+                    historyFiles[leagueCode].Add(string.Format("http://www.football-data.co.uk/mmz4281/{0}/{1}.csv", yearCode, leagueCode));
                 }
             }
 
@@ -383,7 +383,7 @@ namespace BettingPredictorV3
 
             foreach (var leagueCode in fileToURLNameMap)
             {
-                historyFiles.Add(leagueCode.Value, new List<string> { String.Format("http://www.football-data.co.uk/new/{0}.csv", leagueCode.Key) });
+                historyFiles.Add(leagueCode.Value, new List<string> { string.Format("http://www.football-data.co.uk/new/{0}.csv", leagueCode.Key) });
             }
         }
 

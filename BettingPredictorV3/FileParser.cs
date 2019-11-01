@@ -77,8 +77,12 @@ namespace BettingPredictorV3
                 else
                 {
                     string statusCode = ((HttpWebResponse)(ex.Response)).StatusCode.ToString();
-                    MessageBox.Show("Could not download file: " + aFile + ". Error:" + statusCode);
+                    MessageBox.Show("Could not download file: " + aFile + ". Error: " + statusCode);
                 }
+            }
+            catch(FormatException ex)
+            {
+                MessageBox.Show("Could not download file: " + aFile + ".\n\n Error: " + ex.Message);
             }
         }
 
