@@ -1,0 +1,29 @@
+﻿<Window x:Class="BettingPredictorV3.DatabaseSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BettingPredictorV3"
+        mc:Ignorable="d"
+        Title="DatabaseSettings" Height="394.5" Width="400">
+    <Grid>
+        <CheckBox Content="Ignore played fixtures" HorizontalAlignment="Left" Margin="77,44,0,0" VerticalAlignment="Top"/>
+        <CheckBox Content="Populate database" HorizontalAlignment="Left" Margin="77,74,0,0" VerticalAlignment="Top"/>
+        <GroupBox Header="Bookmakers used" HorizontalAlignment="Left" Height="188" Margin="77,148,0,0" VerticalAlignment="Top" Width="246">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                <CheckBox Content="Bet 365"></CheckBox>
+                <CheckBox Content="InterWetten"></CheckBox>
+                <CheckBox Content="BetWin"></CheckBox>
+                <CheckBox Content="Victor Chandler"></CheckBox>
+                </StackPanel>
+                <StackPanel>
+                    <CheckBox Content="William Hill"></CheckBox>
+                    <CheckBox Content="Pinnacle Sport"></CheckBox>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="230,340,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="315,340,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+    </Grid>
+</Window>
