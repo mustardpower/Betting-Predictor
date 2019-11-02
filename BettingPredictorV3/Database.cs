@@ -208,11 +208,12 @@ namespace BettingPredictorV3
                 intervalFixtures = FilterForChosenGD(previousFixtures, x1, x2);
                 ProfitLossInterval homeInterval = CalculateHomeGameProfit(intervalFixtures);
                 ProfitLossInterval awayInterval = CalculateAwayGameProfit(intervalFixtures);
+                homeInterval.SetRange(x1, x2);
+                awayInterval.SetRange(x1, x2);
+
                 x1 = x2;
                 x2 += h;
 
-                homeInterval.SetRange(x1, x2);
-                awayInterval.SetRange(x1, x2);
                 profitLossIntervals.Add(homeInterval);
                 profitLossIntervals.Add(awayInterval);
             }
