@@ -221,7 +221,7 @@ namespace BettingPredictorV3.DataStructures
         }
 
 
-        public List<double> HomeWeightingFunction(List<double> sample)
+        public List<double> WeightingFunction(List<double> sample)
         {
             List<double> new_sample = new List<double>();
             int n = sample.Count;
@@ -265,58 +265,6 @@ namespace BettingPredictorV3.DataStructures
 
                 new_sample.Add(new_x);
 	        }
-
-            return new_sample;
-        }
-        public List<double> AwayWeightingFunction(List<double> sample)
-        {
-            List<double> new_sample = new List<double>();
-            int n = sample.Count;
-            double m = 0;	// the total number of goals scored by the team
-            double idx = 1;
-            double k; // weighting variable
-            double log_x;
-
-            double sum = 0;
-
-            foreach (double x in sample)
-            {
-                m += x;		// sum all the goals in the sample
-
-                if (n > 2)
-                {
-                    sum += Math.Log(idx) / Math.Log((double)(n / 2));	// tally up values of log^x to the base n/2
-                }
-                idx++;
-            }
-
-            m = m / n;	// m is now the mean goals of the sample
-
-            if (sum == 0)
-            {
-                k = 0;
-            }
-            else
-            {
-                k = n / sum;
-            }
-            idx = 1;
-
-            foreach (double x in sample)
-            {
-                if (n > 2)
-                {
-                    log_x = Math.Log(idx) / Math.Log((double)(n / 2));
-                }
-                else
-                {
-                    log_x = 0;
-                }
-                double new_x = k * log_x * (x);
-                idx++;
-
-                new_sample.Add(new_x);
-            }
 
             return new_sample;
         }
@@ -394,8 +342,8 @@ namespace BettingPredictorV3.DataStructures
                 homeOppSample = homeTeam.CreateHomeOppositionSample(date);
                 awayOppSample = awayTeam.CreateAwayOppositionSample(date);
 
-                homeSample = HomeWeightingFunction(homeSample);
-                awaySample = AwayWeightingFunction(awaySample);
+                homeSample = WeightingFunction(homeSample);
+                awaySample = WeightingFunction(awaySample);
 
 				// calculates a home attacking strength and defence strength
                 CalculateStrengths(homeSample, awaySample, homeOppSample, awayOppSample, alpha,beta);
@@ -412,11 +360,7 @@ namespace BettingPredictorV3.DataStructures
                 averageAwayResidual = awayResiduals.Count > 0 ? awayResiduals.Average() : 0.0;
 
                 CalculateBothToScore();
-                CalculateKellyCriterion();
-
-                //// generate a large sample of simulated results
-                //simulated_sample = generateSimulatedResults();
-                //fixture_it->calculateProfit(simulated_sample,home_goals,away_goals,home_form,away_form); 
+                CalculateKellyCriterion(); 
             }
 		}
 
