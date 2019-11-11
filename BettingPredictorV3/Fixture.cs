@@ -290,8 +290,6 @@ namespace BettingPredictorV3.DataStructures
         {
             double lgavghome_goals = league.GetAverageHomeGoals(date);
             double lgavgaway_goals = league.GetAverageAwayGoals(date);
-            double lgavghome_conceded = lgavgaway_goals;
-            double lgavgaway_conceded = lgavghome_goals;
 
             double home_attack_strength;
             double home_defence_strength;
