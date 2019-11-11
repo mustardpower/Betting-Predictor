@@ -378,30 +378,6 @@ namespace BettingPredictorV3.DataStructures
             bothToScore -= (home_prob_no_goals * (1 - away_prob_no_goals)); // P(A = 0 & B != 0) 
         }
 
-        //public List<Fixture> generateSimulatedResults()
-        //{
-        //    List<Fixture> simulated_sample = new List<Fixture>();
-        //    const int NUMBER_OF_RESULTS = 5000;
-
-        //            // generate 5000 random poisson variables using the mean goals scored in home sample
-        //    Fixture temp;
-
-        //    simulated_sample.Clear();	// ensure previous simulated results are removed
-
-        //    for(int i=0;i<NUMBER_OF_RESULTS;i++)
-        //    {
-        //        Random rand = new Random();
-
-        //        predicted_home_goals = predicted_home_goals + (*rand.NextDouble());
-        //        double sim_home_goals  = alglib.invnormaldistribution(predicted_home_goals);
-        //        double sim_away_goals = alglib.invnormaldistribution(predicted_away_goals);
-        //        // generate random variables here using the mean goals scored as lambda
-        //        temp = new Fixture(league,date,home_team,away_team,sim_home_goals,sim_away_goals,new Referee(""),new List<Bookmaker>());
-        //        simulated_sample.Add(temp);
-        //    }
-        //    return simulated_sample;
-        //}
-
         public void CalculateKellyCriterion()
         {
             if(BestHomeOdds != null)
