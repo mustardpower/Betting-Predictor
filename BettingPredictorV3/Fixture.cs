@@ -204,55 +204,6 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-
-        public List<double> WeightingFunction(List<double> sample)
-        {
-            List<double> new_sample = new List<double>();
-            int n = sample.Count;
-	        double idx = 1;
-	        double k; // weighting variable
-	        double log_x;
-
-	        double sum = 0;
-
-	        foreach(double x in sample)
-	        {
-                if (n > 2)
-                {
-                    sum += Math.Log(idx) / Math.Log((double)(n / 2));	// tally up values of log^x to the base n/2
-                }
-		        idx++;
-	        }
-
-            if (sum == 0)
-            {
-                k = 0;
-            }
-            else
-            {
-                k = n / sum;
-            }
-	        idx = 1;
-
-	        foreach(double x in sample)
-	        {
-                if (n > 2)
-                {
-                    log_x = Math.Log(idx) / Math.Log((double)(n / 2));
-                }
-                else
-                {
-                    log_x = 0;
-                }
-		        double new_x = k*log_x*(x);
-		        idx++;
-
-                new_sample.Add(new_x);
-	        }
-
-            return new_sample;
-        }
-
         public void CalculateResiduals()
         {
             HomeResidual = homeGoals - predictedHomeGoals;
