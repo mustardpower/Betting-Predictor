@@ -20,8 +20,6 @@ namespace BettingPredictorV3.DataStructures
         private double predictedHomeGoals;
         private double predictedAwayGoals;
         private double predictedGoalDifference;
-        private double homeResidual;
-        private double awayResidual;
         private double averageHomeResidual;
         private double averageAwayResidual;
         private double bothToScore;   // probability that both teams score in the fixture
@@ -108,21 +106,9 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public double HomeResidual
-        {
-            get
-            {
-                return homeResidual;
-            }
-        }
+        public double HomeResidual { get; set; }
 
-        public double AwayResidual
-        {
-            get
-            {
-                return awayResidual;
-            }
-        }
+        public double AwayResidual { get; set; }
 
         public DateTime Date
         {
@@ -173,8 +159,6 @@ namespace BettingPredictorV3.DataStructures
 
 
         public double PredictedGoalDifference { get => predictedGoalDifference; set => predictedGoalDifference = value; }
-        public double Home_residual { get => homeResidual; set => homeResidual = value; }
-        public double Away_residual { get => awayResidual; set => awayResidual = value; }
         public double AverageHomeResidual { get => averageHomeResidual; set => averageHomeResidual = value; }
         public double AverageAwayResidual { get => averageAwayResidual; set => averageAwayResidual = value; }
         public double Arbitrage { get; private set; }
@@ -271,8 +255,8 @@ namespace BettingPredictorV3.DataStructures
 
         public void CalculateResiduals()
         {
-            homeResidual = homeGoals - predictedHomeGoals;
-            awayResidual = awayGoals - predictedAwayGoals;
+            HomeResidual = homeGoals - predictedHomeGoals;
+            AwayResidual = awayGoals - predictedAwayGoals;
         }
 
         public void CalculateGoalsPerGame()
@@ -312,56 +296,8 @@ namespace BettingPredictorV3.DataStructures
 
         public void PredictResult(double alpha,double beta)
         {
-            List<double> homeSample;
-            List<double> awaySample;
-            List<double> homeOppSample;
-            List<double> awayOppSample;
-
-            double lgavghome_goals;
-            double lgavgaway_goals;
-            double lgavghome_conceded;
-            double lgavgaway_conceded;
-
-            CalculateGoalsPerGame();
-            HomeForm = homeTeam.CalculateForm(date);
-            AwayForm = awayTeam.CalculateForm(date);
-
-            homeSample = homeTeam.CreateHomeSample(date);   // create the samples
-            awaySample = awayTeam.CreateAwaySample(date);
-
-			if((homeSample.Count != 0)&&(awaySample.Count != 0))
-			{
-                lgavghome_goals = league.GetAverageHomeGoals(date);
-				lgavgaway_goals = league.GetAverageAwayGoals(date);
-
-				//find the average teams concede at home and away this is the inverse of goals scored
-
-				lgavghome_conceded = lgavgaway_goals;
-				lgavgaway_conceded = lgavghome_goals;
-
-                homeOppSample = homeTeam.CreateHomeOppositionSample(date);
-                awayOppSample = awayTeam.CreateAwayOppositionSample(date);
-
-                homeSample = WeightingFunction(homeSample);
-                awaySample = WeightingFunction(awaySample);
-
-				// calculates a home attacking strength and defence strength
-                CalculateStrengths(homeSample, awaySample, homeOppSample, awayOppSample, alpha,beta);
-
-                predictedGoalDifference = predictedHomeGoals - predictedAwayGoals;
-
-                homeResidual = predictedHomeGoals - homeGoals;
-                awayResidual = predictedAwayGoals - awayResidual;
-
-                List<double> homeResiduals = homeTeam.GetResiduals(DateTime.Now);
-                averageHomeResidual = homeResiduals.Count > 0 ? homeResiduals.Average() : 0.0;
-
-                List<double> awayResiduals = homeTeam.GetResiduals(DateTime.Now);
-                averageAwayResidual = awayResiduals.Count > 0 ? awayResiduals.Average() : 0.0;
-
-                CalculateBothToScore();
-                CalculateKellyCriterion(); 
-            }
+            ResultPredictor resultPredictor = new ResultPredictor();
+            resultPredictor.PredictResult(this, alpha, beta);
 		}
 
         public void CalculateBothToScore()

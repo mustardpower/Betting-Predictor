@@ -83,6 +83,7 @@
     <Compile Include="IFileParser.cs" />
     <Compile Include="ProfitLossInterval.cs" />
     <Compile Include="Referee.cs" />
+    <Compile Include="ResultPredictor.cs" />
     <Compile Include="Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
