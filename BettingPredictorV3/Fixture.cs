@@ -245,12 +245,6 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public void PredictResult(double alpha,double beta)
-        {
-            ResultPredictor resultPredictor = new ResultPredictor();
-            resultPredictor.PredictResult(this, alpha, beta);
-		}
-
         public void CalculateBothToScore()
         {
             // subtract probabilities from 1.0 for the following results: 0-0, 1-0, 2-0, 3- 0 ....., 0-1, 0-2, 0-3....
