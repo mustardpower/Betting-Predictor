@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BettingPredictorV3
 {
-    class ResultPredictor
+    public class ResultPredictor
     {
         public void PredictResult(Fixture fixture, double alpha, double beta)
         {
