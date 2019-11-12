@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BettingPredictorV3;
 using BettingPredictorV3.DataStructures;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BettingPredictorV3Tests
 {
@@ -27,5 +28,23 @@ namespace BettingPredictorV3Tests
             Assert.AreEqual(0, fixture.PredictedHomeGoals, "Should not have changed since there are no previous fixtures");
             Assert.AreEqual(0, fixture.PredictedAwayGoals, "Should not have changed since there are no previous fixtures");
         }
+
+        [TestMethod]
+        public void TestWeightingFunctionChangesValues()
+        {
+            ResultPredictor resultPredictor = new ResultPredictor();
+            List<double> sample = new List<double>()
+            {
+                1, 2, 3, 4, 5, 6, 7, 8
+            };
+
+            List<double> weightedSample = resultPredictor.WeightingFunction(sample);
+
+            // test collections are the different by checking there
+            //are items in one list but not the other
+            Assert.IsFalse(weightedSample.Except(sample).Count() == 0);
+            Assert.IsFalse(sample.Except(weightedSample).Count() == 0);
+        }
+
     }
 }
