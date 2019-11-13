@@ -44,6 +44,7 @@ namespace BettingPredictorV3Tests
             //are items in one list but not the other
             Assert.IsFalse(weightedSample.Except(sample).Count() == 0);
             Assert.IsFalse(sample.Except(weightedSample).Count() == 0);
+            Assert.AreEqual(sample.Sum(), weightedSample.Sum(), "Weighting should not alter overall value");
         }
 
     }
