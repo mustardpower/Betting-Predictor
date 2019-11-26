@@ -30,6 +30,24 @@ namespace BettingPredictorV3Tests
         }
 
         [TestMethod]
+        public void TestWeightingFunctionSmallSample()
+        {
+            ResultPredictor resultPredictor = new ResultPredictor();
+            List<double> sample = new List<double>()
+            {
+                1, 3
+            };
+
+            List<double> weightedSample = resultPredictor.WeightingFunction(sample);
+
+            // test collections are the different by checking there
+            //are items in one list but not the other
+            Assert.IsFalse(weightedSample.Except(sample).Count() == 0);
+            Assert.IsFalse(sample.Except(weightedSample).Count() == 0);
+            Assert.AreEqual(sample.Sum(), weightedSample.Sum(), "Weighting should not alter overall value");
+        }
+
+        [TestMethod]
         public void TestWeightingFunctionChangesValues()
         {
             ResultPredictor resultPredictor = new ResultPredictor();

@@ -61,7 +61,7 @@ namespace BettingPredictorV3
             // increase weighting of sample for most recent data points
             foreach (double x in sample)
             {
-                sum += Math.Log(idx) * idx;
+                sum += Math.Log(idx) * x;
                 idx++;
             }
 
