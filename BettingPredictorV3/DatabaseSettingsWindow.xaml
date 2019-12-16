@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BettingPredictorV3"
         mc:Ignorable="d"
-        Title="Database Settings" Height="420" Width="420">
+        Title="Database Settings" Height="274" Width="281">
     <Grid>
-        <CheckBox Name="ignoredPlayedFixturesCheckbox"  Content="Ignore played fixtures" HorizontalAlignment="Left" Margin="77,44,0,0" VerticalAlignment="Top"/>
-        <CheckBox Name="populateDatabaseCheckBox" Content="Populate database" HorizontalAlignment="Left" Margin="77,74,0,0" VerticalAlignment="Top"/>
-        <GroupBox Header="Bookmakers used" HorizontalAlignment="Left" Height="188" Margin="77,148,0,0" VerticalAlignment="Top" Width="246">
+        <CheckBox Name="ignoredPlayedFixturesCheckbox"  Content="Ignore played fixtures" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="populateDatabaseCheckBox" Content="Populate database" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top"/>
+        <GroupBox Header="Bookmakers used" HorizontalAlignment="Left" Height="100" Margin="10,85,0,0" VerticalAlignment="Top" Width="246">
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <CheckBox Name="bet365Checkbox" Content="Bet 365"></CheckBox>
@@ -23,7 +23,7 @@
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-        <Button Content="OK" HorizontalAlignment="Left" Margin="230,340,0,10" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="315,340,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="96,210,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="181,210,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
     </Grid>
 </Window>
