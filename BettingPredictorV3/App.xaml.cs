@@ -32,8 +32,8 @@ namespace BettingPredictorV3
         internal ApplicationInitializeDelegate ApplicationInitialize;
         private void _applicationInitialize(Splash splashWindow)
         {
-            System.Windows.Forms.DialogResult result = new DatabaseSettingsWindow().ShowDialog();
-            if(result == System.Windows.Forms.DialogResult.OK)
+            var dialogResult = OpenDatabaseSettingsWindow();
+            if (dialogResult == true)
             {
                 if (DatabaseSettings.PopulateDatabase)
                 {
@@ -51,6 +51,24 @@ namespace BettingPredictorV3
                 });
             }
         }
+
+        private bool? OpenDatabaseSettingsWindow()
+        {
+            DatabaseSettingsWindow databaseSettingsWindow = null;
+            bool? dialogResult = false;
+            ManualResetEvent m = new ManualResetEvent(false);
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
+            {
+                databaseSettingsWindow = new DatabaseSettingsWindow();
+                databaseSettingsWindow.ShowDialog();
+                dialogResult = databaseSettingsWindow.DialogResult;
+                m.Set();
+            });
+
+            m.WaitOne();
+            return dialogResult;
+        }
+
         private void PredictResults()
         {
             double alpha, beta;

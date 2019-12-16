@@ -72,11 +72,8 @@
     <Compile Include="Bookmaker.cs" />
     <Compile Include="CSVManager.cs" />
     <Compile Include="DatabaseSettings.cs" />
-    <Compile Include="DatabaseSettingsWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DatabaseSettingsWindow.Designer.cs">
-      <DependentUpon>DatabaseSettingsWindow.cs</DependentUpon>
+    <Compile Include="DatabaseSettingsWindow.xaml.cs">
+      <DependentUpon>DatabaseSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileParser.cs" />
     <Compile Include="Fixture.cs" />
@@ -92,6 +89,10 @@
     <Compile Include="FixtureWindow.xaml.cs">
       <DependentUpon>FixtureWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="DatabaseSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,9 +129,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="DatabaseSettingsWindow.resx">
-      <DependentUpon>DatabaseSettingsWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
