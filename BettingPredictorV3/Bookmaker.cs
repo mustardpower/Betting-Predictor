@@ -8,6 +8,7 @@ namespace BettingPredictorV3
     [Serializable]
     public class Bookmaker
     {
+        public int BookmakerId { get; set; }
         private string name;
         private double home_odds;
         private double draw_odds;

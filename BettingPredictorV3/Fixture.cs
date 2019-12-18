@@ -8,6 +8,7 @@ namespace BettingPredictorV3.DataStructures
     [Serializable]
     public class Fixture
     {
+        public int FixtureId { get; set; }
         private League league;
         private readonly DateTime date;
         private Team homeTeam;
