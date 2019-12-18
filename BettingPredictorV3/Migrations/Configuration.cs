@@ -1,5 +1,6 @@
 ﻿namespace BettingPredictorV3.Migrations
 {
+    using BettingPredictorV3.DataStructures;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;

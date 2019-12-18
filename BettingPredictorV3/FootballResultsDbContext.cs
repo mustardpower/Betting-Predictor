@@ -13,5 +13,20 @@ namespace BettingPredictorV3
         public DbSet<League> Leagues { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Fixture>()
+                        .HasRequired(m => m.HomeTeam)
+                        .WithMany(t => t.HomeFixtures)
+                        .HasForeignKey(m => m.HomeTeamId)
+                        .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Fixture>()
+                        .HasRequired(m => m.AwayTeam)
+                        .WithMany(t => t.AwayFixtures)
+                        .HasForeignKey(m => m.AwayTeamId)
+                        .WillCascadeOnDelete(false);
+        }
     }
 }

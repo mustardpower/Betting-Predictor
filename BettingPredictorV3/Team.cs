@@ -11,14 +11,17 @@ namespace BettingPredictorV3.DataStructures
         public int TeamId { get; set; }
         private League league;
         private String name;
-        private List<Fixture> fixtures;
         private int form; // points won in last 5 games
+
+        public virtual ICollection<Fixture> HomeFixtures { get; set; }
+        public virtual ICollection<Fixture> AwayFixtures { get; set; }
 
         public Team(League league,String name)
         {
             this.league = league;
             this.name = name;
-            fixtures = new List<Fixture>();
+            HomeFixtures = new List<Fixture>();
+            AwayFixtures = new List<Fixture>();
         }
 
         public String LeagueID
@@ -52,23 +55,23 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public List<Fixture> Fixtures
+        public virtual ICollection<Fixture> Fixtures
         {
             get
             {
-                return fixtures;
+                return HomeFixtures.Concat(AwayFixtures).ToList();
             }
         }
 
         public void AddFixture(Fixture fixture)
         {
-            fixtures.Add(fixture);
+            Fixtures.Add(fixture);
         }
 
         public List<Fixture> GetFixturesBefore(DateTime date)
         {
             List<Fixture> previous_results = new List<Fixture>();
-            foreach (Fixture fixture in fixtures)
+            foreach (Fixture fixture in Fixtures)
             {
                 if (fixture.Date < date)
                 {
@@ -127,7 +130,7 @@ namespace BettingPredictorV3.DataStructures
         {
             List<double> sample = new List<double>();
 
-            foreach (Fixture fixture in fixtures)
+            foreach (Fixture fixture in Fixtures)
             {
                 if (fixture.Date < date)
                 {
@@ -145,7 +148,7 @@ namespace BettingPredictorV3.DataStructures
         {
             List<double> sample = new List<double>();
 
-            foreach (Fixture fixture in fixtures)
+            foreach (Fixture fixture in Fixtures)
             {
                 if (fixture.Date < date)
                 {
@@ -162,7 +165,7 @@ namespace BettingPredictorV3.DataStructures
         {
             List<double> sample = new List<double>();
 
-            foreach (Fixture fixture in fixtures)
+            foreach (Fixture fixture in Fixtures)
             {
                 if (fixture.Date < date)
                 {
@@ -180,7 +183,7 @@ namespace BettingPredictorV3.DataStructures
         {
             List<double> sample = new List<double>();
 
-            foreach (Fixture fixture in fixtures)
+            foreach (Fixture fixture in Fixtures)
             {
                 if (fixture.Date < date)
                 {
@@ -196,7 +199,7 @@ namespace BettingPredictorV3.DataStructures
         public void PredictResults(double alpha,double beta)
         {
             ResultPredictor resultPredictor = new ResultPredictor();
-            foreach (Fixture fixture in fixtures)
+            foreach (Fixture fixture in Fixtures)
             {
                 resultPredictor.PredictResult(fixture, alpha, beta);
                 fixture.CalculateResiduals();
@@ -206,7 +209,7 @@ namespace BettingPredictorV3.DataStructures
         public List<double> GetHomeResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
-            foreach (Fixture fixture in fixtures)
+            foreach (Fixture fixture in Fixtures)
             {
                 if (fixture.Date < date)
                 {
@@ -222,7 +225,7 @@ namespace BettingPredictorV3.DataStructures
         public List<double> GetAwayResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
-            foreach (Fixture fixture in fixtures)
+            foreach (Fixture fixture in Fixtures)
             {
                 if (fixture.Date < date)
                 {
@@ -240,7 +243,7 @@ namespace BettingPredictorV3.DataStructures
         {
             List<double> residuals = new List<double>();
             double residual;
-            foreach (Fixture fixture in fixtures)
+            foreach (Fixture fixture in Fixtures)
             {
                 if (fixture.Date < date)
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -9,10 +10,12 @@ namespace BettingPredictorV3.DataStructures
     public class Fixture
     {
         public int FixtureId { get; set; }
+        public int HomeTeamId { get; set; }
+        public int AwayTeamId { get; set; }
+
         private League league;
         private readonly DateTime date;
-        private Team homeTeam;
-        private Team awayTeam;
+        
         private readonly double homeGoals;
         private readonly double awayGoals;
         private readonly Referee referee;
@@ -41,8 +44,8 @@ namespace BettingPredictorV3.DataStructures
         {
             this.league = league;
             this.date = date;
-            this.homeTeam = home_team;
-            this.awayTeam = away_team;
+            this.HomeTeam = home_team;
+            this.AwayTeam = away_team;
             this.referee = referee;
             this.Odds = odds;
             predictedHomeGoals = 0;
@@ -55,8 +58,8 @@ namespace BettingPredictorV3.DataStructures
         {
             this.league = league;
             this.date = date;
-            this.homeTeam = home_team;
-            this.awayTeam = away_team;
+            this.HomeTeam = home_team;
+            this.AwayTeam = away_team;
             this.homeGoals = home_goals;
             this.awayGoals = away_goals;
             this.referee = referee;
@@ -75,21 +78,11 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public Team HomeTeam
-        {
-            get
-            {
-                return homeTeam;
-            }
-        }
+        [ForeignKey("HomeTeamId")]
+        public virtual Team HomeTeam { get; set; }
 
-        public Team AwayTeam
-        {
-            get
-            {
-                return awayTeam;
-            }
-        }
+        [ForeignKey("AwayTeamId")]
+        public virtual Team AwayTeam { get; set; }
 
         public double HomeGoals
         {
@@ -216,7 +209,7 @@ namespace BettingPredictorV3.DataStructures
             homeGoalsPerGame = 0;
             awayGoalsPerGame = 0;
             // get all fixtures before the current fixture
-            List<Fixture> home_previous_results = homeTeam.GetFixturesBefore(date);
+            List<Fixture> home_previous_results = HomeTeam.GetFixturesBefore(date);
             double total_goals = 0;
 
             if (home_previous_results.Count > 0)
@@ -230,7 +223,7 @@ namespace BettingPredictorV3.DataStructures
                 homeGoalsPerGame = (float)total_goals / (float)home_previous_results.Count;
             }
 
-            List<Fixture> away_previous_results = awayTeam.GetFixturesBefore(date);
+            List<Fixture> away_previous_results = AwayTeam.GetFixturesBefore(date);
 
             if (away_previous_results.Count > 0)
             {
