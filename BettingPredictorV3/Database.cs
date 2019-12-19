@@ -54,7 +54,7 @@ namespace BettingPredictorV3
         public List<string> LeagueCodes {
             get
             {
-                return leagues.Select(x => x.LeagueID).ToList();
+                return leagues.Select(x => x.LeagueCode).ToList();
             }
         }
 
@@ -221,17 +221,6 @@ namespace BettingPredictorV3
             return profitLossIntervals;
         }
 
-        public void AddTeam(Team team)
-        {
-            foreach (League league in leagues)
-            {
-                if (league.LeagueID == team.LeagueID)
-                {
-                    league.AddTeam(team);
-                }
-            }
-        }
-
         public List<Fixture> GetPreviousResults()
         {
             List<Fixture> fixtures = new List<Fixture>();
@@ -245,14 +234,14 @@ namespace BettingPredictorV3
 
         public Team GetTeam(String leagueCode, String teamName)
         {
-            League league = leagues.Find(x => x.LeagueID == leagueCode);
+            League league = leagues.Find(x => x.LeagueCode == leagueCode);
             if(league == null){ return null; }
             return league.GetTeam(teamName);
         }
 
         public League GetLeague(String leagueCode)
         {
-            return leagues.Find(x => x.LeagueID == leagueCode);
+            return leagues.Find(x => x.LeagueCode == leagueCode);
         }
 
         public void PredictResults(double alpha,double beta)

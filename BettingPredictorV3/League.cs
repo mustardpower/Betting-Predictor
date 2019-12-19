@@ -9,25 +9,16 @@ namespace BettingPredictorV3.DataStructures
     [Serializable]
     public class League
     {
-        private string league_ID;
 
-        public League(String league_ID)
+        public League(String leagueCode)
         {
-            this.league_ID = league_ID;
+            this.LeagueCode = leagueCode;
             Teams = new List<Team>();
         }
 
-        public String LeagueID
-        {
-            get
-            {
-                return league_ID;
-            }
-            set
-            {
-                league_ID = value;
-            }
-        }
+        public int LeagueId { get; set; }
+
+        public String LeagueCode { get; set; }
 
         public List<Team> Teams { get; set; }
 

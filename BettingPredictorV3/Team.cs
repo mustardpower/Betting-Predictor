@@ -10,7 +10,7 @@ namespace BettingPredictorV3.DataStructures
     public class Team
     {
         public int TeamId { get; set; }
-        private League league;
+
         private String name;
         private int form; // points won in last 5 games
 
@@ -22,19 +22,11 @@ namespace BettingPredictorV3.DataStructures
 
         public Team(League league,String name)
         {
-            this.league = league;
             this.name = name;
             HomeFixtures = new List<Fixture>();
             AwayFixtures = new List<Fixture>();
         }
 
-        public String LeagueID
-        {
-            get
-            {
-                return league.LeagueID;
-            }
-        }
         public String Name
         {
             get

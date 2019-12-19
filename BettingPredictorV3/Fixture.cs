@@ -10,10 +10,11 @@ namespace BettingPredictorV3.DataStructures
     public class Fixture
     {
         public int FixtureId { get; set; }
+
+        public int LeagueId { get; set; }
         public int HomeTeamId { get; set; }
         public int AwayTeamId { get; set; }
 
-        private League league;
         private readonly DateTime date;
         
         private readonly Referee referee;
@@ -40,7 +41,7 @@ namespace BettingPredictorV3.DataStructures
 
         public Fixture(League league, DateTime date, Team home_team, Team away_team, Referee referee,List<Bookmaker> odds) // constructor for fixture
         {
-            this.league = league;
+            this.FixtureLeague = league;
             this.date = date;
             this.HomeTeam = home_team;
             this.AwayTeam = away_team;
@@ -54,7 +55,7 @@ namespace BettingPredictorV3.DataStructures
         }
         public Fixture(League league,DateTime date,Team home_team,Team away_team,double home_goals,double away_goals,Referee referee,List<Bookmaker> odds) // for result
         {
-            this.league = league;
+            this.FixtureLeague = league;
             this.date = date;
             this.HomeTeam = home_team;
             this.AwayTeam = away_team;
@@ -68,13 +69,8 @@ namespace BettingPredictorV3.DataStructures
             FindBestOdds();
         }
 
-        public League League
-        {
-            get
-            {
-                return league;
-            }
-        }
+        [ForeignKey("LeagueId")]
+        public virtual League FixtureLeague { get; set; }
 
         [ForeignKey("HomeTeamId")]
         public virtual Team HomeTeam { get; set; }
@@ -96,15 +92,6 @@ namespace BettingPredictorV3.DataStructures
             {
                 return date;
             }
-        }
-
-
-        public String LeagueID
-        {
-            get
-            {
-                return league.LeagueID;
-            } 
         }
 
         public Bookmaker BestHomeOdds { get; set; }
@@ -268,8 +255,8 @@ namespace BettingPredictorV3.DataStructures
 
         public void CalculateStrengths(List<double> home_sample, List<double> away_sample, List<double> home_opp_sample, List<double> away_opp_sample,double alpha,double beta)
         {
-            double lgavghome_goals = league.GetAverageHomeGoals(date);
-            double lgavgaway_goals = league.GetAverageAwayGoals(date);
+            double lgavghome_goals = FixtureLeague.GetAverageHomeGoals(date);
+            double lgavgaway_goals = FixtureLeague.GetAverageAwayGoals(date);
 
             double home_attack_strength;
             double home_defence_strength;
@@ -397,7 +384,7 @@ namespace BettingPredictorV3.DataStructures
 
         public override string ToString()
         {
-            return League.LeagueID + "," + Date.ToString() + "," + HomeTeam.Name + "," + AwayTeam.Name + ","
+            return FixtureLeague.LeagueCode + "," + Date.ToString() + "," + HomeTeam.Name + "," + AwayTeam.Name + ","
                 + PredictedGoalDifference + "," + PredictedHomeGoals + "," + PredictedAwayGoals + "," + BothToScore;
         }
 	}
