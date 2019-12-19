@@ -86,12 +86,12 @@ namespace BettingPredictorV3
 
             if (homeTeam == null)
             {
-                league.AddTeam(new Team(league, homeTeamName));
+                league.AddTeam(new Team(homeTeamName));
                 homeTeam = GetTeam(leagueCode, homeTeamName);
             }
             if(awayTeam == null)
             {
-                league.AddTeam(new Team(league, awayTeamName));
+                league.AddTeam(new Team(awayTeamName));
                 awayTeam = GetTeam(leagueCode, awayTeamName);
             }
 

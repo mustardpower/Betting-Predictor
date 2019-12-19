@@ -20,7 +20,7 @@ namespace BettingPredictorV3.DataStructures
         [InverseProperty("AwayTeam")]
         public virtual ICollection<Fixture> AwayFixtures { get; set; }
 
-        public Team(League league,String name)
+        public Team(String name)
         {
             this.name = name;
             HomeFixtures = new List<Fixture>();

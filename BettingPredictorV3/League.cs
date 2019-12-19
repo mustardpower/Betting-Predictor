@@ -158,8 +158,8 @@ namespace BettingPredictorV3.DataStructures
             }
             
 
-            AddTeam(new Team(this, home_team_name));
-            AddTeam(new Team(this, away_team_name));
+            AddTeam(new Team(home_team_name));
+            AddTeam(new Team(away_team_name));
 
             home_team = GetTeam(home_team_name);
             away_team = GetTeam(away_team_name);
