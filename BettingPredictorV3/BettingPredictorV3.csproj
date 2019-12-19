@@ -89,18 +89,6 @@
     <Compile Include="Fixture.cs" />
     <Compile Include="FootballResultsDbContext.cs" />
     <Compile Include="IFileParser.cs" />
-    <Compile Include="Migrations\201912181554071_InitialMigration.cs" />
-    <Compile Include="Migrations\201912181554071_InitialMigration.designer.cs">
-      <DependentUpon>201912181554071_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912182329494_AddInverseProperties.cs" />
-    <Compile Include="Migrations\201912182329494_AddInverseProperties.designer.cs">
-      <DependentUpon>201912182329494_AddInverseProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912190933384_Add-League-Foreign-Key.cs" />
-    <Compile Include="Migrations\201912190933384_Add-League-Foreign-Key.designer.cs">
-      <DependentUpon>201912190933384_Add-League-Foreign-Key.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProfitLossInterval.cs" />
     <Compile Include="Referee.cs" />
@@ -153,15 +141,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201912181554071_InitialMigration.resx">
-      <DependentUpon>201912181554071_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912182329494_AddInverseProperties.resx">
-      <DependentUpon>201912182329494_AddInverseProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912190933384_Add-League-Foreign-Key.resx">
-      <DependentUpon>201912190933384_Add-League-Foreign-Key.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

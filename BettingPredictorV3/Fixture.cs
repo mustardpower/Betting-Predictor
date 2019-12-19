@@ -17,15 +17,8 @@ namespace BettingPredictorV3.DataStructures
 
         private readonly DateTime date;
         
-        private readonly Referee referee;
-        private float homeGoalsPerGame;
-        private float awayGoalsPerGame;
         private double predictedHomeGoals;
         private double predictedAwayGoals;
-        private double predictedGoalDifference;
-        private double averageHomeResidual;
-        private double averageAwayResidual;
-        private double bothToScore;   // probability that both teams score in the fixture
         private double? homeWinProbabilty;
         private double? drawProbability;
         private double? awayWinProbability;
@@ -45,11 +38,11 @@ namespace BettingPredictorV3.DataStructures
             this.date = date;
             this.HomeTeam = home_team;
             this.AwayTeam = away_team;
-            this.referee = referee;
+            this.Referee = referee;
             this.Odds = odds;
             predictedHomeGoals = 0;
             predictedAwayGoals = 0;
-            bothToScore = 0.0;
+            BothToScore = 0.0;
 
             FindBestOdds();
         }
@@ -61,7 +54,7 @@ namespace BettingPredictorV3.DataStructures
             this.AwayTeam = away_team;
             this.HomeGoals = home_goals;
             this.AwayGoals = away_goals;
-            this.referee = referee;
+            this.Referee = referee;
             this.Odds = odds;
             predictedHomeGoals = 0;
             predictedAwayGoals = 0;
@@ -86,13 +79,7 @@ namespace BettingPredictorV3.DataStructures
 
         public double AwayResidual { get; set; }
 
-        public DateTime Date
-        {
-            get
-            {
-                return date;
-            }
-        }
+        public DateTime Date { get; set; }
 
         public Bookmaker BestHomeOdds { get; set; }
 
@@ -100,34 +87,21 @@ namespace BettingPredictorV3.DataStructures
 
         public Bookmaker BestAwayOdds { get; set; }
 
-        public double PredictedHomeGoals
-        {
-            get
-            {
-                return predictedHomeGoals;
-            }
-        }
+        public double PredictedHomeGoals { get; set; }
 
-        public double PredictedAwayGoals
-        {
-            get
-            {
-                return predictedAwayGoals;
-            }
-        }
+        public double PredictedAwayGoals { get; set; }
 
-        public double BothToScore
-        {
-            get
-            {
-                return bothToScore;
-            }
-        }
+        public double BothToScore { get; set; }
 
+        public Referee Referee { get; set; }
 
-        public double PredictedGoalDifference { get => predictedGoalDifference; set => predictedGoalDifference = value; }
-        public double AverageHomeResidual { get => averageHomeResidual; set => averageHomeResidual = value; }
-        public double AverageAwayResidual { get => averageAwayResidual; set => averageAwayResidual = value; }
+        public double HomeGoalsPerGame { get; set; }
+
+        public double AwayGoalsPerGame { get; set; }
+
+        public double PredictedGoalDifference { get; set; }
+        public double AverageHomeResidual { get; set; }
+        public double AverageAwayResidual { get; set; }
         public double Arbitrage { get; private set; }
         public double KellyCriterionHome { get; private set; }
         public double KellyCriterionDraw { get; private set; }
@@ -179,8 +153,8 @@ namespace BettingPredictorV3.DataStructures
 
         public void CalculateGoalsPerGame()
         {
-            homeGoalsPerGame = 0;
-            awayGoalsPerGame = 0;
+            HomeGoalsPerGame = 0;
+            AwayGoalsPerGame = 0;
             // get all fixtures before the current fixture
             List<Fixture> home_previous_results = HomeTeam.GetFixturesBefore(date);
             double total_goals = 0;
@@ -193,7 +167,7 @@ namespace BettingPredictorV3.DataStructures
                     total_goals += fixture.HomeGoals;
                 }
                 // divide by number of games
-                homeGoalsPerGame = (float)total_goals / (float)home_previous_results.Count;
+                HomeGoalsPerGame = (float)total_goals / (float)home_previous_results.Count;
             }
 
             List<Fixture> away_previous_results = AwayTeam.GetFixturesBefore(date);
@@ -208,7 +182,7 @@ namespace BettingPredictorV3.DataStructures
                     total_goals += fixture.HomeGoals;
                 }
                 // divide by number of games
-                awayGoalsPerGame = (float)total_goals / away_previous_results.Count;
+                AwayGoalsPerGame = (float)total_goals / away_previous_results.Count;
             }
         }
 
@@ -216,14 +190,14 @@ namespace BettingPredictorV3.DataStructures
         {
             // subtract probabilities from 1.0 for the following results: 0-0, 1-0, 2-0, 3- 0 ....., 0-1, 0-2, 0-3....
 
-            bothToScore = 1.0;
+            BothToScore = 1.0;
 
             double home_prob_no_goals = StatsLib.poissonPDF(predictedHomeGoals, 0);
             double away_prob_no_goals = StatsLib.poissonPDF(predictedAwayGoals, 0);
 
-            bothToScore -= (home_prob_no_goals * away_prob_no_goals);  // P(A = 0 & B = 0) 
-            bothToScore -= ((1 - home_prob_no_goals) * away_prob_no_goals); // P(A != 0 & B = 0) 
-            bothToScore -= (home_prob_no_goals * (1 - away_prob_no_goals)); // P(A = 0 & B != 0) 
+            BothToScore -= (home_prob_no_goals * away_prob_no_goals);  // P(A = 0 & B = 0) 
+            BothToScore -= ((1 - home_prob_no_goals) * away_prob_no_goals); // P(A != 0 & B = 0) 
+            BothToScore -= (home_prob_no_goals * (1 - away_prob_no_goals)); // P(A = 0 & B != 0) 
         }
 
         public void CalculateKellyCriterion()
