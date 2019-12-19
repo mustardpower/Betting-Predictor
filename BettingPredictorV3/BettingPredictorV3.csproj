@@ -93,9 +93,9 @@
     <Compile Include="Migrations\201912181554071_InitialMigration.designer.cs">
       <DependentUpon>201912181554071_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912181741594_fix-fixtures-foreignkeys.cs" />
-    <Compile Include="Migrations\201912181741594_fix-fixtures-foreignkeys.designer.cs">
-      <DependentUpon>201912181741594_fix-fixtures-foreignkeys.cs</DependentUpon>
+    <Compile Include="Migrations\201912182329494_AddInverseProperties.cs" />
+    <Compile Include="Migrations\201912182329494_AddInverseProperties.designer.cs">
+      <DependentUpon>201912182329494_AddInverseProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProfitLossInterval.cs" />
@@ -152,8 +152,8 @@
     <EmbeddedResource Include="Migrations\201912181554071_InitialMigration.resx">
       <DependentUpon>201912181554071_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912181741594_fix-fixtures-foreignkeys.resx">
-      <DependentUpon>201912181741594_fix-fixtures-foreignkeys.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912182329494_AddInverseProperties.resx">
+      <DependentUpon>201912182329494_AddInverseProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -216,3 +216,6 @@ project.lock.json
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
+/BettingPredictorV3/Migrations/201912182329494_AddInverseProperties.resx
+/BettingPredictorV3/Migrations/201912182329494_AddInverseProperties.Designer.cs
+/BettingPredictorV3/Migrations/201912182329494_AddInverseProperties.cs

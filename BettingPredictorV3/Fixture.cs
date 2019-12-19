@@ -16,8 +16,6 @@ namespace BettingPredictorV3.DataStructures
         private League league;
         private readonly DateTime date;
         
-        private readonly double homeGoals;
-        private readonly double awayGoals;
         private readonly Referee referee;
         private float homeGoalsPerGame;
         private float awayGoalsPerGame;
@@ -60,8 +58,8 @@ namespace BettingPredictorV3.DataStructures
             this.date = date;
             this.HomeTeam = home_team;
             this.AwayTeam = away_team;
-            this.homeGoals = home_goals;
-            this.awayGoals = away_goals;
+            this.HomeGoals = home_goals;
+            this.AwayGoals = away_goals;
             this.referee = referee;
             this.Odds = odds;
             predictedHomeGoals = 0;
@@ -84,21 +82,9 @@ namespace BettingPredictorV3.DataStructures
         [ForeignKey("AwayTeamId")]
         public virtual Team AwayTeam { get; set; }
 
-        public double HomeGoals
-        {
-            get
-            {
-                return homeGoals;
-            }
-        }
+        public double HomeGoals { get; set; }
 
-        public double AwayGoals
-        {
-            get
-            {
-                return awayGoals;
-            }
-        }
+        public double AwayGoals { get; set; }
 
         public double HomeResidual { get; set; }
 
@@ -200,8 +186,8 @@ namespace BettingPredictorV3.DataStructures
 
         public void CalculateResiduals()
         {
-            HomeResidual = homeGoals - predictedHomeGoals;
-            AwayResidual = awayGoals - predictedAwayGoals;
+            HomeResidual = HomeGoals - predictedHomeGoals;
+            AwayResidual = AwayGoals - predictedAwayGoals;
         }
 
         public void CalculateGoalsPerGame()

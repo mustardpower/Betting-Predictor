@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -13,7 +14,10 @@ namespace BettingPredictorV3.DataStructures
         private String name;
         private int form; // points won in last 5 games
 
+        [InverseProperty("HomeTeam")]
         public virtual ICollection<Fixture> HomeFixtures { get; set; }
+
+        [InverseProperty("AwayTeam")]
         public virtual ICollection<Fixture> AwayFixtures { get; set; }
 
         public Team(League league,String name)
