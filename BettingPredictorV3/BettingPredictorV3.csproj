@@ -89,6 +89,10 @@
     <Compile Include="Fixture.cs" />
     <Compile Include="FootballResultsDbContext.cs" />
     <Compile Include="IFileParser.cs" />
+    <Compile Include="Migrations\201912191018325_RemoveLeagueReference.cs" />
+    <Compile Include="Migrations\201912191018325_RemoveLeagueReference.designer.cs">
+      <DependentUpon>201912191018325_RemoveLeagueReference.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProfitLossInterval.cs" />
     <Compile Include="Referee.cs" />
@@ -141,6 +145,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\201912191018325_RemoveLeagueReference.resx">
+      <DependentUpon>201912191018325_RemoveLeagueReference.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
