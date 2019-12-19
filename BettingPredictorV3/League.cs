@@ -13,51 +13,18 @@ namespace BettingPredictorV3.DataStructures
         public League(String leagueCode)
         {
             this.LeagueCode = leagueCode;
-            Teams = new List<Team>();
+            Fixtures = new List<Fixture>();
         }
 
         public int LeagueId { get; set; }
 
         public String LeagueCode { get; set; }
 
-        public List<Team> Teams { get; set; }
-
-        public void AddTeam(Team team)
-        {
-            if (Teams.Find(x => x.Name == team.Name) == null)
-            {
-                Teams.Add(team);
-            }
-        }
-
-        public Team GetTeam(String name)
-        {
-            foreach (Team team in Teams)
-            {
-                if (team.Name == name)
-                {
-                    return team;
-                }
-            }
-
-            return null;
-        }
+        public virtual ICollection<Fixture> Fixtures { get; set; }
 
         public void AddFixture(Fixture fixture)
         {
-            if (Teams.Count(x => x.Name == fixture.HomeTeam.Name) == 0)
-            {
-                // if no match found then add team to the league
-                AddTeam(fixture.HomeTeam);
-            }
-
-            foreach (Team team in Teams)
-            {
-                if (team.Name == fixture.HomeTeam.Name)
-                {
-                    team.AddFixture(fixture);
-                }
-            }
+            Fixtures.Add(fixture);
         }
 
         public int GetFileOffset(string[] fixture_data)
@@ -157,16 +124,8 @@ namespace BettingPredictorV3.DataStructures
                 
             }
             
-
-            AddTeam(new Team(home_team_name));
-            AddTeam(new Team(away_team_name));
-
-            home_team = GetTeam(home_team_name);
-            away_team = GetTeam(away_team_name);
-
             Fixture newFixture = new Fixture(this, date, home_team, away_team, home_goals, away_goals, new Referee(""), odds);
-            home_team.AddFixture(newFixture);
-            away_team.AddFixture(newFixture);
+            Fixtures.Add(newFixture);
         }
 
         private static List<Bookmaker> ParseBookmakers(string[] fixture_data, bool newLeague, int offset)
@@ -213,32 +172,21 @@ namespace BettingPredictorV3.DataStructures
 
         public void PredictResults(double alpha, double beta)
         {
-            foreach (Team team in Teams)
-            {
-                team.PredictResults(alpha,beta);
-            }
-        }
-
-        public List<Fixture> GetFixtures()
-        {
-            List<Fixture> fixtures = new List<Fixture>();
-            foreach (Team team in Teams)
-            {
-                fixtures.AddRange(team.Fixtures);
-            }
-
-            return fixtures;
+            
         }
 
         public List<Fixture> GetFixtures(DateTime date)
         {
-            List<Fixture> fixtures = new List<Fixture>();
-            foreach (Team team in Teams)
+            List<Fixture> previous_results = new List<Fixture>();
+            foreach (Fixture fixture in Fixtures)
             {
-                fixtures.AddRange(team.GetFixturesBefore(date));
+                if (fixture.Date < date)
+                {
+                    previous_results.Add(fixture);
+                }
             }
 
-            return fixtures;
+            return previous_results;
         }
 
         public double GetAverageHomeGoals(DateTime date)
@@ -280,20 +228,12 @@ namespace BettingPredictorV3.DataStructures
         public List<double> GetHomeResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
-            foreach (Team team in Teams)
-            {
-                residuals.AddRange(team.GetHomeResiduals(date));
-            }
 
             return residuals;
         }
         public List<double> GetAwayResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
-            foreach (Team team in Teams)
-            {
-                residuals.AddRange(team.GetAwayResiduals(date));
-            }
 
             return residuals;
         }

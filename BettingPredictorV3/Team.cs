@@ -20,6 +20,12 @@ namespace BettingPredictorV3.DataStructures
         [InverseProperty("AwayTeam")]
         public virtual ICollection<Fixture> AwayFixtures { get; set; }
 
+        public Team()
+        {
+            Name = "Default Name";
+            HomeFixtures = new List<Fixture>();
+            AwayFixtures = new List<Fixture>();
+        }
         public Team(String name)
         {
             this.name = name;
@@ -61,7 +67,11 @@ namespace BettingPredictorV3.DataStructures
 
         public void AddFixture(Fixture fixture)
         {
-            Fixtures.Add(fixture);
+            using(var db = new FootballResultsDbContext())
+            {
+                db.Fixtures.Add(fixture);
+                db.SaveChanges();
+            }
         }
 
         public List<Fixture> GetFixturesBefore(DateTime date)

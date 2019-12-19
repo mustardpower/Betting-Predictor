@@ -77,23 +77,18 @@ namespace BettingPredictorV3
             if(league == null)
             {
                 League newLeague = new League(leagueCode);
+                using(var db = new FootballResultsDbContext())
+                {
+                    db.Leagues.Add(newLeague);
+                    db.SaveChanges();
+                }
+
                 leagues.Add(newLeague);
                 league = newLeague;
             }
 
             Team homeTeam = GetTeam(leagueCode, homeTeamName);
             Team awayTeam = GetTeam(leagueCode, awayTeamName);
-
-            if (homeTeam == null)
-            {
-                league.AddTeam(new Team(homeTeamName));
-                homeTeam = GetTeam(leagueCode, homeTeamName);
-            }
-            if(awayTeam == null)
-            {
-                league.AddTeam(new Team(awayTeamName));
-                awayTeam = GetTeam(leagueCode, awayTeamName);
-            }
 
             fixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
         }
@@ -109,7 +104,11 @@ namespace BettingPredictorV3
             {
                 League newLeague = new League(leagueCode);
                 newLeague.ParseHistoricalData(fixtureData);
-                leagues.Add(newLeague);
+                using(var db = new FootballResultsDbContext())
+                {
+                    db.Leagues.Add(newLeague);
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -226,7 +225,7 @@ namespace BettingPredictorV3
             List<Fixture> fixtures = new List<Fixture>();
             foreach (League league in leagues)
             {
-                fixtures.AddRange(league.GetFixtures());
+                fixtures.AddRange(league.Fixtures);
             }
 
             return fixtures;
@@ -234,9 +233,10 @@ namespace BettingPredictorV3
 
         public Team GetTeam(String leagueCode, String teamName)
         {
-            League league = leagues.Find(x => x.LeagueCode == leagueCode);
-            if(league == null){ return null; }
-            return league.GetTeam(teamName);
+            using(var db = new FootballResultsDbContext())
+            {
+                return db.Teams.ToList().Find(x => x.Name == teamName);
+            }
         }
 
         public League GetLeague(String leagueCode)
