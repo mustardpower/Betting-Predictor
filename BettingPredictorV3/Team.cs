@@ -62,7 +62,12 @@ namespace BettingPredictorV3.DataStructures
         {
             get
             {
-                return HomeFixtures.Concat(AwayFixtures).ToList();
+                using(var db = new FootballResultsDbContext())
+                {
+                    Team teamInDatabase = db.Teams.Where(team => TeamId == TeamId).FirstOrDefault();
+                    var combinedFixtures = teamInDatabase.HomeFixtures.Concat(teamInDatabase.AwayFixtures).ToList();
+                    return combinedFixtures;
+                }
             }
         }
 

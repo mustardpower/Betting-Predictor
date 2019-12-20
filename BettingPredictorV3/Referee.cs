@@ -10,6 +10,11 @@ namespace BettingPredictorV3
     {
         private String name;
 
+        Referee()
+        {
+            Name = "Default Name";
+        }
+
         public Referee(String aName)
         {
             this.Name = aName;
