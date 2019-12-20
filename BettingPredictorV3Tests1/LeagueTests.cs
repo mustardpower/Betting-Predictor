@@ -34,20 +34,20 @@ namespace BettingPredictorV3.DataStructures.Tests
 
             league.ParseHistoricalData(testData);
 
-            Assert.AreEqual(league.LeagueCode, "SP2");
+            Assert.AreEqual("SP2", league.LeagueCode);
 
             Fixture fixture = league.Fixtures.First();
 
-            Assert.AreEqual(fixture.FixtureLeague, league);
-            Assert.AreEqual(fixture.FixtureLeague.LeagueCode, "SP2");
-            Assert.AreEqual(fixture.Date.Day, 16);
-            Assert.AreEqual(fixture.Date.Month, 8);
-            Assert.AreEqual(fixture.Date.Year, 2013);
+            Assert.AreEqual(league, fixture.FixtureLeague);
+            Assert.AreEqual("SP2", fixture.FixtureLeague.LeagueCode);
+            Assert.AreEqual(16, fixture.Date.Day);
+            Assert.AreEqual(8, fixture.Date.Month);
+            Assert.AreEqual(2013, fixture.Date.Year);
 
-            Assert.AreEqual(fixture.HomeTeam.Name, "Girona");
-            Assert.AreEqual(fixture.AwayTeam.Name, "Alaves");
-            Assert.AreEqual(fixture.HomeGoals, 1);
-            Assert.AreEqual(fixture.AwayGoals, 0);
+            Assert.AreEqual("Girona", fixture.HomeTeam.Name);
+            Assert.AreEqual("Alaves", fixture.AwayTeam.Name);
+            Assert.AreEqual(1, fixture.HomeGoals);
+            Assert.AreEqual(0, fixture.AwayGoals);
         }
 
         [TestMethod()]
