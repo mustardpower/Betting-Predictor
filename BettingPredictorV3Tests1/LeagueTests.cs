@@ -32,11 +32,10 @@ namespace BettingPredictorV3.DataStructures.Tests
                 "", "", "", "", "", "", "2.37", "3.19", "3.45"
             };
 
-            league.ParseHistoricalData(testData);
+            FileParser parser = new FileParser();
+            Fixture fixture = parser.ParseHistoricalFixtureData(league, testData);
 
             Assert.AreEqual("SP2", league.LeagueCode);
-
-            Fixture fixture = league.Fixtures.First();
 
             Assert.AreEqual(league, fixture.FixtureLeague);
             Assert.AreEqual("SP2", fixture.FixtureLeague.LeagueCode);
@@ -70,8 +69,8 @@ namespace BettingPredictorV3.DataStructures.Tests
                 "", "", "", "", "", "", "2.37", "3.19", "3.45"
             };
 
-            league.ParseHistoricalData(testData);
-            Fixture fixture = league.Fixtures.First();
+            FileParser parser = new FileParser();
+            Fixture fixture = parser.ParseHistoricalFixtureData(league, testData);
 
             // No bookmakers chosen in settings by default
             Assert.AreEqual(fixture.Odds.Count, 5);

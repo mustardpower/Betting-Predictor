@@ -95,16 +95,17 @@ namespace BettingPredictorV3
 
         public void AddLeague(string leagueCode, string[] fixtureData)
         {
+            FileParser parser = new FileParser();
             League aLeague = GetLeague(leagueCode);
             if (aLeague != null)
             {
-                aLeague.ParseHistoricalData(fixtureData);
+                parser.ParseHistoricalFixtureData(aLeague, fixtureData);
             }
             else
             {
                 League newLeague = new League(leagueCode);
-                newLeague.ParseHistoricalData(fixtureData);
-                using(var db = new FootballResultsDbContext())
+                parser.ParseHistoricalFixtureData(newLeague, fixtureData);
+                using (var db = new FootballResultsDbContext())
                 {
                     db.Leagues.Add(newLeague);
                     db.SaveChanges();

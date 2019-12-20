@@ -14,8 +14,6 @@ namespace BettingPredictorV3.DataStructures
         public int LeagueId { get; set; }
         public int HomeTeamId { get; set; }
         public int AwayTeamId { get; set; }
-
-        private readonly DateTime date;
         
         private double predictedHomeGoals;
         private double predictedAwayGoals;
@@ -35,7 +33,7 @@ namespace BettingPredictorV3.DataStructures
         public Fixture(League league, DateTime date, Team home_team, Team away_team, Referee referee,List<Bookmaker> odds) // constructor for fixture
         {
             this.FixtureLeague = league;
-            this.date = date;
+            this.Date = date;
             this.HomeTeam = home_team;
             this.AwayTeam = away_team;
             this.Referee = referee;
@@ -49,7 +47,7 @@ namespace BettingPredictorV3.DataStructures
         public Fixture(League league,DateTime date,Team home_team,Team away_team,double home_goals,double away_goals,Referee referee,List<Bookmaker> odds) // for result
         {
             this.FixtureLeague = league;
-            this.date = date;
+            this.Date = date;
             this.HomeTeam = home_team;
             this.AwayTeam = away_team;
             this.HomeGoals = home_goals;
@@ -156,7 +154,7 @@ namespace BettingPredictorV3.DataStructures
             HomeGoalsPerGame = 0;
             AwayGoalsPerGame = 0;
             // get all fixtures before the current fixture
-            List<Fixture> home_previous_results = HomeTeam.GetFixturesBefore(date);
+            List<Fixture> home_previous_results = HomeTeam.GetFixturesBefore(Date);
             double total_goals = 0;
 
             if (home_previous_results.Count > 0)
@@ -170,7 +168,7 @@ namespace BettingPredictorV3.DataStructures
                 HomeGoalsPerGame = (float)total_goals / (float)home_previous_results.Count;
             }
 
-            List<Fixture> away_previous_results = AwayTeam.GetFixturesBefore(date);
+            List<Fixture> away_previous_results = AwayTeam.GetFixturesBefore(Date);
 
             if (away_previous_results.Count > 0)
             {
@@ -229,8 +227,8 @@ namespace BettingPredictorV3.DataStructures
 
         public void CalculateStrengths(List<double> home_sample, List<double> away_sample, List<double> home_opp_sample, List<double> away_opp_sample,double alpha,double beta)
         {
-            double lgavghome_goals = FixtureLeague.GetAverageHomeGoals(date);
-            double lgavgaway_goals = FixtureLeague.GetAverageAwayGoals(date);
+            double lgavghome_goals = FixtureLeague.GetAverageHomeGoals(Date);
+            double lgavgaway_goals = FixtureLeague.GetAverageAwayGoals(Date);
 
             double home_attack_strength;
             double home_defence_strength;
