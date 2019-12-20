@@ -14,8 +14,8 @@ namespace BettingPredictorV3Tests
         public void TestTryPredictFixtureWithNoData()
         {
             League league = new League("TEST");
-            Team homeTeam = new Team(league, "HOME");
-            Team awayTeam = new Team(league, "AWAY");
+            Team homeTeam = new Team("HOME");
+            Team awayTeam = new Team("AWAY");
             ResultPredictor resultPredictor = new ResultPredictor();
             DateTime date = new DateTime();
             Referee referee = new Referee("Ref");

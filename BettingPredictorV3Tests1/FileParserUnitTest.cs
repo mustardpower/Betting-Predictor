@@ -21,7 +21,7 @@ B1,09 / 08 / 2019,19:30,Anderlecht,Mechelen,,,,,,,1.75,4.2,4,1.83,3.75,3.9,1.77,
 
             Fixture fixture = fileParser.Database.FixtureList.First();
 
-            Assert.AreEqual("B1", fixture.LeagueID);
+            Assert.AreEqual("B1", fixture.FixtureLeague.LeagueCode);
             Assert.AreEqual(9, fixture.Date.Day);
             Assert.AreEqual(8, fixture.Date.Month);
             Assert.AreEqual(2019, fixture.Date.Year);

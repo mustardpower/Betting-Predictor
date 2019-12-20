@@ -34,13 +34,12 @@ namespace BettingPredictorV3.DataStructures.Tests
 
             league.ParseHistoricalData(testData);
 
-            Assert.AreEqual(league.LeagueID, "SP2");
-            Assert.AreEqual(league.Teams.Count, 2);
+            Assert.AreEqual(league.LeagueCode, "SP2");
 
-            Fixture fixture = league.GetFixtures().First();
+            Fixture fixture = league.Fixtures.First();
 
-            Assert.AreEqual(fixture.League, league);
-            Assert.AreEqual(fixture.LeagueID, "SP2");
+            Assert.AreEqual(fixture.FixtureLeague, league);
+            Assert.AreEqual(fixture.FixtureLeague.LeagueCode, "SP2");
             Assert.AreEqual(fixture.Date.Day, 16);
             Assert.AreEqual(fixture.Date.Month, 8);
             Assert.AreEqual(fixture.Date.Year, 2013);
@@ -72,7 +71,7 @@ namespace BettingPredictorV3.DataStructures.Tests
             };
 
             league.ParseHistoricalData(testData);
-            Fixture fixture = league.GetFixtures().First();
+            Fixture fixture = league.Fixtures.First();
 
             // No bookmakers chosen in settings by default
             Assert.AreEqual(fixture.Odds.Count, 5);
