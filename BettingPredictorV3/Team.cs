@@ -57,6 +57,7 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
+        [NotMapped]
         public virtual ICollection<Fixture> Fixtures
         {
             get
