@@ -162,6 +162,15 @@ namespace BettingPredictorV3.DataStructures
         public double AverageHomeResidual { get => averageHomeResidual; set => averageHomeResidual = value; }
         public double AverageAwayResidual { get => averageAwayResidual; set => averageAwayResidual = value; }
         public double Arbitrage { get; private set; }
+
+        public bool HasCalculatedOdds()
+        {
+            if (BestHomeOdds == null || BestHomeOdds.HomeOdds.Equals(0.0)) return false;
+            if (BestDrawOdds == null || BestDrawOdds.DrawOdds.Equals(0.0)) return false;
+            if (BestAwayOdds == null || BestAwayOdds.AwayOdds.Equals(0.0)) return false;
+            return true;
+        }
+
         public double KellyCriterionHome { get; private set; }
         public double KellyCriterionDraw { get; private set; }
         public double KellyCriterionAway { get; private set; }

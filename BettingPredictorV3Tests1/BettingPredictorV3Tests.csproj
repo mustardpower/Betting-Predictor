@@ -67,6 +67,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileParserUnitTest.cs" />
     <Compile Include="ResultPredictorUnitTest.cs" />
+    <Compile Include="FixtureUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

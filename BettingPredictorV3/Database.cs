@@ -134,6 +134,7 @@ namespace BettingPredictorV3
         {
             double profit = 0.0;
             int ignoredTeams = 0;
+
             Fixture max_odds_fixture = new Fixture
             {
                 BestHomeOdds = new Bookmaker("bookie", 0.0, 0.0, 0.0)
@@ -141,7 +142,7 @@ namespace BettingPredictorV3
 
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.BestHomeOdds == null)
+                if (!fixture.HasCalculatedOdds())
                 {
                     ignoredTeams++;
                 }
@@ -174,7 +175,7 @@ namespace BettingPredictorV3
 
             foreach (Fixture fixture in fixtures)
             {
-                if (fixture.BestAwayOdds == null)
+                if (!fixture.HasCalculatedOdds())
                 {
                     ignoredTeams++;
                 }
