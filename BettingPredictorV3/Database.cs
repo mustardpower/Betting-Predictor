@@ -135,11 +135,6 @@ namespace BettingPredictorV3
             double profit = 0.0;
             int ignoredTeams = 0;
 
-            Fixture max_odds_fixture = new Fixture
-            {
-                BestHomeOdds = new Bookmaker("bookie", 0.0, 0.0, 0.0)
-            };
-
             foreach (Fixture fixture in fixtures)
             {
                 if (!fixture.HasCalculatedOdds())
@@ -150,10 +145,6 @@ namespace BettingPredictorV3
                 {
                     if (fixture.HomeGoals > fixture.AwayGoals)
                     {
-                        if (max_odds_fixture.BestHomeOdds.HomeOdds < fixture.BestHomeOdds.HomeOdds)
-                        {
-                            max_odds_fixture = fixture;
-                        }
                         profit += fixture.BestHomeOdds.HomeOdds - 1;
                     }
                     else
