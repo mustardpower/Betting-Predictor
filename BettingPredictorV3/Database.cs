@@ -98,17 +98,17 @@ namespace BettingPredictorV3
             fixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
         }
 
-        public void AddLeague(string leagueCode, string[] fixtureData)
+        public void AddLeague(string leagueCode, string[] columnHeaders, string[] fixtureData)
         {
             League aLeague = GetLeague(leagueCode);
             if (aLeague != null)
             {
-                aLeague.ParseHistoricalData(fixtureData);
+                aLeague.ParseHistoricalData(fixtureData, columnHeaders);
             }
             else
             {
                 League newLeague = new League(leagueCode);
-                newLeague.ParseHistoricalData(fixtureData);
+                newLeague.ParseHistoricalData(fixtureData, columnHeaders);
                 leagues.Add(newLeague);
             }
         }

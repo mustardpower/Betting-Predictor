@@ -32,7 +32,25 @@ namespace BettingPredictorV3.DataStructures.Tests
                 "", "", "", "", "", "", "2.37", "3.19", "3.45"
             };
 
-            league.ParseHistoricalData(testData);
+            string[] columnHeaders = new string[]
+            {
+                "Div", "Date",    "HomeTeam",    "AwayTeam", 
+                "FTHG",    "FTAG" ,   "FTR", "HTHG",    "HTAG",    "HTR",
+                "B365H",   "B365D",   "B365A",
+                "BWH", "BWD", "BWA",
+                "IWH", "IWD", "IWA",
+                "LBH", "LBD", "LBA",
+                "PSH", "PSD", "PSA",
+                "WHH", "WHD", "WHA",
+                "SJH", "SJD" ,"SJA",
+                "VCH", "VCD", "VCA",
+                "Bb1X2",   "BbMxH",   "BbAvH",   "BbMxD",   "BbAvD",   "BbMxA", 
+                "BbAvA",   "BbOU",    "BbMx>2.5",    "BbAv>2.5",    "BbMx<2.5",    "BbAv<2.5", 
+                "BbAH",    "BbAHh",   "BbMxAHH", "BbAvAHH", "BbMxAHA", "BbAvAHA", "PSCH","PSCD","PSCA"
+
+            };
+
+            league.ParseHistoricalData(testData, columnHeaders);
 
             Assert.AreEqual(league.LeagueID, "SP2");
             Assert.AreEqual(league.Teams.Count, 2);
@@ -71,7 +89,25 @@ namespace BettingPredictorV3.DataStructures.Tests
                 "", "", "", "", "", "", "2.37", "3.19", "3.45"
             };
 
-            league.ParseHistoricalData(testData);
+            string[] columnHeaders = new string[]
+            {
+                "Div", "Date",    "HomeTeam",    "AwayTeam",
+                "FTHG",    "FTAG" ,   "FTR", "HTHG",    "HTAG",    "HTR",
+                "B365H",   "B365D",   "B365A",
+                "BWH", "BWD", "BWA",
+                "IWH", "IWD", "IWA",
+                "LBH", "LBD", "LBA",
+                "PSH", "PSD", "PSA",
+                "WHH", "WHD", "WHA",
+                "SJH", "SJD" ,"SJA",
+                "VCH", "VCD", "VCA",
+                "Bb1X2",   "BbMxH",   "BbAvH",   "BbMxD",   "BbAvD",   "BbMxA",
+                "BbAvA",   "BbOU",    "BbMx>2.5",    "BbAv>2.5",    "BbMx<2.5",    "BbAv<2.5",
+                "BbAH",    "BbAHh",   "BbMxAHH", "BbAvAHH", "BbMxAHA", "BbAvAHA", "PSCH","PSCD","PSCA"
+
+            };
+
+            league.ParseHistoricalData(testData, columnHeaders);
             Fixture fixture = league.GetFixtures().First();
 
             // No bookmakers chosen in settings by default

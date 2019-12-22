@@ -101,6 +101,7 @@ namespace BettingPredictorV3
         public void ParseHistoricalData(string htmlCode)
         {
             int headings = htmlCode.IndexOf("\n");
+            var columnHeaders = htmlCode.Substring(0, headings).Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
             var fixtures = htmlCode.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
@@ -111,7 +112,7 @@ namespace BettingPredictorV3
                 if (league_code.Length > 0)
                 {
                     Console.WriteLine(league_code + ": " + fixtureData.Length);
-                    Database.AddLeague(league_code, fixtureData);
+                    Database.AddLeague(league_code, columnHeaders, fixtureData);
                 }
             }
         }
