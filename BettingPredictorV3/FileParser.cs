@@ -101,7 +101,7 @@ namespace BettingPredictorV3
         public void ParseHistoricalData(string htmlCode)
         {
             int headings = htmlCode.IndexOf("\n");
-            var columnHeaders = htmlCode.Substring(0, headings).Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
+            var columnHeaders = htmlCode.Substring(0, headings).Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries).ToList();
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
             var fixtures = htmlCode.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 

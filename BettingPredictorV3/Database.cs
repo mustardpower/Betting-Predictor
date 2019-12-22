@@ -98,7 +98,7 @@ namespace BettingPredictorV3
             fixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
         }
 
-        public void AddLeague(string leagueCode, string[] columnHeaders, string[] fixtureData)
+        public void AddLeague(string leagueCode, List<string> columnHeaders, string[] fixtureData)
         {
             League aLeague = GetLeague(leagueCode);
             if (aLeague != null)
