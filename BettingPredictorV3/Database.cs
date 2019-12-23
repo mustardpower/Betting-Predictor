@@ -14,61 +14,33 @@ namespace BettingPredictorV3
     [Serializable]
     public class Database
     {
-        private List<League> leagues;   // list of all the leagues stored
-        private List<Fixture> fixtureList;
-        private List<String> fixturesFiles;
-        private Dictionary<String, List<String>> historyFiles;
 
-        public List<League> Leagues
-        {
-            get
-            {
-                return leagues;
-            }
-        }
+        public List<League> Leagues { get; set; }
 
-        public List<String> FixtureFiles
-        {
-            get
-            {
-                return fixturesFiles;
-            }
-        }
+        public List<string> FixtureFiles { get; set; }
 
-        public Dictionary<String, List<String>> HistoryFiles
-        {
-            get
-            {
-                return historyFiles;
-            }
-        }
+        public Dictionary<string, List<string>> HistoryFiles { get; set; }
 
-        public List<Fixture> FixtureList
-        {
-            get
-            {
-                return fixtureList;
-            }
-        }
+        public List<Fixture> FixtureList { get; set; }
 
         public List<string> LeagueCodes {
             get
             {
-                return leagues.Select(x => x.LeagueID).ToList();
+                return Leagues.Select(x => x.LeagueID).ToList();
             }
         }
 
         public Database()
         {
-            leagues = new List<League>();
-            fixtureList = new List<Fixture>();
-            historyFiles = new Dictionary<String, List<String>>();
-            fixturesFiles = new List<String>();
+            Leagues = new List<League>();
+            FixtureList = new List<Fixture>();
+            HistoryFiles = new Dictionary<String, List<String>>();
+            FixtureFiles = new List<String>();
         }
 
         public void ClearData()
         {
-            leagues.Clear();
+            Leagues.Clear();
         }
 
         public void AddUpcomingFixture(string leagueCode, DateTime date, string homeTeamName, string awayTeamName, List<Bookmaker> odds)
@@ -77,7 +49,7 @@ namespace BettingPredictorV3
             if(league == null)
             {
                 League newLeague = new League(leagueCode);
-                leagues.Add(newLeague);
+                Leagues.Add(newLeague);
                 league = newLeague;
             }
 
@@ -95,7 +67,7 @@ namespace BettingPredictorV3
                 awayTeam = GetTeam(leagueCode, awayTeamName);
             }
 
-            fixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
+            FixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
         }
 
         public void AddLeague(string leagueCode, List<string> columnHeaders, string[] fixtureData)
@@ -109,7 +81,7 @@ namespace BettingPredictorV3
             {
                 League newLeague = new League(leagueCode);
                 newLeague.ParseHistoricalData(fixtureData, columnHeaders);
-                leagues.Add(newLeague);
+                Leagues.Add(newLeague);
             }
         }
 
@@ -215,7 +187,7 @@ namespace BettingPredictorV3
 
         public void AddTeam(Team team)
         {
-            foreach (League league in leagues)
+            foreach (League league in Leagues)
             {
                 if (league.LeagueID == team.LeagueID)
                 {
@@ -227,7 +199,7 @@ namespace BettingPredictorV3
         public List<Fixture> GetPreviousResults()
         {
             List<Fixture> fixtures = new List<Fixture>();
-            foreach (League league in leagues)
+            foreach (League league in Leagues)
             {
                 fixtures.AddRange(league.GetFixtures());
             }
@@ -237,14 +209,14 @@ namespace BettingPredictorV3
 
         public Team GetTeam(String leagueCode, String teamName)
         {
-            League league = leagues.Find(x => x.LeagueID == leagueCode);
+            League league = Leagues.Find(x => x.LeagueID == leagueCode);
             if(league == null){ return null; }
             return league.GetTeam(teamName);
         }
 
         public League GetLeague(String leagueCode)
         {
-            return leagues.Find(x => x.LeagueID == leagueCode);
+            return Leagues.Find(x => x.LeagueID == leagueCode);
         }
 
         public void PredictResults(double alpha,double beta)
@@ -257,7 +229,7 @@ namespace BettingPredictorV3
 
         public void PredictHistoricalResults(double alpha, double beta)
         {
-            foreach (League league in leagues)
+            foreach (League league in Leagues)
             {
                 league.PredictResults(alpha, beta);
             }
@@ -266,7 +238,7 @@ namespace BettingPredictorV3
         public void PredictUpcomingFixtures(double alpha, double beta)
         {
             ResultPredictor resultPredictor = new ResultPredictor();
-            foreach (Fixture fixture in fixtureList)
+            foreach (Fixture fixture in FixtureList)
             {
                 resultPredictor.PredictResult(fixture, alpha, beta);
             }
@@ -277,7 +249,7 @@ namespace BettingPredictorV3
             double alpha = 0.0;
             List<double> errors = new List<double>();
 
-            foreach (Fixture fixture in fixtureList)
+            foreach (Fixture fixture in FixtureList)
             {
                 errors.Add(fixture.AverageHomeResidual);
             }
@@ -297,7 +269,7 @@ namespace BettingPredictorV3
             double beta = 0.0;
             List<double> errors = new List<double>();
 
-            foreach (Fixture fixture in fixtureList)
+            foreach (Fixture fixture in FixtureList)
             {
                 errors.Add(fixture.AverageAwayResidual);
             }
@@ -315,7 +287,7 @@ namespace BettingPredictorV3
         public List<double> GetHomeResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
-            foreach (League league in leagues)
+            foreach (League league in Leagues)
             {
                 residuals.AddRange(league.GetHomeResiduals(date));
             }
@@ -326,7 +298,7 @@ namespace BettingPredictorV3
         public List<double> GetAwayResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
-            foreach (League league in leagues)
+            foreach (League league in Leagues)
             {
                 residuals.AddRange(league.GetAwayResiduals(date));
             }
@@ -345,10 +317,10 @@ namespace BettingPredictorV3
 
             foreach(string leagueCode in leagueCodes)
             {
-                historyFiles.Add(leagueCode, new List<string>());
+                HistoryFiles.Add(leagueCode, new List<string>());
                 foreach (string yearCode in yearCodes)
                 {
-                    historyFiles[leagueCode].Add(string.Format("http://www.football-data.co.uk/mmz4281/{0}/{1}.csv", yearCode, leagueCode));
+                    HistoryFiles[leagueCode].Add(string.Format("http://www.football-data.co.uk/mmz4281/{0}/{1}.csv", yearCode, leagueCode));
                 }
             }
 
@@ -376,14 +348,14 @@ namespace BettingPredictorV3
 
             foreach (var leagueCode in fileToURLNameMap)
             {
-                historyFiles.Add(leagueCode.Value, new List<string> { string.Format("http://www.football-data.co.uk/new/{0}.csv", leagueCode.Key) });
+                HistoryFiles.Add(leagueCode.Value, new List<string> { string.Format("http://www.football-data.co.uk/new/{0}.csv", leagueCode.Key) });
             }
         }
 
         public void SetFixturesFiles()
         {
-            fixturesFiles.Add("http://www.football-data.co.uk/fixtures.csv");
-            fixturesFiles.Add("http://www.football-data.co.uk/new_league_fixtures.csv");
+            FixtureFiles.Add("http://www.football-data.co.uk/fixtures.csv");
+            FixtureFiles.Add("http://www.football-data.co.uk/new_league_fixtures.csv");
         }
     }
 }
