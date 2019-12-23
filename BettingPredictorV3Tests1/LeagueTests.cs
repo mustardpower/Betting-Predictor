@@ -32,7 +32,7 @@ namespace BettingPredictorV3.DataStructures.Tests
                 "", "", "", "", "", "", "2.37", "3.19", "3.45"
             };
 
-            string[] columnHeaders = new string[]
+            List<string> columnHeaders = new List<string>()
             {
                 "Div", "Date",    "HomeTeam",    "AwayTeam", 
                 "FTHG",    "FTAG" ,   "FTR", "HTHG",    "HTAG",    "HTR",
@@ -89,7 +89,7 @@ namespace BettingPredictorV3.DataStructures.Tests
                 "", "", "", "", "", "", "2.37", "3.19", "3.45"
             };
 
-            string[] columnHeaders = new string[]
+            List<string> columnHeaders = new List<string>()
             {
                 "Div", "Date",    "HomeTeam",    "AwayTeam",
                 "FTHG",    "FTAG" ,   "FTR", "HTHG",    "HTAG",    "HTR",
