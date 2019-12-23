@@ -115,20 +115,55 @@ namespace BettingPredictorV3
         public void AddLeague(string leagueCode, string[] fixtureData)
         {
             FileParser parser = new FileParser();
-            League aLeague = GetLeague(leagueCode);
-            if (aLeague != null)
+            Fixture newFixture = null;
+
+            using (var db = new FootballResultsDbContext())
             {
-                parser.ParseHistoricalFixtureData(aLeague, fixtureData);
-            }
-            else
-            {
-                League newLeague = new League(leagueCode);
-                parser.ParseHistoricalFixtureData(newLeague, fixtureData);
-                using (var db = new FootballResultsDbContext())
+                League aLeague = GetLeague(leagueCode);
+                if (aLeague != null)
                 {
+                    newFixture = parser.ParseHistoricalFixtureData(aLeague, fixtureData);
+                }
+                else
+                {
+                    League newLeague = new League(leagueCode);
+                    newFixture = parser.ParseHistoricalFixtureData(newLeague, fixtureData);
+
                     db.Leagues.Add(newLeague);
                     db.SaveChanges();
                 }
+
+                // Retrieve team from database
+                Team homeTeam = db.Teams.Where(x => x.Name == newFixture.HomeTeam.Name).SingleOrDefault();
+                if(homeTeam != null)
+                {
+                    // if found then use database definition
+                    newFixture.HomeTeam = homeTeam;
+                }
+                else
+                {
+                    // if not found then need to add team to database before saving fixture
+                    db.Teams.Add(newFixture.HomeTeam);
+                    db.SaveChanges();
+                }
+
+                Team awayTeam = db.Teams.Where(x => x.Name == newFixture.AwayTeam.Name).SingleOrDefault();
+                if (awayTeam != null)
+                {
+                    // if found then use database definition
+                    newFixture.AwayTeam = awayTeam;
+                }
+                else
+                {
+                    // if not found then need to add team to database before saving fixture
+                    db.Teams.Add(newFixture.AwayTeam);
+                    db.SaveChanges();
+                }
+
+                newFixture.LeagueId = aLeague.LeagueId;
+
+                db.Fixtures.Add(newFixture);
+                db.SaveChanges();
             }
         }
 

@@ -121,8 +121,6 @@ namespace BettingPredictorV3
         // Creates a Fixture from the fixture data
         public Fixture ParseHistoricalFixtureData(League aLeague, string[] fixture_data)
         {
-            Team home_team = null;
-            Team away_team = null;
             List<Bookmaker> odds = new List<Bookmaker>();
 
             /* Additional league data has been added at a later point, 

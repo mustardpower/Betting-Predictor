@@ -12,7 +12,9 @@ namespace BettingPredictorV3.DataStructures
         public int FixtureId { get; set; }
 
         public int LeagueId { get; set; }
+
         public int HomeTeamId { get; set; }
+
         public int AwayTeamId { get; set; }
         
         private double predictedHomeGoals;

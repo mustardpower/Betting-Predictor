@@ -82,16 +82,12 @@ namespace BettingPredictorV3.DataStructures
 
         public List<Fixture> GetFixturesBefore(DateTime date)
         {
-            List<Fixture> previous_results = new List<Fixture>();
-            foreach (Fixture fixture in Fixtures)
+            using (var db = new FootballResultsDbContext())
             {
-                if (fixture.Date < date)
-                {
-                    previous_results.Add(fixture);
-                }
+                var homeFixtures = db.Fixtures.Where(fixture => fixture.Date < date && fixture.HomeTeamId == TeamId);
+                var awayFixtures = db.Fixtures.Where(fixture => fixture.Date < date && fixture.AwayTeamId == TeamId);
+                return homeFixtures.Concat(awayFixtures).ToList();
             }
-
-            return previous_results;
         }
 
         public int CalculateForm(DateTime date)
