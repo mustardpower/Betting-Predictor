@@ -88,7 +88,26 @@ namespace BettingPredictorV3
             }
 
             Team homeTeam = GetTeam(leagueCode, homeTeamName);
+            if(homeTeam == null)
+            {
+                using (var db = new FootballResultsDbContext())
+                {
+                    homeTeam = new Team(homeTeamName);
+                    db.Teams.Add(homeTeam);
+                    db.SaveChanges();
+                }
+            }
+
             Team awayTeam = GetTeam(leagueCode, awayTeamName);
+            if (awayTeam == null)
+            {
+                using (var db = new FootballResultsDbContext())
+                {
+                    awayTeam = new Team(awayTeamName);
+                    db.Teams.Add(awayTeam);
+                    db.SaveChanges();
+                }
+            }
 
             fixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
         }
