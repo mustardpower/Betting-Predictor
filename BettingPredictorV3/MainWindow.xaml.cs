@@ -158,12 +158,12 @@ namespace BettingPredictorV3
 
         public List<Fixture> FilterForChosenGD(IEnumerable<Fixture> aFixtureList)
         {
-            if (!((minGD.Text == null) || (minGD.Text.Equals(""))))
+            if (!(string.IsNullOrEmpty(minGD.Text)))
             {
                 double minimumGD = Convert.ToDouble(minGD.Text);
                 aFixtureList = aFixtureList.Where(x => x.PredictedGoalDifference > minimumGD);
             }
-            if (!((maxGD.Text == null) || (maxGD.Text.Equals(""))))
+            if (!(string.IsNullOrEmpty(maxGD.Text)))
             {
                 double maximumGD = Convert.ToDouble(maxGD.Text);
                 aFixtureList = aFixtureList.Where(x => x.PredictedGoalDifference < maximumGD);

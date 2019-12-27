@@ -322,7 +322,7 @@ namespace BettingPredictorV3.DataStructures
 
         public void FindBestOdds()
         {
-            if(Odds.Count() > 0)
+            if(Odds.Count > 0)
             {
                 BestHomeOdds = Odds.First();
                 BestDrawOdds = Odds.First();
