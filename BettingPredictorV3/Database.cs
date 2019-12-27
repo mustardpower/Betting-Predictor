@@ -128,7 +128,7 @@ namespace BettingPredictorV3
 
             double yield = (profit / fixtures.Count) * 100.0;
             string intervalName = "Test interval name";
-            return new ProfitLossInterval(intervalName, "Home", fixtures.Count, profit, yield);
+            return new ProfitLossInterval(intervalName, "Home", fixtures.Count - ignoredTeams, profit, yield);
         }
 
         internal static ProfitLossInterval CalculateAwayGameProfit(List<Fixture> fixtures)
@@ -157,7 +157,7 @@ namespace BettingPredictorV3
 
             double yield = (profit / fixtures.Count) * 100.0;
             string intervalName = "Test interval name";
-            return new ProfitLossInterval(intervalName, "Away", fixtures.Count, profit, yield);
+            return new ProfitLossInterval(intervalName, "Away", fixtures.Count - ignoredTeams, profit, yield);
         }
 
         internal List<ProfitLossInterval> CalculateProfitIntervals(List<Fixture> previousFixtures, float min, float max, int n)
@@ -308,7 +308,9 @@ namespace BettingPredictorV3
 
         public void SetHistoryFiles()
         {
-            List<string> yearCodes = new List<string> { "1415", "1516", "1617", "1718", "1819", "1920" };
+            List<string> yearCodes = new List<string> { 
+                //"1415", "1516", "1617", "1718", "1819",
+                "1920" };
             List<string> leagueCodes = new List<string>
             {
                 "E0", "E1", "E2", "E3", "EC", "SC0", "SC1", "SC2", "SC3",
