@@ -49,7 +49,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public List<double> WeightingFunction(List<double> sample)
+        public static List<double> WeightingFunction(List<double> sample)
         {
             List<double> new_sample = new List<double>();
             int n = sample.Count;
