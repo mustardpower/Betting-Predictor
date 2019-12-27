@@ -18,7 +18,6 @@ namespace BettingPredictorV3
     public partial class MainWindow : Window
     {
         private Database database = new Database();
-        private BackgroundWorker worker = new BackgroundWorker();
 
         public MainWindow(Database aDatabase)
         { 

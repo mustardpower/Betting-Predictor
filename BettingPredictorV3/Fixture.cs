@@ -36,12 +36,12 @@ namespace BettingPredictorV3.DataStructures
         {
         }
 
-        public Fixture(League league, DateTime date, Team home_team, Team away_team, Referee referee,List<Bookmaker> odds) // constructor for fixture
+        public Fixture(League league, DateTime date, Team homeTeam, Team awayTeam, Referee referee,List<Bookmaker> odds) // constructor for fixture
         {
             this.league = league;
             this.date = date;
-            this.homeTeam = home_team;
-            this.awayTeam = away_team;
+            this.homeTeam = homeTeam;
+            this.awayTeam = awayTeam;
             this.referee = referee;
             this.Odds = odds;
             predictedHomeGoals = 0;
@@ -50,14 +50,14 @@ namespace BettingPredictorV3.DataStructures
 
             FindBestOdds();
         }
-        public Fixture(League league,DateTime date,Team home_team,Team away_team,double home_goals,double away_goals,Referee referee,List<Bookmaker> odds) // for result
+        public Fixture(League league,DateTime date,Team homeTeam, Team awayTeam, double homeGoals,double awayGoals,Referee referee,List<Bookmaker> odds) // for result
         {
             this.league = league;
             this.date = date;
-            this.homeTeam = home_team;
-            this.awayTeam = away_team;
-            this.homeGoals = home_goals;
-            this.awayGoals = away_goals;
+            this.homeTeam = homeTeam;
+            this.awayTeam = awayTeam;
+            this.homeGoals = homeGoals;
+            this.awayGoals = awayGoals;
             this.referee = referee;
             this.Odds = odds;
             predictedHomeGoals = 0;
