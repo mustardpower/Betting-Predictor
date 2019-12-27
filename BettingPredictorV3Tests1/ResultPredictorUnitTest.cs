@@ -32,13 +32,12 @@ namespace BettingPredictorV3Tests
         [TestMethod]
         public void TestWeightingFunctionChangesValues()
         {
-            ResultPredictor resultPredictor = new ResultPredictor();
             List<double> sample = new List<double>()
             {
                 1, 2, 3, 4, 5, 6, 7, 8
             };
 
-            List<double> weightedSample = resultPredictor.WeightingFunction(sample);
+            List<double> weightedSample = ResultPredictor.WeightingFunction(sample);
 
             // test collections are the different by checking there
             //are items in one list but not the other
