@@ -296,25 +296,5 @@ namespace BettingPredictorV3
         {
             System.Windows.Forms.MessageBox.Show("© Copyright of Paul Gothard. Not for commercial use.");
         }
-
-        private void PredictResults()
-        {
-            double alpha, beta;
-
-            do
-            {
-                alpha = database.GetAlphaValue();
-                beta = database.GetBetaValue();
-                database.PredictResults(alpha, beta);
-            }
-            while ((Math.Abs(alpha) > Math.Abs(database.GetAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.GetBetaValue()))));
-
-
-            List<double> homeResiduals = database.GetHomeResiduals(DateTime.Now);
-            List<double> awayResiduals = database.GetAwayResiduals(DateTime.Now);
-
-            homeResiduals.RemoveAll(x => Double.IsNaN(x));
-            awayResiduals.RemoveAll(x => Double.IsNaN(x));
-        }
     }
 }
