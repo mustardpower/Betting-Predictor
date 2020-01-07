@@ -25,5 +25,14 @@ namespace BettingPredictorV3
             upcomingFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
             return upcomingFixtures;
         }
+
+        public List<Fixture> GetPreviousFixtures()
+        {
+            List<Fixture> previousFixtures = database.GetPreviousResults();
+            previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
+            previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
+            previousFixtures = previousFixtures.Distinct().ToList();
+            return previousFixtures;
+        }
     }
 }

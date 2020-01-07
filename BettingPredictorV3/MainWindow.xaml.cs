@@ -45,10 +45,7 @@ namespace BettingPredictorV3
 
         private void DataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Fixture> previousFixtures = database.GetPreviousResults();
-            previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
-            previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
-            previousFixtures = previousFixtures.Distinct().ToList();
+            List<Fixture> previousFixtures = viewModel.GetPreviousFixtures();
             dataGrid_PreviousFixtures.ItemsSource = previousFixtures;
 
             const float minValue = -3.0f;
