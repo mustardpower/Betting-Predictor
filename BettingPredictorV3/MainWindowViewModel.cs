@@ -1,4 +1,5 @@
 ﻿using BettingPredictorV3.DataStructures;
+using CsvFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -96,6 +97,74 @@ namespace BettingPredictorV3
                     {
                         MessageBox.Show("Failed to serialize. Reason: " + ex.Message);
                     }
+                }
+            }
+        }
+
+        public void CreateBet()
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "BET SLIP"; // Default file name
+            dlg.DefaultExt = ".csv"; // Default file extension
+            dlg.Filter = "CSV (Comma delimited) (.csv)|*.csv"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                var csvRows = new[] { new {
+                    FixtureDate = DateTime.Now,
+                    LeagueID = "LeagueID",
+                    TeamName = "Team Name",
+                    KellyCriterion = 0.0,
+                    Bookie = "Bookmaker",
+                    BestOdds = 0.0 } }.ToList();
+
+                const double threashold = 0.01;
+                var homeFixtures = database.FixtureList.Where(x => x.KellyCriterionHome > threashold);
+                csvRows.AddRange(homeFixtures.Select(x => new
+                {
+                    FixtureDate = x.Date,
+                    LeagueID = x.LeagueID,
+                    TeamName = x.HomeTeam.Name,
+                    KellyCriterion = x.KellyCriterionHome,
+                    Bookie = x.BestHomeOdds.Name,
+                    BestOdds = x.BestHomeOdds.HomeOdds
+                }));
+
+                var awayFixtures = database.FixtureList.Where(x => x.KellyCriterionAway > threashold);
+                csvRows.AddRange(awayFixtures.Select(x => new
+                {
+                    FixtureDate = x.Date,
+                    LeagueID = x.LeagueID,
+                    TeamName = x.AwayTeam.Name,
+                    KellyCriterion = x.KellyCriterionAway,
+                    Bookie = x.BestAwayOdds.Name,
+                    BestOdds = x.BestAwayOdds.AwayOdds
+                }));
+
+                csvRows.RemoveAt(0); // remove dummy anonymous object
+
+                CsvDefinition csvDefinition = new CsvDefinition();
+                csvDefinition.FieldSeparator = ',';
+                csvDefinition.Columns = new List<string>{
+                    "FixtureDate",
+                    "LeagueID",
+                    "TeamName",
+                    "KellyCriterion",
+                    "Bookie",
+                    "BestOdds" };
+
+                try
+                {
+                    csvRows.ToCsv(dlg.FileName, csvDefinition);
+                }
+                catch (IOException ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
