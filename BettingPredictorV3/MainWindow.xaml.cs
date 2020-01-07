@@ -34,7 +34,7 @@ namespace BettingPredictorV3
         {
             var upcomingFixtures = viewModel.GetDefaultUpcomingFixtures();
             dataGrid_UpcomingFixtures.ItemsSource = upcomingFixtures;
-            leaguesComboBox.ItemsSource = database.Leagues;
+            leaguesComboBox.ItemsSource = viewModel.Leagues;
             dateComboBox.ItemsSource = upcomingFixtures.Select(x => x.Date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
         }
 

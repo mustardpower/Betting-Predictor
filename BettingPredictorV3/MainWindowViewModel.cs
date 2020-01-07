@@ -20,6 +20,14 @@ namespace BettingPredictorV3
             database = aDatabase;
         }
 
+        public IEnumerable<League> Leagues
+        {
+            get
+            {
+                return database.Leagues;
+            }
+        }
+
         public List<Fixture> GetDefaultUpcomingFixtures()
         {
             List<Fixture> upcomingFixtures = new List<Fixture>();
