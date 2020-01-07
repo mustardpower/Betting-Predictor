@@ -47,12 +47,6 @@ namespace BettingPredictorV3
         {
             List<Fixture> previousFixtures = viewModel.GetPreviousFixtures();
             dataGrid_PreviousFixtures.ItemsSource = previousFixtures;
-
-            const float minValue = -3.0f;
-            const float maxValue = 3.0f;
-            const int noOfIntervals = 60;
-            database.CalculateProfitIntervals(previousFixtures, minValue, maxValue, noOfIntervals);
-
         }
 
         private void DataGrid_HomeProfitLossReport_Loaded(object sender, RoutedEventArgs e)
