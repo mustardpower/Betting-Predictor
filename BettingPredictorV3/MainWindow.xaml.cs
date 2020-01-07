@@ -18,26 +18,21 @@ namespace BettingPredictorV3
     public partial class MainWindow : Window
     {
         private Database database = new Database();
+        private MainWindowViewModel viewModel;
 
         public MainWindow(Database aDatabase)
         { 
             InitializeComponent();
-            database = aDatabase;
-        }
 
-        public List<Fixture> GetDefaultUpcomingFixtures()
-        {
-            List<Fixture> upcomingFixtures = new List<Fixture>();
-            upcomingFixtures = database.FixtureList;
-            // remove teams with less than a season of results
-            upcomingFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
-            upcomingFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
-            return upcomingFixtures;
+            // keeping legacy variable for now but should be removed and all logic should be moved out of UI!
+            database = aDatabase;
+
+            viewModel = new MainWindowViewModel(aDatabase);
         }
 
         public void RefreshUpcomingFixturesTab()
         {
-            var upcomingFixtures = GetDefaultUpcomingFixtures();
+            var upcomingFixtures = viewModel.GetDefaultUpcomingFixtures();
             dataGrid_UpcomingFixtures.ItemsSource = upcomingFixtures;
             leaguesComboBox.ItemsSource = database.Leagues;
             dateComboBox.ItemsSource = upcomingFixtures.Select(x => x.Date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));

@@ -86,6 +86,7 @@
     <Compile Include="FileParser.cs" />
     <Compile Include="Fixture.cs" />
     <Compile Include="IFileParser.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="ProfitLossInterval.cs" />
     <Compile Include="Referee.cs" />
     <Compile Include="ResultPredictor.cs" />
