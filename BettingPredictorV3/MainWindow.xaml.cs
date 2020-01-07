@@ -12,15 +12,12 @@ namespace BettingPredictorV3
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Database database = new Database();
+    
         private MainWindowViewModel viewModel;
 
         public MainWindow(Database aDatabase)
         { 
             InitializeComponent();
-
-            // keeping legacy variable for now but should be removed and all logic should be moved out of UI!
-            database = aDatabase;
 
             viewModel = new MainWindowViewModel(aDatabase);
         }
@@ -46,12 +43,12 @@ namespace BettingPredictorV3
 
         private void DataGrid_HomeProfitLossReport_Loaded(object sender, RoutedEventArgs e)
         {
-            dataGrid_HomeProfitLossReport.ItemsSource = database.CalculateProfitLossIntervals().Where(x => x.HomeOrAway == "Home");
+            dataGrid_HomeProfitLossReport.ItemsSource = viewModel.CalculateHomeProfitLossIntervals();
         }
 
         private void DataGrid_AwayProfitLossReport_Loaded(object sender, RoutedEventArgs e)
         {
-            dataGrid_AwayProfitLossReport.ItemsSource = database.CalculateProfitLossIntervals().Where(x => x.HomeOrAway == "Away");
+            dataGrid_AwayProfitLossReport.ItemsSource = viewModel.CalculateAwayProfitLossIntervals();
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -78,8 +75,8 @@ namespace BettingPredictorV3
             List<Fixture> queriedFixtures = new List<Fixture>();
             if (tabItem1.IsSelected)
             {
-                queriedFixtures = database.FixtureList;
-                IEnumerable<String> leagueIDs = database.Leagues.Select(x => x.LeagueID);
+                queriedFixtures = viewModel.FixtureList.ToList();
+                IEnumerable<String> leagueIDs = viewModel.Leagues.Select(x => x.LeagueID);
 
                 if (leaguesComboBox.SelectedItem != null)
                 {
@@ -97,12 +94,12 @@ namespace BettingPredictorV3
             }
             else if (tabItem2.IsSelected)
             {
-                List<Fixture> previousFixtures = database.GetPreviousResults();
+                List<Fixture> previousFixtures = viewModel.GetPreviousResults();
                 previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
                 previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
                 queriedFixtures = previousFixtures.Distinct().ToList();
   
-                IEnumerable<String> leagueIDs = database.Leagues.Select(x => x.LeagueID);
+                IEnumerable<String> leagueIDs = viewModel.Leagues.Select(x => x.LeagueID);
 
                 if (leaguesComboBox.SelectedItem != null)
                 {
@@ -127,7 +124,7 @@ namespace BettingPredictorV3
             List<Fixture> upcomingFixtures = new List<Fixture>();
             dateComboBox.SelectedItem = null;
             leaguesComboBox.SelectedItem = null;
-            upcomingFixtures = database.FixtureList;
+            upcomingFixtures = viewModel.FixtureList.ToList();
 
             // remove teams with less than a season of results
             upcomingFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);

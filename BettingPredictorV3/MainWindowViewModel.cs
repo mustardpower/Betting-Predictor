@@ -29,6 +29,14 @@ namespace BettingPredictorV3
             }
         }
 
+        public IEnumerable<Fixture> FixtureList
+        {
+            get
+            {
+                return database.FixtureList;
+            }
+        }
+
         public List<Fixture> GetDefaultUpcomingFixtures()
         {
             List<Fixture> upcomingFixtures = new List<Fixture>();
@@ -46,6 +54,11 @@ namespace BettingPredictorV3
             previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
             previousFixtures = previousFixtures.Distinct().ToList();
             return previousFixtures;
+        }
+
+        public List<Fixture> GetPreviousResults()
+        {
+            return database.GetPreviousResults();
         }
 
         public void LoadDatabase()
@@ -167,6 +180,16 @@ namespace BettingPredictorV3
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        public IEnumerable<ProfitLossInterval> CalculateHomeProfitLossIntervals()
+        {
+            return database.CalculateProfitLossIntervals().Where(x => x.HomeOrAway == "Home");
+        }
+
+        public IEnumerable<ProfitLossInterval> CalculateAwayProfitLossIntervals()
+        {
+            return database.CalculateProfitLossIntervals().Where(x => x.HomeOrAway == "Away");
         }
     }
 }
