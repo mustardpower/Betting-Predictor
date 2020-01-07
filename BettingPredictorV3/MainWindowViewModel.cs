@@ -37,6 +37,15 @@ namespace BettingPredictorV3
             }
         }
 
+        public IEnumerable<DateTime> UpcomingFixtureDates
+        {
+            get
+            {
+                return GetDefaultUpcomingFixtures().Select(x => x.Date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
+            }
+        }
+
+
         public List<Fixture> GetDefaultUpcomingFixtures()
         {
             List<Fixture> upcomingFixtures = new List<Fixture>();

@@ -24,10 +24,9 @@ namespace BettingPredictorV3
 
         public void RefreshUpcomingFixturesTab()
         {
-            var upcomingFixtures = viewModel.GetDefaultUpcomingFixtures();
-            dataGrid_UpcomingFixtures.ItemsSource = upcomingFixtures;
+            dataGrid_UpcomingFixtures.ItemsSource = viewModel.GetDefaultUpcomingFixtures();
             leaguesComboBox.ItemsSource = viewModel.Leagues;
-            dateComboBox.ItemsSource = upcomingFixtures.Select(x => x.Date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
+            dateComboBox.ItemsSource = viewModel.UpcomingFixtureDates;
         }
 
         public void DataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)
@@ -97,8 +96,6 @@ namespace BettingPredictorV3
                 previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
                 previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
                 queriedFixtures = previousFixtures.Distinct().ToList();
-  
-                IEnumerable<String> leagueIDs = viewModel.Leagues.Select(x => x.LeagueID);
 
                 if (leaguesComboBox.SelectedItem != null)
                 {
