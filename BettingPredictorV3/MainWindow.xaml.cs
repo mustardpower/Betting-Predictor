@@ -37,8 +37,7 @@ namespace BettingPredictorV3
 
         private void DataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Fixture> previousFixtures = viewModel.GetPreviousFixtures();
-            dataGrid_PreviousFixtures.ItemsSource = previousFixtures;
+            dataGrid_PreviousFixtures.ItemsSource = viewModel.GetPreviousFixtures();
         }
 
         private void DataGrid_HomeProfitLossReport_Loaded(object sender, RoutedEventArgs e)
