@@ -27,8 +27,6 @@ namespace BettingPredictorV3
         public void RefreshUpcomingFixturesTab()
         {
             dataGrid_UpcomingFixtures.ItemsSource = viewModel.GetDefaultUpcomingFixtures();
-            
-            dateComboBox.ItemsSource = viewModel.UpcomingFixtureDates;
         }
 
         public void DataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)

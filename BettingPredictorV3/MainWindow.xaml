@@ -96,7 +96,7 @@
         <Label Content="League Code" Height="29" HorizontalAlignment="Left" Margin="928,127,0,0" Name="label1" VerticalAlignment="Top" Width="84" />
         <Label Content="Date" Height="29" HorizontalAlignment="Left" Margin="928,176,0,0" Name="label2" VerticalAlignment="Top" Width="84" />
         <ComboBox Height="32" HorizontalAlignment="Left" Margin="1045,127,0,0" Name="leaguesComboBox" ItemsSource="{Binding Path=Leagues}" DisplayMemberPath="LeagueID" VerticalAlignment="Top" Width="89" />
-        <ComboBox Height="32" DataContext="{Binding}" HorizontalAlignment="Left" Margin="1045,176,0,0"  Name="dateComboBox" ItemsSource="{Binding Path=fixture.date}" VerticalAlignment="Top" Width="89" />
+        <ComboBox Height="32" HorizontalAlignment="Left" Margin="1045,176,0,0"  Name="dateComboBox" ItemsSource="{Binding Path=UpcomingFixtureDates}" VerticalAlignment="Top" Width="89" />
         <Button Content="Reset Search" Height="32" HorizontalAlignment="Left" Margin="931,331,0,0" Click ="ResetButton_Click" Name="resetButton" VerticalAlignment="Top" Width="84" />
         <GroupBox Header="Predicted Goal Difference" Height="105" HorizontalAlignment="Left" Margin="931,220,0,0" Name="groupBox1" VerticalAlignment="Top" Width="204">
             <Grid Margin="0,0,17,3" Width="192">
