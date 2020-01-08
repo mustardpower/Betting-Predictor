@@ -50,7 +50,7 @@
             </TabItem>
             <TabItem Header = "Previous Fixtures" Name="tabItem2">
                 <DataGrid AutoGenerateColumns="False" Height="719" HorizontalAlignment="Left"
-                  Margin="22,70,0,0" Name="dataGrid_PreviousFixtures" Loaded="DataGrid_PreviousFixtures_Loaded"
+                  Margin="22,70,0,0" Name="dataGrid_PreviousFixtures" ItemsSource="{Binding Path=PreviousFixtures}"
                   VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick" DataContext="{Binding}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="League Code" Binding="{Binding Path=League.LeagueID}"></DataGridTextColumn>

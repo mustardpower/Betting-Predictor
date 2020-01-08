@@ -59,7 +59,15 @@ namespace BettingPredictorV3
             }
         }
 
-        public List<Fixture> GetPreviousFixtures(int minimumNumberOfFixtures)
+        public List<Fixture> PreviousFixtures
+        {
+            get
+            {
+                return GetPreviousFixturesWithMinimumFixtures(minimumNumberOfFixtures: 10);
+            }
+        }
+
+        public List<Fixture> GetPreviousFixturesWithMinimumFixtures(int minimumNumberOfFixtures)
         {
             List<Fixture> previousFixtures = database.GetPreviousResults();
             previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < minimumNumberOfFixtures);

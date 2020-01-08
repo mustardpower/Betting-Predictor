@@ -29,16 +29,6 @@ namespace BettingPredictorV3
             dataGrid_UpcomingFixtures.ItemsSource = viewModel.DefaultUpcomingFixtures;
         }
 
-        public void DataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void DataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
-        {
-            dataGrid_PreviousFixtures.ItemsSource = viewModel.GetPreviousFixtures(minimumNumberOfFixtures: 10);
-        }
-
         private void DataGrid_HomeProfitLossReport_Loaded(object sender, RoutedEventArgs e)
         {
             dataGrid_HomeProfitLossReport.ItemsSource = viewModel.CalculateHomeProfitLossIntervals();
@@ -91,7 +81,7 @@ namespace BettingPredictorV3
             }
             else if (tabItem2.IsSelected)
             {
-                List<Fixture> previousFixtures = viewModel.GetPreviousFixtures(minimumNumberOfFixtures: 10);
+                List<Fixture> previousFixtures = viewModel.GetPreviousFixturesWithMinimumFixtures(minimumNumberOfFixtures: 10);
                 queriedFixtures = previousFixtures.Distinct().ToList();
 
                 if (leaguesComboBox.SelectedItem != null)
