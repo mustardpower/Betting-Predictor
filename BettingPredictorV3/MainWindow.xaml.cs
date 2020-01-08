@@ -13,19 +13,21 @@ namespace BettingPredictorV3
     public partial class MainWindow : Window
     {
     
-        private MainWindowViewModel viewModel;
+        private readonly MainWindowViewModel viewModel;
 
         public MainWindow(MainWindowViewModel aViewModel)
         { 
             InitializeComponent();
 
             viewModel = aViewModel;
+
+            DataContext = viewModel;
         }
 
         public void RefreshUpcomingFixturesTab()
         {
             dataGrid_UpcomingFixtures.ItemsSource = viewModel.GetDefaultUpcomingFixtures();
-            leaguesComboBox.ItemsSource = viewModel.Leagues;
+            
             dateComboBox.ItemsSource = viewModel.UpcomingFixtureDates;
         }
 
