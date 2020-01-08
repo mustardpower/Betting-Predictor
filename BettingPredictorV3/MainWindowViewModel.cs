@@ -41,10 +41,14 @@ namespace BettingPredictorV3
         {
             get
             {
-                return DefaultUpcomingFixtures.Select(x => new DateTime(x.Date.Year, 1, 1).AddDays(x.Date.DayOfYear - 1)).Distinct();
+                return DatesForFixtures(DefaultUpcomingFixtures);
             }
         }
 
+        public static IEnumerable<DateTime> DatesForFixtures(List<Fixture> fixtureList)
+        {
+            return fixtureList.Select(x => new DateTime(x.Date.Year, 1, 1).AddDays(x.Date.DayOfYear - 1)).Distinct();
+        }
 
         public List<Fixture> DefaultUpcomingFixtures
         {
