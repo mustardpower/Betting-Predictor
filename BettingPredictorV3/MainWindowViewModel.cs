@@ -56,11 +56,11 @@ namespace BettingPredictorV3
             return upcomingFixtures;
         }
 
-        public List<Fixture> GetPreviousFixtures()
+        public List<Fixture> GetPreviousFixtures(int minimumNumberOfFixtures)
         {
             List<Fixture> previousFixtures = database.GetPreviousResults();
-            previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
-            previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
+            previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < minimumNumberOfFixtures);
+            previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < minimumNumberOfFixtures);
             previousFixtures = previousFixtures.Distinct().ToList();
             return previousFixtures;
         }

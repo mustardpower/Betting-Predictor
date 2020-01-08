@@ -36,7 +36,7 @@ namespace BettingPredictorV3
 
         private void DataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            dataGrid_PreviousFixtures.ItemsSource = viewModel.GetPreviousFixtures();
+            dataGrid_PreviousFixtures.ItemsSource = viewModel.GetPreviousFixtures(minimumNumberOfFixtures: 10);
         }
 
         private void DataGrid_HomeProfitLossReport_Loaded(object sender, RoutedEventArgs e)
@@ -91,9 +91,7 @@ namespace BettingPredictorV3
             }
             else if (tabItem2.IsSelected)
             {
-                List<Fixture> previousFixtures = viewModel.GetPreviousResults();
-                previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
-                previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
+                List<Fixture> previousFixtures = viewModel.GetPreviousFixtures(minimumNumberOfFixtures: 10);
                 queriedFixtures = previousFixtures.Distinct().ToList();
 
                 if (leaguesComboBox.SelectedItem != null)
