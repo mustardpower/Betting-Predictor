@@ -26,12 +26,12 @@ namespace BettingPredictorV3
 
         public void RefreshUpcomingFixturesTab()
         {
-            dataGrid_UpcomingFixtures.ItemsSource = viewModel.GetDefaultUpcomingFixtures();
+            dataGrid_UpcomingFixtures.ItemsSource = viewModel.DefaultUpcomingFixtures;
         }
 
         public void DataGrid_UpcomingFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            RefreshUpcomingFixturesTab();
+            
         }
 
         private void DataGrid_PreviousFixtures_Loaded(object sender, RoutedEventArgs e)
@@ -116,7 +116,7 @@ namespace BettingPredictorV3
         {
             dateComboBox.SelectedItem = null;
             leaguesComboBox.SelectedItem = null;
-            dataGrid_UpcomingFixtures.ItemsSource = viewModel.GetDefaultUpcomingFixtures();
+            dataGrid_UpcomingFixtures.ItemsSource = viewModel.DefaultUpcomingFixtures;
         }
 
         public List<Fixture> FilterForChosenGD(IEnumerable<Fixture> aFixtureList)

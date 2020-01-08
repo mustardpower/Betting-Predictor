@@ -41,19 +41,22 @@ namespace BettingPredictorV3
         {
             get
             {
-                return GetDefaultUpcomingFixtures().Select(x => x.Date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
+                return DefaultUpcomingFixtures.Select(x => x.Date.DayOfYear).Distinct().Select(dayOfYear => new DateTime(DateTime.Now.Year, 1, 1).AddDays(dayOfYear - 1));
             }
         }
 
 
-        public List<Fixture> GetDefaultUpcomingFixtures()
+        public List<Fixture> DefaultUpcomingFixtures
         {
-            List<Fixture> upcomingFixtures = new List<Fixture>();
-            upcomingFixtures = database.FixtureList;
-            // remove teams with less than a season of results
-            upcomingFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
-            upcomingFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
-            return upcomingFixtures;
+            get
+            {
+                List<Fixture> upcomingFixtures = new List<Fixture>();
+                upcomingFixtures = database.FixtureList;
+                // remove teams with less than a season of results
+                upcomingFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+                upcomingFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+                return upcomingFixtures;
+            }
         }
 
         public List<Fixture> GetPreviousFixtures(int minimumNumberOfFixtures)

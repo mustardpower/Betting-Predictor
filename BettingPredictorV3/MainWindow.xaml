@@ -18,7 +18,7 @@
         <TabControl Height="656" HorizontalAlignment="Left" Margin="0,20,0,0" Name="tabControl1" VerticalAlignment="Top" Width="922">
             <TabItem Header="Upcoming Fixtures" Name="tabItem1">
                 <DataGrid AutoGenerateColumns="False" Height="606" HorizontalAlignment="Left"
-                  Margin="22,14,0,0" Name="dataGrid_UpcomingFixtures" Loaded="DataGrid_UpcomingFixtures_Loaded"
+                  Margin="22,14,0,0" Name="dataGrid_UpcomingFixtures" ItemsSource="{Binding Path=DefaultUpcomingFixtures}"
                   VerticalAlignment="Top" Width="875" SelectionUnit="FullRow" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick" DataContext="{Binding}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="League Code" Binding="{Binding Path=League.LeagueID}"></DataGridTextColumn>
