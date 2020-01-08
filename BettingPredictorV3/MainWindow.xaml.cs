@@ -15,11 +15,11 @@ namespace BettingPredictorV3
     
         private MainWindowViewModel viewModel;
 
-        public MainWindow(Database aDatabase)
+        public MainWindow(MainWindowViewModel aViewModel)
         { 
             InitializeComponent();
 
-            viewModel = new MainWindowViewModel(aDatabase);
+            viewModel = aViewModel;
         }
 
         public void RefreshUpcomingFixturesTab()

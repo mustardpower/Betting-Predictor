@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace BettingPredictorV3
 {
-    class MainWindowViewModel
+    public class MainWindowViewModel
     {
         private Database database = new Database();
 

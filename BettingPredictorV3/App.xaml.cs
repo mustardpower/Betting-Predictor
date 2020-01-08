@@ -46,7 +46,8 @@ namespace BettingPredictorV3
                 // Create the main window, but on the UI thread.
                 Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
                 {
-                    MainWindow = new MainWindow(database);
+                    MainWindowViewModel viewModel = new MainWindowViewModel(database);
+                    MainWindow = new MainWindow(viewModel);
                     MainWindow.Show();
                 });
             }
