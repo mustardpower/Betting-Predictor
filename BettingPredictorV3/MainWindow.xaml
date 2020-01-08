@@ -69,8 +69,8 @@
                 <StackPanel>
                     <Label Height="30">Home Intervals</Label>
                     <DataGrid AutoGenerateColumns="False" Height="220" HorizontalAlignment="Left"
-                  Margin="22,0,0,0" Name="dataGrid_HomeProfitLossReport" Loaded="DataGrid_HomeProfitLossReport_Loaded"
-                  VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
+                  Margin="22,0,0,0" Name="dataGrid_HomeProfitLossReport" ItemsSource="{Binding Path=HomeProfitLossIntervals}"
+                  VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Goal Difference Interval" Binding="{Binding Path=GdInterval}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Number of Matches" Binding="{Binding Path=NumberOfMatches}"></DataGridTextColumn>
@@ -80,8 +80,8 @@
                     </DataGrid>
                     <Label Height="30">Away Intervals</Label>
                     <DataGrid AutoGenerateColumns="False" Height="220" HorizontalAlignment="Left"
-                  Margin="22,0,0,0" Name="dataGrid_AwayProfitLossReport" Loaded="DataGrid_AwayProfitLossReport_Loaded"
-                  VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True" DataContext="{Binding}">
+                  Margin="22,0,0,0" Name="dataGrid_AwayProfitLossReport" ItemsSource="{Binding Path=AwayProfitLossIntervals}"
+                  VerticalAlignment="Top" Width="883" SelectionUnit="FullRow" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Goal Difference Interval" Binding="{Binding Path=GdInterval}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Number of Matches" Binding="{Binding Path=NumberOfMatches}"></DataGridTextColumn>

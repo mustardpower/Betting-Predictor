@@ -67,6 +67,22 @@ namespace BettingPredictorV3
             }
         }
 
+        public IEnumerable<ProfitLossInterval> HomeProfitLossIntervals
+        {
+            get
+            {
+                return CalculateHomeProfitLossIntervals();
+            }
+        }
+
+        public IEnumerable<ProfitLossInterval> AwayProfitLossIntervals
+        {
+            get
+            {
+                return CalculateAwayProfitLossIntervals();
+            }
+        }
+
         public List<Fixture> GetPreviousFixturesWithMinimumFixtures(int minimumNumberOfFixtures)
         {
             List<Fixture> previousFixtures = database.GetPreviousResults();

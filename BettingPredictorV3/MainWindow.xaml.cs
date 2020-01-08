@@ -29,16 +29,6 @@ namespace BettingPredictorV3
             dataGrid_UpcomingFixtures.ItemsSource = viewModel.DefaultUpcomingFixtures;
         }
 
-        private void DataGrid_HomeProfitLossReport_Loaded(object sender, RoutedEventArgs e)
-        {
-            dataGrid_HomeProfitLossReport.ItemsSource = viewModel.CalculateHomeProfitLossIntervals();
-        }
-
-        private void DataGrid_AwayProfitLossReport_Loaded(object sender, RoutedEventArgs e)
-        {
-            dataGrid_AwayProfitLossReport.ItemsSource = viewModel.CalculateAwayProfitLossIntervals();
-        }
-
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Fixture selectedFixture;
