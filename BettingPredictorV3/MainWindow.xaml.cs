@@ -116,16 +116,9 @@ namespace BettingPredictorV3
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Fixture> upcomingFixtures = new List<Fixture>();
             dateComboBox.SelectedItem = null;
             leaguesComboBox.SelectedItem = null;
-            upcomingFixtures = viewModel.FixtureList.ToList();
-
-            // remove teams with less than a season of results
-            upcomingFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
-            upcomingFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
-
-            dataGrid_UpcomingFixtures.ItemsSource = upcomingFixtures;
+            dataGrid_UpcomingFixtures.ItemsSource = viewModel.GetDefaultUpcomingFixtures();
         }
 
         public List<Fixture> FilterForChosenGD(IEnumerable<Fixture> aFixtureList)
