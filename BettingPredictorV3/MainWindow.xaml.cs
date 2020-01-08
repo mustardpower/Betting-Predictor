@@ -74,7 +74,6 @@ namespace BettingPredictorV3
             if (tabItem1.IsSelected)
             {
                 queriedFixtures = viewModel.FixtureList.ToList();
-                IEnumerable<String> leagueIDs = viewModel.Leagues.Select(x => x.LeagueID);
 
                 if (leaguesComboBox.SelectedItem != null)
                 {
