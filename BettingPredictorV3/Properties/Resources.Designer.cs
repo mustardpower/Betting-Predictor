@@ -59,5 +59,23 @@ namespace BettingPredictorV3.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sample sizes do not match.
+        /// </summary>
+        internal static string SampleSizesDoNotMatch {
+            get {
+                return ResourceManager.GetString("SampleSizesDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Samples must not be null.
+        /// </summary>
+        internal static string SamplesMustNotBeNull {
+            get {
+                return ResourceManager.GetString("SamplesMustNotBeNull", resourceCulture);
+            }
+        }
     }
 }

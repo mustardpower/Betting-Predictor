@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BettingPredictorV3.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,9 +27,14 @@ namespace BettingPredictorV3
 
         public static double ChiSquaredValue(List<double> actualFrequencySample, List<double> expectedFrequencySample)
         {
+            if(actualFrequencySample == null || expectedFrequencySample == null)
+            {
+                throw new ArgumentException(Resources.SamplesMustNotBeNull);
+            }
+
             if(actualFrequencySample.Count != expectedFrequencySample.Count)
             {
-                throw new ArgumentException("Sample sizes do not match");
+                throw new ArgumentException(Resources.SampleSizesDoNotMatch);
             }
 
             double chiSquared = 0.0;
