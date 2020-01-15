@@ -97,6 +97,11 @@ namespace BettingPredictorV3
             return new_sample;
         }
 
+        public static double expectedFrequencyPoisson(double lambda, int k, int v)
+        {
+            return StatsLib.poissonPDF(lambda, k) * v;
+        }
+
         public static double GoodnessOfFitPoisson(List<double> sample)
         {
             return 0.0;

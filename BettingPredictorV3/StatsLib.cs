@@ -23,5 +23,24 @@ namespace BettingPredictorV3
 
             return fact;
         }
+
+        public static double ChiSquaredValue(List<double> actualFrequencySample, List<double> expectedFrequencySample)
+        {
+            if(actualFrequencySample.Count != expectedFrequencySample.Count)
+            {
+                throw new ArgumentException("Sample sizes do not match");
+            }
+
+            double chiSquared = 0.0;
+
+            for(int x = 0; x < actualFrequencySample.Count; x++)
+            {
+                double observed = actualFrequencySample.ElementAt(x);
+                double expected = expectedFrequencySample.ElementAt(x);
+                chiSquared += Math.Pow(observed - expected, 2) / expected;
+            }
+
+            return chiSquared;
+        }
     }
 }
