@@ -96,5 +96,10 @@ namespace BettingPredictorV3
 
             return new_sample;
         }
+
+        public static double GoodnessOfFitPoisson(List<double> sample)
+        {
+            return 0.0;
+        }
     }
 }

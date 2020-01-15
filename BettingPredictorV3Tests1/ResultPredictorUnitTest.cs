@@ -45,5 +45,26 @@ namespace BettingPredictorV3Tests
             Assert.IsFalse(sample.Except(weightedSample).Count() == 0);
         }
 
+        [TestMethod]
+        public void TestGoodnessOfFitPoisson()
+        {
+            // these are values of PDF where lambda = 2
+            List<double> poissonSample = new List<double>()
+            {
+                0.1353352832366127,
+                0.2706705664732254,
+                0.2706705664732254,
+                0.18044704431548359,
+                0.090223522157741792,
+                0.036089408863096722,
+                0.012029802954365574
+            };
+
+            Assert.IsTrue(poissonSample.Sum() > 0.99, "Probabilities should sum to 1");
+
+            double fitPercentage = ResultPredictor.GoodnessOfFitPoisson(poissonSample);
+            Assert.IsTrue(fitPercentage > 99.0, "Data should match the Poisson distribution PDF");
+        }
+
     }
 }

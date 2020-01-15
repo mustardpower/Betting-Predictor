@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BettingPredictorV3
 {
-    static class StatsLib
+    public static class StatsLib
     {
         public static double poissonPDF(double lambda, int k)
         {
