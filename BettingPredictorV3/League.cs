@@ -10,6 +10,11 @@ namespace BettingPredictorV3.DataStructures
     public class League
     {
 
+        public League()
+        {
+
+        }
+
         public League(String leagueCode)
         {
             this.LeagueCode = leagueCode;

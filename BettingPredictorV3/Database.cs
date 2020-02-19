@@ -12,12 +12,13 @@ using BettingPredictorV3.DataStructures;
 namespace BettingPredictorV3
 {
     [Serializable]
-    public class Database
+    public class Database : IDisposable
     {
         private List<League> leagues;   // list of all the leagues stored
         private List<Fixture> fixtureList;
         private List<String> fixturesFiles;
         private Dictionary<String, List<String>> historyFiles;
+        private FootballResultsDbContext dbContext;
 
         public List<League> Leagues
         {
@@ -64,6 +65,7 @@ namespace BettingPredictorV3
             fixtureList = new List<Fixture>();
             historyFiles = new Dictionary<String, List<String>>();
             fixturesFiles = new List<String>();
+            dbContext = new FootballResultsDbContext();
         }
 
         public void ClearData()
@@ -117,54 +119,51 @@ namespace BettingPredictorV3
             FileParser parser = new FileParser();
             Fixture newFixture = null;
 
-            using (var db = new FootballResultsDbContext())
+            League aLeague = GetLeague(leagueCode);
+            if (aLeague != null)
             {
-                League aLeague = GetLeague(leagueCode);
-                if (aLeague != null)
-                {
-                    newFixture = parser.ParseHistoricalFixtureData(aLeague, fixtureData);
-                }
-                else
-                {
-                    League newLeague = new League(leagueCode);
-                    newFixture = parser.ParseHistoricalFixtureData(newLeague, fixtureData);
-
-                    db.Leagues.Add(newLeague);
-                    db.SaveChanges();
-                }
-
-                // Retrieve team from database
-                Team homeTeam = db.Teams.Where(x => x.Name == newFixture.HomeTeam.Name).SingleOrDefault();
-                if(homeTeam != null)
-                {
-                    // if found then use database definition
-                    newFixture.HomeTeam = homeTeam;
-                }
-                else
-                {
-                    // if not found then need to add team to database before saving fixture
-                    db.Teams.Add(newFixture.HomeTeam);
-                    db.SaveChanges();
-                }
-
-                Team awayTeam = db.Teams.Where(x => x.Name == newFixture.AwayTeam.Name).SingleOrDefault();
-                if (awayTeam != null)
-                {
-                    // if found then use database definition
-                    newFixture.AwayTeam = awayTeam;
-                }
-                else
-                {
-                    // if not found then need to add team to database before saving fixture
-                    db.Teams.Add(newFixture.AwayTeam);
-                    db.SaveChanges();
-                }
-
-                newFixture.LeagueId = aLeague.LeagueId;
-
-                db.Fixtures.Add(newFixture);
-                db.SaveChanges();
+                newFixture = parser.ParseHistoricalFixtureData(aLeague, fixtureData);
             }
+            else
+            {
+                League newLeague = new League(leagueCode);
+                newFixture = parser.ParseHistoricalFixtureData(newLeague, fixtureData);
+
+                dbContext.Leagues.Add(newLeague);
+                dbContext.SaveChanges();
+            }
+
+            // Retrieve team from database
+            Team homeTeam = dbContext.Teams.Where(x => x.Name == newFixture.HomeTeam.Name).SingleOrDefault();
+            if(homeTeam != null)
+            {
+                // if found then use database definition
+                newFixture.HomeTeam = homeTeam;
+            }
+            else
+            {
+            // if not found then need to add team to database before saving fixture
+                dbContext.Teams.Add(newFixture.HomeTeam);
+                dbContext.SaveChanges();
+            }
+
+            Team awayTeam = dbContext.Teams.Where(x => x.Name == newFixture.AwayTeam.Name).SingleOrDefault();
+            if (awayTeam != null)
+            {
+                // if found then use database definition
+                newFixture.AwayTeam = awayTeam;
+            }
+            else
+            {
+                // if not found then need to add team to database before saving fixture
+                dbContext.Teams.Add(newFixture.AwayTeam);
+                dbContext.SaveChanges();
+            }
+
+            newFixture.LeagueId = aLeague.LeagueId;
+
+            dbContext.Fixtures.Add(newFixture);
+            dbContext.SaveChanges();
         }
 
         internal List<ProfitLossInterval> CalculateProfitLossIntervals()
@@ -288,15 +287,12 @@ namespace BettingPredictorV3
 
         public Team GetTeam(String leagueCode, String teamName)
         {
-            using(var db = new FootballResultsDbContext())
-            {
-                return db.Teams.ToList().Find(x => x.Name == teamName);
-            }
+            return dbContext.Teams.ToList().Find(x => x.Name == teamName);
         }
 
-        public League GetLeague(String leagueCode)
+        public League GetLeague(string leagueCode)
         {
-            return leagues.Find(x => x.LeagueCode == leagueCode);
+            return dbContext.Leagues.ToList().Find(x => x.LeagueCode == leagueCode);
         }
 
         public void PredictResults(double alpha,double beta)
@@ -436,6 +432,11 @@ namespace BettingPredictorV3
         {
             fixturesFiles.Add("http://www.football-data.co.uk/fixtures.csv");
             fixturesFiles.Add("http://www.football-data.co.uk/new_league_fixtures.csv");
+        }
+
+        public void Dispose()
+        {
+            dbContext?.Dispose();
         }
     }
 }

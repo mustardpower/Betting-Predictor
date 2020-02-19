@@ -16,13 +16,11 @@ namespace BettingPredictorV3
     internal delegate void Invoker();
     public partial class App : Application
     {
-        private Database database = new Database();
+        private Database database;
         
         public App()
         {
             ApplicationInitialize = _applicationInitialize;
-            database.SetFixturesFiles();
-            database.SetHistoryFiles();
         }
         public static new App Current
         {
@@ -32,6 +30,9 @@ namespace BettingPredictorV3
         internal ApplicationInitializeDelegate ApplicationInitialize;
         private void _applicationInitialize(Splash splashWindow)
         {
+            database = new Database();
+            database.SetFixturesFiles();
+            database.SetHistoryFiles();
             var dialogResult = OpenDatabaseSettingsWindow();
             if (dialogResult == true)
             {
@@ -50,6 +51,8 @@ namespace BettingPredictorV3
                     MainWindow.Show();
                 });
             }
+
+            database.Dispose();
         }
 
         private bool? OpenDatabaseSettingsWindow()
