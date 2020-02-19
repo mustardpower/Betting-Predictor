@@ -81,10 +81,14 @@ namespace BettingPredictorV3.DataStructures
 
         public DateTime Date { get; set; }
 
+        // don't bother mapping these as they can be calculated from the odds list
+        [NotMapped]
         public Bookmaker BestHomeOdds { get; set; }
 
+        [NotMapped]
         public Bookmaker BestDrawOdds { get; set; }
 
+        [NotMapped]
         public Bookmaker BestAwayOdds { get; set; }
 
         public double PredictedHomeGoals { get; set; }
