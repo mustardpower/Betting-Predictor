@@ -106,6 +106,8 @@ namespace BettingPredictorV3.DataStructures
         public double PredictedGoalDifference { get; set; }
         public double AverageHomeResidual { get; set; }
         public double AverageAwayResidual { get; set; }
+        
+        [NotMapped]
         public double Arbitrage { get; private set; }
         public double KellyCriterionHome { get; private set; }
         public double KellyCriterionDraw { get; private set; }
