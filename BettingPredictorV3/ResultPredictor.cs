@@ -45,10 +45,10 @@ namespace BettingPredictorV3
 
                 fixture.CalculateResiduals();
 
-                List<double> homeResiduals = fixture.HomeTeam.GetResiduals(DateTime.Now);
+                List<double> homeResiduals = GetResiduals(DateTime.Now, fixture.HomeTeam);
                 fixture.AverageHomeResidual = homeResiduals.Count > 0 ? homeResiduals.Average() : 0.0;
 
-                List<double> awayResiduals = fixture.AwayTeam.GetResiduals(DateTime.Now);
+                List<double> awayResiduals = GetResiduals(DateTime.Now, fixture.AwayTeam);
                 fixture.AverageAwayResidual = awayResiduals.Count > 0 ? awayResiduals.Average() : 0.0;
 
                 fixture.CalculateBothToScore();
@@ -227,6 +227,38 @@ namespace BettingPredictorV3
             }
 
             return new_sample;
+        }
+
+        private List<double> GetResiduals(DateTime date, Team aTeam)
+        {
+            List<double> residuals = new List<double>();
+            double residual;
+            var fixtures = FixturesForTeam(aTeam);
+
+            foreach (Fixture fixture in fixtures)
+            {
+                if (fixture.Date < date)
+                {
+                    if (fixture.HomeTeam == aTeam)
+                    {
+                        residual = fixture.HomeResidual;
+                        if (!Double.IsNaN(residual))
+                        {
+                            residuals.Add(residual);
+                        }
+                    }
+                    else if (fixture.AwayTeam == aTeam)
+                    {
+                        residual = fixture.AwayResidual;
+                        if (!Double.IsNaN(residual))
+                        {
+                            residuals.Add(residual);
+                        }
+                    }
+                }
+            }
+
+            return residuals;
         }
     }
 }

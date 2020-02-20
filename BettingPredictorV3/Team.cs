@@ -122,36 +122,6 @@ namespace BettingPredictorV3.DataStructures
 
             return residuals;
         }
-
-        public List<double> GetResiduals(DateTime date)
-        {
-            List<double> residuals = new List<double>();
-            double residual;
-            foreach (Fixture fixture in Fixtures)
-            {
-                if (fixture.Date < date)
-                {
-                    if (fixture.HomeTeam == this)
-                    {
-                        residual = fixture.HomeResidual;
-                        if (!Double.IsNaN(residual))
-                        {
-                            residuals.Add(residual);
-                        }
-                    }
-                    else if (fixture.AwayTeam == this)
-                    {
-                        residual = fixture.AwayResidual;
-                        if(!Double.IsNaN(residual))
-                        {
-                            residuals.Add(residual);
-                        }
-                    }
-                }
-            }
-
-            return residuals;
-        }
     }
 
 }
