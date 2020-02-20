@@ -9,6 +9,13 @@ namespace BettingPredictorV3
 {
     public class ResultPredictor
     {
+        private FootballResultsDbContext dbContext;
+
+        public ResultPredictor(FootballResultsDbContext aContext)
+        {
+            dbContext = aContext;
+        }
+
         public void PredictResult(Fixture fixture, double alpha, double beta)
         {
             List<double> homeSample;
@@ -20,8 +27,8 @@ namespace BettingPredictorV3
             fixture.HomeForm = CalculateForm(fixture.Date, fixture.HomeTeam);
             fixture.AwayForm = CalculateForm(fixture.Date, fixture.AwayTeam);
 
-            homeSample = fixture.HomeTeam.CreateHomeSample(fixture.Date);   // create the samples
-            awaySample = fixture.AwayTeam.CreateAwaySample(fixture.Date);
+            homeSample = CreateHomeSample(fixture.Date, fixture.HomeTeam);   // create the samples
+            awaySample = CreateAwaySample(fixture.Date, fixture.AwayTeam);
 
             if ((homeSample.Count != 0) && (awaySample.Count != 0))
             {
@@ -49,6 +56,49 @@ namespace BettingPredictorV3
             }
         }
 
+        private List<double> CreateHomeSample(DateTime date, Team aTeam)
+        {
+            List<double> sample = new List<double>();
+            var fixtures = FixturesForTeam(aTeam);
+            foreach (Fixture fixture in fixtures)
+            {
+                if (fixture.Date < date)
+                {
+                    if (fixture.HomeTeam == aTeam)
+                    {
+                        sample.Add(fixture.HomeGoals);
+                    }
+                }
+            }
+
+            return sample;
+        }
+
+        private List<Fixture> FixturesForTeam(Team aTeam)
+        {
+            Team teamInDatabase = dbContext.Teams.Where(team => aTeam.TeamId == aTeam.TeamId).FirstOrDefault();
+            var combinedFixtures = teamInDatabase.HomeFixtures.Concat(teamInDatabase.AwayFixtures).ToList();
+            return combinedFixtures;
+        }
+
+        private List<double> CreateAwaySample(DateTime date, Team aTeam)
+        {
+            List<double> sample = new List<double>();
+            var fixtures = FixturesForTeam(aTeam);
+            foreach (Fixture fixture in fixtures)
+            {
+                if (fixture.Date < date)
+                {
+                    if (fixture.AwayTeam == aTeam)
+                    {
+                        sample.Add(fixture.AwayGoals);
+                    }
+                }
+            }
+
+            return sample;
+        }
+
         public int CalculateForm(DateTime date, Team aTeam)
         {
             int idx = 0;
@@ -56,7 +106,9 @@ namespace BettingPredictorV3
             const int kNumberOfRelevantGames = 5;
             const int kNumberOfPtsForWin = 3;
 
-            List<Fixture> previous_results = aTeam.GetFixturesBefore(date);
+            var homeFixtures = dbContext.Fixtures.Where(fixture => fixture.Date < date && fixture.HomeTeamId == aTeam.TeamId);
+            var awayFixtures = dbContext.Fixtures.Where(fixture => fixture.Date < date && fixture.AwayTeamId == aTeam.TeamId);
+            List<Fixture> previous_results = homeFixtures.Concat(awayFixtures).ToList();
             previous_results.Reverse();
 
             foreach (Fixture fixture in previous_results)

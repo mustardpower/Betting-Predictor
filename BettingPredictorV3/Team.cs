@@ -90,41 +90,6 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public List<double> CreateHomeSample(DateTime date)
-        {
-            List<double> sample = new List<double>();
-
-            foreach (Fixture fixture in Fixtures)
-            {
-                if (fixture.Date < date)
-                {
-                    if (fixture.HomeTeam == this)
-                    {
-                        sample.Add(fixture.HomeGoals);
-                    }
-                }
-            }
-
-            return sample;
-        }
-
-        public List<double> CreateAwaySample(DateTime date)
-        {
-            List<double> sample = new List<double>();
-
-            foreach (Fixture fixture in Fixtures)
-            {
-                if (fixture.Date < date)
-                {
-                    if (fixture.AwayTeam == this)
-                    {
-                        sample.Add(fixture.AwayGoals);
-                    }
-                }
-            }
-
-            return sample;
-        }
         public List<double> CreateHomeOppositionSample(DateTime date)
         {
             List<double> sample = new List<double>();
@@ -159,15 +124,6 @@ namespace BettingPredictorV3.DataStructures
             }
 
             return sample;
-        }
-        public void PredictResults(double alpha,double beta)
-        {
-            ResultPredictor resultPredictor = new ResultPredictor();
-            foreach (Fixture fixture in Fixtures)
-            {
-                resultPredictor.PredictResult(fixture, alpha, beta);
-                fixture.CalculateResiduals();
-            }
         }
 
         public List<double> GetHomeResiduals(DateTime date)
