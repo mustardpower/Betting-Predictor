@@ -97,56 +97,69 @@ namespace BettingPredictorV3
             fixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
         }
 
-        public void AddLeague(string leagueCode, string[] fixtureData)
+        public void AddFixtures(string[] fixtures)
         {
+            bool previousConfigurationAutoDetectChanges = dbContext.Configuration.AutoDetectChangesEnabled;
+            dbContext.Configuration.AutoDetectChangesEnabled = false;
+
+            bool previousConfigurationValidateOnSave = dbContext.Configuration.ValidateOnSaveEnabled;
+            dbContext.Configuration.ValidateOnSaveEnabled = false;
+
             FileParser parser = new FileParser();
-            Fixture newFixture = null;
-
-            League aLeague = GetLeague(leagueCode);
-            if (aLeague != null)
+            foreach (string fixture in fixtures)
             {
-                newFixture = parser.ParseHistoricalFixtureData(aLeague, fixtureData);
-            }
-            else
-            {
-                League newLeague = new League(leagueCode);
-                newFixture = parser.ParseHistoricalFixtureData(newLeague, fixtureData);
+                var fixtureData = fixture.Split(new[] { ',' }, System.StringSplitOptions.None);
+                string leagueCode = fixtureData[0];
+                if (leagueCode.Length > 0)
+                {
+                    Console.WriteLine(leagueCode + ": " + fixtureData.Length);
+                    Fixture newFixture = null;
 
-                dbContext.Leagues.Add(newLeague);
-                dbContext.SaveChanges();
-            }
+                    League aLeague = GetLeague(leagueCode);
+                    if (aLeague != null)
+                    {
+                        newFixture = parser.ParseHistoricalFixtureData(aLeague, fixtureData);
+                    }
+                    else
+                    {
+                        aLeague = new League(leagueCode);
+                        newFixture = parser.ParseHistoricalFixtureData(aLeague, fixtureData);
+                        dbContext.Leagues.Add(aLeague);
+                    }
 
-            // Retrieve team from database
-            Team homeTeam = dbContext.Teams.Where(x => x.Name == newFixture.HomeTeam.Name).SingleOrDefault();
-            if(homeTeam != null)
-            {
-                // if found then use database definition
-                newFixture.HomeTeam = homeTeam;
-            }
-            else
-            {
-            // if not found then need to add team to database before saving fixture
-                dbContext.Teams.Add(newFixture.HomeTeam);
-                dbContext.SaveChanges();
-            }
+                    // Retrieve team from database
+                    Team homeTeam = dbContext.Teams.Where(x => x.Name == newFixture.HomeTeam.Name).SingleOrDefault();
+                    if (homeTeam != null)
+                    {
+                        // if found then use database definition
+                        newFixture.HomeTeam = homeTeam;
+                    }
+                    else
+                    {
+                        // if not found then need to add team to database before saving fixture
+                        dbContext.Teams.Add(newFixture.HomeTeam);
+                    }
 
-            Team awayTeam = dbContext.Teams.Where(x => x.Name == newFixture.AwayTeam.Name).SingleOrDefault();
-            if (awayTeam != null)
-            {
-                // if found then use database definition
-                newFixture.AwayTeam = awayTeam;
-            }
-            else
-            {
-                // if not found then need to add team to database before saving fixture
-                dbContext.Teams.Add(newFixture.AwayTeam);
-                dbContext.SaveChanges();
-            }
+                    Team awayTeam = dbContext.Teams.Where(x => x.Name == newFixture.AwayTeam.Name).SingleOrDefault();
+                    if (awayTeam != null)
+                    {
+                        // if found then use database definition
+                        newFixture.AwayTeam = awayTeam;
+                    }
+                    else
+                    {
+                        // if not found then need to add team to database before saving fixture
+                        dbContext.Teams.Add(newFixture.AwayTeam);
+                    }
 
-            newFixture.LeagueId = aLeague.LeagueId;
+                    newFixture.LeagueId = aLeague.LeagueId;
 
-            dbContext.Fixtures.Add(newFixture);
+                    dbContext.Fixtures.Add(newFixture);
+                }
+            }
             dbContext.SaveChanges();
+            dbContext.Configuration.AutoDetectChangesEnabled = previousConfigurationAutoDetectChanges;
+            dbContext.Configuration.ValidateOnSaveEnabled = previousConfigurationValidateOnSave;
         }
 
         internal List<ProfitLossInterval> CalculateProfitLossIntervals()

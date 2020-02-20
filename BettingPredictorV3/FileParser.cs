@@ -105,17 +105,8 @@ namespace BettingPredictorV3
             int headings = htmlCode.IndexOf("\n");
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
             var fixtures = htmlCode.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string fixture in fixtures)
-            {
-                var fixtureData = fixture.Split(new[] { ',' }, System.StringSplitOptions.None);
-                string league_code = fixtureData[0];
-                if (league_code.Length > 0)
-                {
-                    Console.WriteLine(league_code + ": " + fixtureData.Length);
-                    Database.AddLeague(league_code, fixtureData);
-                }
-            }
+            Database.AddFixtures(fixtures);
+            
         }
 
         // Creates a Fixture from the fixture data
