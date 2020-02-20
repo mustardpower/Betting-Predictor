@@ -39,7 +39,6 @@ namespace BettingPredictorV3
                 if (DatabaseSettings.PopulateDatabase)
                 {
                     FileParser fileParser = new FileParser();
-                    database.ClearData();
                     fileParser.PopulateDatabase(database, splashWindow);
                     PredictResults();
                 }

@@ -14,7 +14,6 @@ namespace BettingPredictorV3
     [Serializable]
     public class Database : IDisposable
     {
-        private List<League> leagues;   // list of all the leagues stored
         private List<Fixture> fixtureList;
         private List<String> fixturesFiles;
         private Dictionary<String, List<String>> historyFiles;
@@ -24,7 +23,7 @@ namespace BettingPredictorV3
         {
             get
             {
-                return leagues;
+                return dbContext.Leagues.ToList();
             }
         }
 
@@ -55,22 +54,16 @@ namespace BettingPredictorV3
         public List<string> LeagueCodes {
             get
             {
-                return leagues.Select(x => x.LeagueCode).ToList();
+                return dbContext.Leagues.Select(x => x.LeagueCode).ToList();
             }
         }
 
         public Database()
         {
-            leagues = new List<League>();
             fixtureList = new List<Fixture>();
             historyFiles = new Dictionary<String, List<String>>();
             fixturesFiles = new List<String>();
             dbContext = new FootballResultsDbContext();
-        }
-
-        public void ClearData()
-        {
-            leagues.Clear();
         }
 
         public void AddUpcomingFixture(string leagueCode, DateTime date, string homeTeamName, string awayTeamName, List<Bookmaker> odds)
@@ -79,36 +72,26 @@ namespace BettingPredictorV3
             if(league == null)
             {
                 League newLeague = new League(leagueCode);
-                using(var db = new FootballResultsDbContext())
-                {
-                    db.Leagues.Add(newLeague);
-                    db.SaveChanges();
-                }
+                dbContext.Leagues.Add(newLeague);
+                dbContext.SaveChanges();
 
-                leagues.Add(newLeague);
                 league = newLeague;
             }
 
             Team homeTeam = GetTeam(leagueCode, homeTeamName);
             if(homeTeam == null)
             {
-                using (var db = new FootballResultsDbContext())
-                {
-                    homeTeam = new Team(homeTeamName);
-                    db.Teams.Add(homeTeam);
-                    db.SaveChanges();
-                }
+                homeTeam = new Team(homeTeamName);
+                dbContext.Teams.Add(homeTeam);
+                dbContext.SaveChanges();
             }
 
             Team awayTeam = GetTeam(leagueCode, awayTeamName);
             if (awayTeam == null)
             {
-                using (var db = new FootballResultsDbContext())
-                {
-                    awayTeam = new Team(awayTeamName);
-                    db.Teams.Add(awayTeam);
-                    db.SaveChanges();
-                }
+                awayTeam = new Team(awayTeamName);
+                dbContext.Teams.Add(awayTeam);
+                dbContext.SaveChanges();
             }
 
             fixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
@@ -277,7 +260,7 @@ namespace BettingPredictorV3
         public List<Fixture> GetPreviousResults()
         {
             List<Fixture> fixtures = new List<Fixture>();
-            foreach (League league in leagues)
+            foreach (League league in dbContext.Leagues)
             {
                 fixtures.AddRange(league.Fixtures);
             }
@@ -305,7 +288,7 @@ namespace BettingPredictorV3
 
         public void PredictHistoricalResults(double alpha, double beta)
         {
-            foreach (League league in leagues)
+            foreach (League league in dbContext.Leagues)
             {
                 league.PredictResults(alpha, beta);
             }
@@ -363,7 +346,7 @@ namespace BettingPredictorV3
         public List<double> GetHomeResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
-            foreach (League league in leagues)
+            foreach (League league in dbContext.Leagues)
             {
                 residuals.AddRange(league.GetHomeResiduals(date));
             }
@@ -374,7 +357,7 @@ namespace BettingPredictorV3
         public List<double> GetAwayResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
-            foreach (League league in leagues)
+            foreach (League league in dbContext.Leagues)
             {
                 residuals.AddRange(league.GetAwayResiduals(date));
             }
