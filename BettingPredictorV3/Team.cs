@@ -90,50 +90,6 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public int CalculateForm(DateTime date)
-        {
-            int idx = 0;
-            form = 0;
-            const int kNumberOfRelevantGames  = 5;
-            const int kNumberOfPtsForWin = 3;
-
-            List<Fixture> previous_results = GetFixturesBefore(date);
-            previous_results.Reverse();
-
-            foreach (Fixture fixture in previous_results)
-            {
-                if (idx < kNumberOfRelevantGames)
-                {
-                    if (fixture.HomeTeam == this) // if current team is home side
-                    {
-                        if (fixture.AwayGoals < fixture.HomeGoals)	// home win
-                        {
-                            form += kNumberOfPtsForWin;
-                        }
-                        else if (fixture.AwayGoals == fixture.HomeGoals) // draw
-                        {
-                            form++;
-                        }
-                    }
-                    else // if current team is the away side
-                    {
-                        if (fixture.AwayGoals > fixture.HomeGoals)	// away win
-                        {
-                            form += kNumberOfPtsForWin;
-                        }
-                        else if (fixture.AwayGoals == fixture.HomeGoals) // draw
-                        {
-                            form++;
-                        }
-                    }
-
-                    idx++;
-                }
-            }
-
-            return form;
-        }
-
         public List<double> CreateHomeSample(DateTime date)
         {
             List<double> sample = new List<double>();

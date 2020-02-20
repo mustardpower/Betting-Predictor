@@ -17,8 +17,8 @@ namespace BettingPredictorV3
             List<double> awayOppSample;
 
             fixture.CalculateGoalsPerGame();
-            fixture.HomeForm = fixture.HomeTeam.CalculateForm(fixture.Date);
-            fixture.AwayForm = fixture.AwayTeam.CalculateForm(fixture.Date);
+            fixture.HomeForm = CalculateForm(fixture.Date, fixture.HomeTeam);
+            fixture.AwayForm = CalculateForm(fixture.Date, fixture.AwayTeam);
 
             homeSample = fixture.HomeTeam.CreateHomeSample(fixture.Date);   // create the samples
             awaySample = fixture.AwayTeam.CreateAwaySample(fixture.Date);
@@ -47,6 +47,50 @@ namespace BettingPredictorV3
                 fixture.CalculateBothToScore();
                 fixture.CalculateKellyCriterion();
             }
+        }
+
+        public int CalculateForm(DateTime date, Team aTeam)
+        {
+            int idx = 0;
+            int form = 0;
+            const int kNumberOfRelevantGames = 5;
+            const int kNumberOfPtsForWin = 3;
+
+            List<Fixture> previous_results = aTeam.GetFixturesBefore(date);
+            previous_results.Reverse();
+
+            foreach (Fixture fixture in previous_results)
+            {
+                if (idx < kNumberOfRelevantGames)
+                {
+                    if (fixture.HomeTeam == aTeam) // if current team is home side
+                    {
+                        if (fixture.AwayGoals < fixture.HomeGoals)	// home win
+                        {
+                            form += kNumberOfPtsForWin;
+                        }
+                        else if (fixture.AwayGoals == fixture.HomeGoals) // draw
+                        {
+                            form++;
+                        }
+                    }
+                    else // if current team is the away side
+                    {
+                        if (fixture.AwayGoals > fixture.HomeGoals)	// away win
+                        {
+                            form += kNumberOfPtsForWin;
+                        }
+                        else if (fixture.AwayGoals == fixture.HomeGoals) // draw
+                        {
+                            form++;
+                        }
+                    }
+
+                    idx++;
+                }
+            }
+
+            return form;
         }
 
         public List<double> WeightingFunction(List<double> sample)
