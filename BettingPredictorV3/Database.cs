@@ -126,6 +126,7 @@ namespace BettingPredictorV3
                         aLeague = new League(leagueCode);
                         newFixture = parser.ParseHistoricalFixtureData(aLeague, fixtureData);
                         dbContext.Leagues.Add(aLeague);
+                        dbContext.SaveChanges();
                     }
 
                     // Retrieve team from database
@@ -139,6 +140,7 @@ namespace BettingPredictorV3
                     {
                         // if not found then need to add team to database before saving fixture
                         dbContext.Teams.Add(newFixture.HomeTeam);
+                        dbContext.SaveChanges();
                     }
 
                     Team awayTeam = dbContext.Teams.Where(x => x.Name == newFixture.AwayTeam.Name).SingleOrDefault();
@@ -151,6 +153,7 @@ namespace BettingPredictorV3
                     {
                         // if not found then need to add team to database before saving fixture
                         dbContext.Teams.Add(newFixture.AwayTeam);
+                        dbContext.SaveChanges();
                     }
 
                     newFixture.LeagueId = aLeague.LeagueId;
