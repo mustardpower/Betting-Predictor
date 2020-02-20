@@ -99,6 +99,7 @@ namespace BettingPredictorV3
 
         public void AddFixtures(string[] fixtures)
         {
+            // turning these config settings off speeds up the insertions
             bool previousConfigurationAutoDetectChanges = dbContext.Configuration.AutoDetectChangesEnabled;
             dbContext.Configuration.AutoDetectChangesEnabled = false;
 
@@ -158,6 +159,8 @@ namespace BettingPredictorV3
                 }
             }
             dbContext.SaveChanges();
+
+            // restore the config settings that were turned off to improve speed of insertions
             dbContext.Configuration.AutoDetectChangesEnabled = previousConfigurationAutoDetectChanges;
             dbContext.Configuration.ValidateOnSaveEnabled = previousConfigurationValidateOnSave;
         }
