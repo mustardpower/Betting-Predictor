@@ -80,39 +80,6 @@ namespace BettingPredictorV3.DataStructures
                 return homeFixtures.Concat(awayFixtures).ToList();
             }
         }
-
-        public List<double> GetHomeResiduals(DateTime date)
-        {
-            List<double> residuals = new List<double>();
-            foreach (Fixture fixture in Fixtures)
-            {
-                if (fixture.Date < date)
-                {
-                    if (fixture.HomeResidual != fixture.HomeGoals)
-                    {
-                        residuals.Add(fixture.HomeResidual);
-                    }
-                }
-            }
-
-            return residuals;
-        }
-        public List<double> GetAwayResiduals(DateTime date)
-        {
-            List<double> residuals = new List<double>();
-            foreach (Fixture fixture in Fixtures)
-            {
-                if (fixture.Date < date)
-                {
-                    if (fixture.HomeResidual != fixture.HomeGoals)
-                    {
-                        residuals.Add(fixture.AwayResidual);
-                    }
-                }
-            }
-
-            return residuals;
-        }
     }
 
 }
