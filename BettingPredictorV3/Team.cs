@@ -71,15 +71,6 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public void AddFixture(Fixture fixture)
-        {
-            using(var db = new FootballResultsDbContext())
-            {
-                db.Fixtures.Add(fixture);
-                db.SaveChanges();
-            }
-        }
-
         public List<Fixture> GetFixturesBefore(DateTime date)
         {
             using (var db = new FootballResultsDbContext())
