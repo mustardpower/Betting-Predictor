@@ -32,8 +32,8 @@ namespace BettingPredictorV3
 
             if ((homeSample.Count != 0) && (awaySample.Count != 0))
             {
-                homeOppSample = fixture.HomeTeam.CreateHomeOppositionSample(fixture.Date);
-                awayOppSample = fixture.AwayTeam.CreateAwayOppositionSample(fixture.Date);
+                homeOppSample = CreateHomeOppositionSample(fixture.Date, fixture.HomeTeam);
+                awayOppSample = CreateAwayOppositionSample(fixture.Date, fixture.AwayTeam);
 
                 homeSample = WeightingFunction(homeSample);
                 awaySample = WeightingFunction(awaySample);
@@ -65,6 +65,42 @@ namespace BettingPredictorV3
                 if (fixture.Date < date)
                 {
                     if (fixture.HomeTeam == aTeam)
+                    {
+                        sample.Add(fixture.HomeGoals);
+                    }
+                }
+            }
+
+            return sample;
+        }
+
+        private List<double> CreateHomeOppositionSample(DateTime date, Team aTeam)
+        {
+            List<double> sample = new List<double>();
+            var fixtures = FixturesForTeam(aTeam);
+            foreach (Fixture fixture in fixtures)
+            {
+                if (fixture.Date < date)
+                {
+                    if (fixture.HomeTeam == aTeam)
+                    {
+                        sample.Add(fixture.AwayGoals);
+                    }
+                }
+            }
+
+            return sample;
+        }
+
+        private List<double> CreateAwayOppositionSample(DateTime date, Team aTeam)
+        {
+            List<double> sample = new List<double>();
+            var fixtures = FixturesForTeam(aTeam);
+            foreach (Fixture fixture in fixtures)
+            {
+                if (fixture.Date < date)
+                {
+                    if (fixture.AwayTeam == aTeam)
                     {
                         sample.Add(fixture.HomeGoals);
                     }

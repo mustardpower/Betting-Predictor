@@ -90,42 +90,6 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public List<double> CreateHomeOppositionSample(DateTime date)
-        {
-            List<double> sample = new List<double>();
-
-            foreach (Fixture fixture in Fixtures)
-            {
-                if (fixture.Date < date)
-                {
-                    if (fixture.HomeTeam == this)
-                    {
-                        sample.Add(fixture.AwayGoals);
-                    }
-                }
-            }
-
-            return sample;
-        }
-
-        public List<double> CreateAwayOppositionSample(DateTime date)
-        {
-            List<double> sample = new List<double>();
-
-            foreach (Fixture fixture in Fixtures)
-            {
-                if (fixture.Date < date)
-                {
-                    if (fixture.AwayTeam == this)
-                    {
-                        sample.Add(fixture.HomeGoals);
-                    }
-                }
-            }
-
-            return sample;
-        }
-
         public List<double> GetHomeResiduals(DateTime date)
         {
             List<double> residuals = new List<double>();
