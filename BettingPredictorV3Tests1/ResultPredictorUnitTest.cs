@@ -16,34 +16,42 @@ namespace BettingPredictorV3Tests
             League league = new League("TEST");
             Team homeTeam = new Team("HOME");
             Team awayTeam = new Team("AWAY");
-            ResultPredictor resultPredictor = new ResultPredictor();
-            DateTime date = new DateTime();
-            Referee referee = new Referee("Ref");
-            List<Bookmaker> odds = new List<Bookmaker>();
-            Fixture fixture = new Fixture(league, date, homeTeam, awayTeam, referee, odds);
 
-            Assert.AreEqual(0, fixture.PredictedHomeGoals);
-            Assert.AreEqual(0, fixture.PredictedAwayGoals);
-            resultPredictor.PredictResult(fixture, 0, 0);
-            Assert.AreEqual(0, fixture.PredictedHomeGoals, "Should not have changed since there are no previous fixtures");
-            Assert.AreEqual(0, fixture.PredictedAwayGoals, "Should not have changed since there are no previous fixtures");
+            using (var dbContext = new FootballResultsDbContext()) 
+            {
+                ResultPredictor resultPredictor = new ResultPredictor(dbContext);
+                DateTime date = new DateTime();
+                Referee referee = new Referee("Ref");
+                List<Bookmaker> odds = new List<Bookmaker>();
+                Fixture fixture = new Fixture(league, date, homeTeam, awayTeam, referee, odds);
+
+                Assert.AreEqual(0, fixture.PredictedHomeGoals);
+                Assert.AreEqual(0, fixture.PredictedAwayGoals);
+                resultPredictor.PredictResult(fixture, 0, 0);
+                Assert.AreEqual(0, fixture.PredictedHomeGoals, "Should not have changed since there are no previous fixtures");
+                Assert.AreEqual(0, fixture.PredictedAwayGoals, "Should not have changed since there are no previous fixtures");
+            }
+            
         }
 
         [TestMethod]
         public void TestWeightingFunctionChangesValues()
         {
-            ResultPredictor resultPredictor = new ResultPredictor();
-            List<double> sample = new List<double>()
+            using (var dbContext = new FootballResultsDbContext())
             {
-                1, 2, 3, 4, 5, 6, 7, 8
-            };
+                ResultPredictor resultPredictor = new ResultPredictor(dbContext);
+                List<double> sample = new List<double>()
+                {
+                    1, 2, 3, 4, 5, 6, 7, 8
+                };
 
-            List<double> weightedSample = resultPredictor.WeightingFunction(sample);
+                List<double> weightedSample = resultPredictor.WeightingFunction(sample);
 
-            // test collections are the different by checking there
-            //are items in one list but not the other
-            Assert.IsFalse(weightedSample.Except(sample).Count() == 0);
-            Assert.IsFalse(sample.Except(weightedSample).Count() == 0);
+                // test collections are the different by checking there
+                //are items in one list but not the other
+                Assert.IsFalse(weightedSample.Except(sample).Count() == 0);
+                Assert.IsFalse(sample.Except(weightedSample).Count() == 0);
+            }
         }
 
     }

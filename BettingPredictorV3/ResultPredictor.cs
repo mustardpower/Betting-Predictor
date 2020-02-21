@@ -154,6 +154,8 @@ namespace BettingPredictorV3
         private List<Fixture> FixturesForTeam(Team aTeam)
         {
             Team teamInDatabase = dbContext.Teams.Where(team => team.TeamId == aTeam.TeamId).FirstOrDefault();
+            if (teamInDatabase == null) return new List<Fixture>();
+
             var combinedFixtures = teamInDatabase.HomeFixtures.Concat(teamInDatabase.AwayFixtures).ToList();
             return combinedFixtures;
         }
