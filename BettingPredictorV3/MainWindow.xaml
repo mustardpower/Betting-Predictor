@@ -21,7 +21,7 @@
                   Margin="22,14,0,0" Name="dataGrid_UpcomingFixtures" Loaded="DataGrid_UpcomingFixtures_Loaded"
                   VerticalAlignment="Top" Width="875" SelectionUnit="FullRow" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick" DataContext="{Binding}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="League Code" Binding="{Binding Path=FixtureLeague.LeagueCode}"></DataGridTextColumn>x 
+                        <DataGridTextColumn Header="League Code" Binding="{Binding Path=FixtureLeague.LeagueCode}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}" ></DataGridTextColumn>
                         <DataGridTextColumn Header="Home Team" Binding="{Binding Path=HomeTeam.Name}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Away Team" Binding="{Binding Path=AwayTeam.Name}"></DataGridTextColumn>
