@@ -89,7 +89,11 @@ namespace BettingPredictorV3
             {
                 return;
             }
-            FixtureWindow fixtureDlg = new FixtureWindow(selectedFixture);
+
+            var homeFixtures = database.GetFixturesBefore(selectedFixture.HomeTeam, DateTime.Now);
+            var awayFixtures = database.GetFixturesBefore(selectedFixture.HomeTeam, DateTime.Now);
+
+            FixtureWindow fixtureDlg = new FixtureWindow(selectedFixture, homeFixtures, awayFixtures);
             fixtureDlg.Show();
         }
 

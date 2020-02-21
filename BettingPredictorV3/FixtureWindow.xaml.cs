@@ -20,28 +20,30 @@ namespace BettingPredictorV3
     /// </summary>
     public partial class FixtureWindow : Window
     {
-        public Fixture SelectedFixture { get; set; }
+        public List<Fixture> HomeFixtures { get; set; }
+        public List<Fixture> AwayFixtures { get; set; }
 
-        public FixtureWindow(Fixture aFixture)
+        public FixtureWindow(Fixture aFixture, List<Fixture> homeTeamFixtures, List<Fixture> awayTeamFixtures)
         {
             InitializeComponent();
-            SelectedFixture = aFixture;
-            DataContext = SelectedFixture;
+            HomeFixtures = homeTeamFixtures;
+            AwayFixtures = awayTeamFixtures;
+            DataContext = aFixture;
         }
 
         private void HomeTeamFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            if(SelectedFixture != null)
+            if(HomeFixtures != null)
             {
-                homeFixturesGrid.ItemsSource = SelectedFixture.HomeTeam.Fixtures;
+                homeFixturesGrid.ItemsSource = HomeFixtures;
             }
         }
 
         private void AwayTeamFixtures_Loaded(object sender, RoutedEventArgs e)
         {
-            if (SelectedFixture != null)
+            if (AwayFixtures != null)
             {
-                awayFixturesGrid.ItemsSource = SelectedFixture.AwayTeam.Fixtures;
+                awayFixturesGrid.ItemsSource = AwayFixtures;
             }
         }
 

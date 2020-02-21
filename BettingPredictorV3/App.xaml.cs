@@ -48,9 +48,14 @@ namespace BettingPredictorV3
                 {
                     MainWindow = new MainWindow(database);
                     MainWindow.Show();
-                    database.Dispose();
+                    MainWindow.Closed += MainWindow_Closed;
                 });
             }
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            database?.Dispose();
         }
 
         private bool? OpenDatabaseSettingsWindow()
