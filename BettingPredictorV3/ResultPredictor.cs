@@ -23,8 +23,8 @@ namespace BettingPredictorV3
             List<double> homeOppSample;
             List<double> awayOppSample;
 
-            var previousHomeFixtures = fixture.HomeTeam.GetFixturesBefore(fixture.Date);
-            var previousAwayFixtures = fixture.AwayTeam.GetFixturesBefore(fixture.Date);
+            var previousHomeFixtures = GetFixturesBefore(fixture.HomeTeam, fixture.Date);
+            var previousAwayFixtures = GetFixturesBefore(fixture.AwayTeam, fixture.Date);
             fixture.CalculateGoalsPerGame(previousHomeFixtures, previousAwayFixtures);
 
             fixture.HomeForm = CalculateForm(fixture.Date, fixture.HomeTeam);
@@ -62,6 +62,13 @@ namespace BettingPredictorV3
 
                 dbContext.SaveChanges();
             }
+        }
+
+        private List<Fixture> GetFixturesBefore(Team aTeam, DateTime date)
+        {
+            var homeFixtures = dbContext.Fixtures.Where(fixture => fixture.Date < date && fixture.HomeTeamId == aTeam.TeamId);
+            var awayFixtures = dbContext.Fixtures.Where(fixture => fixture.Date < date && fixture.AwayTeamId == aTeam.TeamId);
+            return homeFixtures.Concat(awayFixtures).ToList();
         }
 
         private double CalculateBothToScore(double predictedHomeGoals, double predictedAwayGoals)
