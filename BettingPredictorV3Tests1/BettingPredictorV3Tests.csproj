@@ -74,7 +74,7 @@
     <Compile Include="LeagueTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileParserUnitTest.cs" />
-    <Compile Include="ResultPredictorUnitTest.cs" />
+    <Compile Include="ResultPredictorIntegrationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

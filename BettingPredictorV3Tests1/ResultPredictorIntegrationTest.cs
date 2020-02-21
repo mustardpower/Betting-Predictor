@@ -8,7 +8,7 @@ using System.Linq;
 namespace BettingPredictorV3Tests
 {
     [TestClass]
-    public class ResultPredictorUnitTest
+    public class ResultPredictorIntegrationTest
     {
         [TestMethod]
         public void TestTryPredictFixtureWithNoData()
