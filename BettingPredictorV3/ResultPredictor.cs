@@ -54,11 +54,25 @@ namespace BettingPredictorV3
                 List<double> awayResiduals = GetResiduals(DateTime.Now, fixture.AwayTeam);
                 fixture.AverageAwayResidual = awayResiduals.Count > 0 ? awayResiduals.Average() : 0.0;
 
-                fixture.CalculateBothToScore();
+                fixture.BothToScore = CalculateBothToScore(fixture.PredictedHomeGoals, fixture.PredictedAwayGoals);
                 fixture.CalculateKellyCriterion();
 
                 dbContext.SaveChanges();
             }
+        }
+
+        private double CalculateBothToScore(double predictedHomeGoals, double predictedAwayGoals)
+        {
+            // subtract probabilities from 1.0 for the following results: 0-0, 1-0, 2-0, 3- 0 ....., 0-1, 0-2, 0-3....
+            double bothToScore = 1.0;
+
+            double home_prob_no_goals = StatsLib.poissonPDF(predictedHomeGoals, 0);
+            double away_prob_no_goals = StatsLib.poissonPDF(predictedAwayGoals, 0);
+
+            bothToScore -= (home_prob_no_goals * away_prob_no_goals);  // P(A = 0 & B = 0) 
+            bothToScore -= ((1 - home_prob_no_goals) * away_prob_no_goals); // P(A != 0 & B = 0) 
+            bothToScore -= (home_prob_no_goals * (1 - away_prob_no_goals)); // P(A = 0 & B != 0) 
+            return bothToScore;
         }
 
         private List<double> CreateHomeSample(DateTime date, Team aTeam)
