@@ -18,6 +18,7 @@ namespace BettingPredictorV3
         private List<String> fixturesFiles;
         private Dictionary<String, List<String>> historyFiles;
         private FootballResultsDbContext dbContext;
+        protected bool disposed = false;
 
         public List<League> Leagues
         {
@@ -438,7 +439,21 @@ namespace BettingPredictorV3
 
         public void Dispose()
         {
-            dbContext?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                dbContext.Dispose();
+            }
+
+            disposed = true;
         }
     }
 }
