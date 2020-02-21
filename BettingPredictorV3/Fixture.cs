@@ -157,38 +157,34 @@ namespace BettingPredictorV3.DataStructures
             AwayResidual = AwayGoals - predictedAwayGoals;
         }
 
-        public void CalculateGoalsPerGame()
+        public void CalculateGoalsPerGame(List<Fixture> previousHomeFixtures, List<Fixture> previousAwayFixtures)
         {
             HomeGoalsPerGame = 0;
             AwayGoalsPerGame = 0;
-            // get all fixtures before the current fixture
-            List<Fixture> home_previous_results = HomeTeam.GetFixturesBefore(Date);
             double total_goals = 0;
 
-            if (home_previous_results.Count > 0)
+            if (previousHomeFixtures.Count > 0)
             {
-                foreach (Fixture fixture in home_previous_results)
+                foreach (Fixture fixture in previousHomeFixtures)
                 {
                     // add up goals in those fixtures
                     total_goals += fixture.HomeGoals;
                 }
                 // divide by number of games
-                HomeGoalsPerGame = (float)total_goals / (float)home_previous_results.Count;
+                HomeGoalsPerGame = (float)total_goals / (float)previousHomeFixtures.Count;
             }
 
-            List<Fixture> away_previous_results = AwayTeam.GetFixturesBefore(Date);
-
-            if (away_previous_results.Count > 0)
+            if (previousAwayFixtures.Count > 0)
             {
                 total_goals = 0;
 
-                foreach (Fixture fixture in away_previous_results)
+                foreach (Fixture fixture in previousAwayFixtures)
                 {
                     // add up goals in those fixtures
                     total_goals += fixture.HomeGoals;
                 }
                 // divide by number of games
-                AwayGoalsPerGame = (float)total_goals / away_previous_results.Count;
+                AwayGoalsPerGame = (float)total_goals / previousAwayFixtures.Count;
             }
         }
 

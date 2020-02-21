@@ -23,7 +23,10 @@ namespace BettingPredictorV3
             List<double> homeOppSample;
             List<double> awayOppSample;
 
-            fixture.CalculateGoalsPerGame();
+            var previousHomeFixtures = fixture.HomeTeam.GetFixturesBefore(fixture.Date);
+            var previousAwayFixtures = fixture.AwayTeam.GetFixturesBefore(fixture.Date);
+            fixture.CalculateGoalsPerGame(previousHomeFixtures, previousAwayFixtures);
+
             fixture.HomeForm = CalculateForm(fixture.Date, fixture.HomeTeam);
             fixture.AwayForm = CalculateForm(fixture.Date, fixture.AwayTeam);
 
