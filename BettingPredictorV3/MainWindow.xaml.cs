@@ -31,8 +31,8 @@ namespace BettingPredictorV3
             List<Fixture> upcomingFixtures = new List<Fixture>();
             upcomingFixtures = database.FixtureList;
             // remove teams with less than a season of results
-            upcomingFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
-            upcomingFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+            upcomingFixtures.RemoveAll(x => database.GetFixturesBefore(x.HomeTeam, DateTime.Now).Count < 19);
+            upcomingFixtures.RemoveAll(x => database.GetFixturesBefore(x.AwayTeam, DateTime.Now).Count < 19);
             return upcomingFixtures;
         }
 
@@ -118,8 +118,8 @@ namespace BettingPredictorV3
             else if (tabItem2.IsSelected)
             {
                 List<Fixture> previousFixtures = database.GetPreviousResults();
-                previousFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(x.Date).Count < 10);
-                previousFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(x.Date).Count < 10);
+                previousFixtures.RemoveAll(x => database.GetFixturesBefore(x.HomeTeam, x.Date).Count < 10);
+                previousFixtures.RemoveAll(x => database.GetFixturesBefore(x.AwayTeam, x.Date).Count < 10);
                 queriedFixtures = previousFixtures.Distinct().ToList();
   
                 IEnumerable<String> leagueIDs = database.Leagues.Select(x => x.LeagueCode);
@@ -150,8 +150,8 @@ namespace BettingPredictorV3
             upcomingFixtures = database.FixtureList;
 
             // remove teams with less than a season of results
-            upcomingFixtures.RemoveAll(x => x.HomeTeam.GetFixturesBefore(DateTime.Now).Count < 19);
-            upcomingFixtures.RemoveAll(x => x.AwayTeam.GetFixturesBefore(DateTime.Now).Count < 19);
+            upcomingFixtures.RemoveAll(x => database.GetFixturesBefore(x.HomeTeam, DateTime.Now).Count < 19);
+            upcomingFixtures.RemoveAll(x => database.GetFixturesBefore(x.AwayTeam, DateTime.Now).Count < 19);
 
             dataGrid_UpcomingFixtures.ItemsSource = upcomingFixtures;
         }

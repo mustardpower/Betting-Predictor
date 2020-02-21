@@ -70,16 +70,6 @@ namespace BettingPredictorV3.DataStructures
                 }
             }
         }
-
-        public List<Fixture> GetFixturesBefore(DateTime date)
-        {
-            using (var db = new FootballResultsDbContext())
-            {
-                var homeFixtures = db.Fixtures.Where(fixture => fixture.Date < date && fixture.HomeTeamId == TeamId);
-                var awayFixtures = db.Fixtures.Where(fixture => fixture.Date < date && fixture.AwayTeamId == TeamId);
-                return homeFixtures.Concat(awayFixtures).ToList();
-            }
-        }
     }
 
 }

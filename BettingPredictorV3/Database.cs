@@ -44,6 +44,12 @@ namespace BettingPredictorV3
             }
         }
 
+        internal List<Fixture> GetFixturesBefore(Team aTeam, DateTime date)
+        {
+            ResultPredictor predictor = new ResultPredictor(dbContext);
+            return predictor.GetFixturesBefore(aTeam, date);
+        }
+
         public List<Fixture> FixtureList
         {
             get

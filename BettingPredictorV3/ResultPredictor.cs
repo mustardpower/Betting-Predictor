@@ -64,7 +64,7 @@ namespace BettingPredictorV3
             }
         }
 
-        private List<Fixture> GetFixturesBefore(Team aTeam, DateTime date)
+        public List<Fixture> GetFixturesBefore(Team aTeam, DateTime date)
         {
             var homeFixtures = dbContext.Fixtures.Where(fixture => fixture.Date < date && fixture.HomeTeamId == aTeam.TeamId);
             var awayFixtures = dbContext.Fixtures.Where(fixture => fixture.Date < date && fixture.AwayTeamId == aTeam.TeamId);
