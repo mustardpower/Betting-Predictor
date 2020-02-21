@@ -233,38 +233,6 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public void CalculateStrengths(List<double> home_sample, List<double> away_sample, List<double> home_opp_sample, List<double> away_opp_sample,double alpha,double beta)
-        {
-            // assumes a teams defensive strength and oppositions
-            // attacking strength affect each other when calculating predicted goals
-            PredictedHomeGoals = CalculatePredictedHomeGoals(home_sample, away_opp_sample, alpha);
-            PredictedAwayGoals = CalculatePredictedAwayGoals(away_sample, home_opp_sample, beta);
-        }
-
-        public double CalculatePredictedHomeGoals(List<double> home_sample, List<double> away_opp_sample, double alpha)
-        {
-            double home_attack_strength;
-            double lgavghome_goals = FixtureLeague.GetAverageHomeGoals(Date);
-            home_attack_strength = home_sample.Average() / lgavghome_goals;
-
-            double away_defence_strength;
-            away_defence_strength = away_opp_sample.Average() / lgavghome_goals;
-
-            return home_attack_strength * away_defence_strength * lgavghome_goals - alpha;
-        }
-
-        public double CalculatePredictedAwayGoals(List<double> away_sample, List<double> home_opp_sample, double beta)
-        {
-            double away_attack_strength;
-            double lgavgaway_goals = FixtureLeague.GetAverageAwayGoals(Date);
-            away_attack_strength = away_sample.Average() / lgavgaway_goals;
-
-            double home_defence_strength;
-            home_defence_strength = home_opp_sample.Average() / lgavgaway_goals;
-
-            return away_attack_strength * home_defence_strength * lgavgaway_goals - beta;
-        }
-
         public void FindBestOdds()
         {
             if(Odds.Count() > 0)

@@ -39,7 +39,10 @@ namespace BettingPredictorV3
                 awaySample = WeightingFunction(awaySample);
 
                 // calculates a home attacking strength and defence strength
-                fixture.CalculateStrengths(homeSample, awaySample, homeOppSample, awayOppSample, alpha, beta);
+                double leagueAverageHomeGoals = fixture.FixtureLeague.GetAverageHomeGoals(fixture.Date);
+                fixture.PredictedHomeGoals = CalculatePredictedHomeGoals(homeSample, awayOppSample, leagueAverageHomeGoals, alpha);
+                double leagueAverageAwayGoals = fixture.FixtureLeague.GetAverageAwayGoals(fixture.Date);
+                fixture.PredictedAwayGoals = CalculatePredictedAwayGoals(awaySample, homeOppSample, leagueAverageAwayGoals, beta);
 
                 fixture.PredictedGoalDifference = fixture.PredictedHomeGoals - fixture.PredictedAwayGoals;
 
@@ -53,6 +56,8 @@ namespace BettingPredictorV3
 
                 fixture.CalculateBothToScore();
                 fixture.CalculateKellyCriterion();
+
+                dbContext.SaveChanges();
             }
         }
 
@@ -108,6 +113,28 @@ namespace BettingPredictorV3
             }
 
             return sample;
+        }
+
+        public double CalculatePredictedHomeGoals(List<double> home_sample, List<double> away_opp_sample, double leagueAverageHomeGoals, double alpha)
+        {
+            double home_attack_strength;
+            home_attack_strength = home_sample.Average() / leagueAverageHomeGoals;
+
+            double away_defence_strength;
+            away_defence_strength = away_opp_sample.Average() / leagueAverageHomeGoals;
+
+            return home_attack_strength * away_defence_strength * leagueAverageHomeGoals - alpha;
+        }
+
+        public double CalculatePredictedAwayGoals(List<double> away_sample, List<double> home_opp_sample, double leagueAverageAwayGoals, double beta)
+        {
+            double away_attack_strength;
+            away_attack_strength = away_sample.Average() / leagueAverageAwayGoals;
+
+            double home_defence_strength;
+            home_defence_strength = home_opp_sample.Average() / leagueAverageAwayGoals;
+
+            return away_attack_strength * home_defence_strength * leagueAverageAwayGoals - beta;
         }
 
         private List<Fixture> FixturesForTeam(Team aTeam)
