@@ -14,7 +14,6 @@ namespace BettingPredictorV3
     [Serializable]
     public class Database : IDisposable
     {
-        private List<Fixture> fixtureList;
         private List<String> fixturesFiles;
         private Dictionary<String, List<String>> historyFiles;
         private FootballResultsDbContext dbContext;
@@ -36,6 +35,11 @@ namespace BettingPredictorV3
             }
         }
 
+        internal List<Fixture> GetUpcomingFixtures()
+        {
+            return dbContext.Fixtures.Where(x => x.Date >= DateTime.Today).ToList();
+        }
+
         public Dictionary<String, List<String>> HistoryFiles
         {
             get
@@ -50,13 +54,7 @@ namespace BettingPredictorV3
             return predictor.GetFixturesBefore(aTeam, date);
         }
 
-        public List<Fixture> FixtureList
-        {
-            get
-            {
-                return fixtureList;
-            }
-        }
+        
 
         public List<string> LeagueCodes {
             get
@@ -67,7 +65,6 @@ namespace BettingPredictorV3
 
         public Database()
         {
-            fixtureList = new List<Fixture>();
             historyFiles = new Dictionary<String, List<String>>();
             fixturesFiles = new List<String>();
             dbContext = new FootballResultsDbContext();
@@ -75,6 +72,13 @@ namespace BettingPredictorV3
 
         public void AddUpcomingFixture(string leagueCode, DateTime date, string homeTeamName, string awayTeamName, List<Bookmaker> odds)
         {
+            // turning these config settings off speeds up the insertions
+            bool previousConfigurationAutoDetectChanges = dbContext.Configuration.AutoDetectChangesEnabled;
+            dbContext.Configuration.AutoDetectChangesEnabled = false;
+
+            bool previousConfigurationValidateOnSave = dbContext.Configuration.ValidateOnSaveEnabled;
+            dbContext.Configuration.ValidateOnSaveEnabled = false;
+
             League league = GetLeague(leagueCode);
             if(league == null)
             {
@@ -101,7 +105,24 @@ namespace BettingPredictorV3
                 dbContext.SaveChanges();
             }
 
-            fixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
+            var fixture = GetFixture(leagueCode, homeTeam, awayTeam, date);
+            if(fixture == null)
+            {
+                fixture = new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds);
+                dbContext.Fixtures.Add(fixture);
+                dbContext.SaveChanges();
+            }
+
+            // restore the config settings that were turned off to improve speed of insertions
+            dbContext.Configuration.AutoDetectChangesEnabled = previousConfigurationAutoDetectChanges;
+            dbContext.Configuration.ValidateOnSaveEnabled = previousConfigurationValidateOnSave;
+        }
+
+        private Fixture GetFixture(string leagueCode, Team homeTeam, Team awayTeam, DateTime date)
+        {
+            return dbContext.Fixtures.ToList()
+                .Where(x => x.FixtureLeague.LeagueCode == leagueCode && homeTeam.TeamId == x.HomeTeamId && awayTeam.TeamId == x.AwayTeamId && x.Date == date)
+                .SingleOrDefault();
         }
 
         public void AddFixtures(string[] fixtures)
@@ -323,7 +344,7 @@ namespace BettingPredictorV3
         public void PredictUpcomingFixtures(double alpha, double beta)
         {
             ResultPredictor resultPredictor = new ResultPredictor(dbContext);
-            foreach (Fixture fixture in fixtureList)
+            foreach (Fixture fixture in GetUpcomingFixtures())
             {
                 resultPredictor.PredictResult(fixture, alpha, beta);
             }
@@ -334,7 +355,7 @@ namespace BettingPredictorV3
             double alpha = 0.0;
             List<double> errors = new List<double>();
 
-            foreach (Fixture fixture in fixtureList)
+            foreach (Fixture fixture in GetUpcomingFixtures())
             {
                 errors.Add(fixture.AverageHomeResidual);
             }
@@ -354,7 +375,7 @@ namespace BettingPredictorV3
             double beta = 0.0;
             List<double> errors = new List<double>();
 
-            foreach (Fixture fixture in fixtureList)
+            foreach (Fixture fixture in GetUpcomingFixtures())
             {
                 errors.Add(fixture.AverageAwayResidual);
             }

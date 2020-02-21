@@ -28,8 +28,7 @@ namespace BettingPredictorV3
 
         public List<Fixture> GetDefaultUpcomingFixtures()
         {
-            List<Fixture> upcomingFixtures = new List<Fixture>();
-            upcomingFixtures = database.FixtureList;
+            List<Fixture> upcomingFixtures = database.GetUpcomingFixtures();
             // remove teams with less than a season of results
             upcomingFixtures.RemoveAll(x => database.GetFixturesBefore(x.HomeTeam, DateTime.Now).Count < 19);
             upcomingFixtures.RemoveAll(x => database.GetFixturesBefore(x.AwayTeam, DateTime.Now).Count < 19);
@@ -102,7 +101,7 @@ namespace BettingPredictorV3
             List<Fixture> queriedFixtures = new List<Fixture>();
             if (tabItem1.IsSelected)
             {
-                queriedFixtures = database.FixtureList;
+                queriedFixtures = database.GetUpcomingFixtures();
                 IEnumerable<String> leagueIDs = database.Leagues.Select(x => x.LeagueCode);
 
                 if (leaguesComboBox.SelectedItem != null)
@@ -151,7 +150,7 @@ namespace BettingPredictorV3
             List<Fixture> upcomingFixtures = new List<Fixture>();
             dateComboBox.SelectedItem = null;
             leaguesComboBox.SelectedItem = null;
-            upcomingFixtures = database.FixtureList;
+            upcomingFixtures = database.GetUpcomingFixtures();
 
             // remove teams with less than a season of results
             upcomingFixtures.RemoveAll(x => database.GetFixturesBefore(x.HomeTeam, DateTime.Now).Count < 19);
@@ -199,7 +198,7 @@ namespace BettingPredictorV3
                     BestOdds = 0.0 } }.ToList();
 
                 const double threashold = 0.01;
-                var homeFixtures = database.FixtureList.Where(x => x.KellyCriterionHome > threashold);
+                var homeFixtures = database.GetUpcomingFixtures().Where(x => x.KellyCriterionHome > threashold);
                 csvRows.AddRange(homeFixtures.Select(x => new {
                     FixtureDate = x.Date,
                     LeagueID = x.FixtureLeague.LeagueCode,
@@ -208,7 +207,7 @@ namespace BettingPredictorV3
                     Bookie = x.BestHomeOdds.Name,
                     BestOdds = x.BestHomeOdds.HomeOdds }));
 
-                var awayFixtures = database.FixtureList.Where(x => x.KellyCriterionAway > threashold);
+                var awayFixtures = database.GetUpcomingFixtures().Where(x => x.KellyCriterionAway > threashold);
                 csvRows.AddRange(awayFixtures.Select(x => new {
                     FixtureDate = x.Date,
                     LeagueID = x.FixtureLeague.LeagueCode,
