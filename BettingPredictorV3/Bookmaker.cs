@@ -12,50 +12,21 @@ namespace BettingPredictorV3
 
         public int FixtureId { get; set; }
 
-        private string name;
-        private double home_odds;
-        private double draw_odds;
-        private double away_odds;
+        public string Name { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+        public double HomeOdds { get; set; }
 
-        public double HomeOdds
-        {
-            get
-            {
-                return home_odds;
-            }
-        }
+        public double DrawOdds { get; set; }
 
-        public double DrawOdds
-        {
-            get
-            {
-                return draw_odds;
-            }
-        }
-
-        public double AwayOdds
-        {
-            get
-            {
-                return away_odds;
-            }
-        }
+        public double AwayOdds { get; set; }
 
         public Bookmaker() { }
         public Bookmaker(string name, double home,double draw,double away)
         {
-            this.name = name;
-            this.home_odds = home;
-            this.draw_odds = draw;
-            this.away_odds = away;
+            Name = name;
+            HomeOdds = home;
+            DrawOdds = draw;
+            AwayOdds = away;
         }
     }
 }
