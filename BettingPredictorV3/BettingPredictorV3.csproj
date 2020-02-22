@@ -89,10 +89,6 @@
     <Compile Include="Fixture.cs" />
     <Compile Include="FootballResultsDbContext.cs" />
     <Compile Include="IFileParser.cs" />
-    <Compile Include="Migrations\202002220947289_Extra-Bookmaker-Fields.cs" />
-    <Compile Include="Migrations\202002220947289_Extra-Bookmaker-Fields.designer.cs">
-      <DependentUpon>202002220947289_Extra-Bookmaker-Fields.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProfitLossInterval.cs" />
     <Compile Include="Referee.cs" />
@@ -145,9 +141,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202002220947289_Extra-Bookmaker-Fields.resx">
-      <DependentUpon>202002220947289_Extra-Bookmaker-Fields.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
