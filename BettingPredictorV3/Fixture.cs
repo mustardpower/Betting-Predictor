@@ -207,7 +207,7 @@ namespace BettingPredictorV3.DataStructures
             if(BestHomeOdds != null)
             {
                 double b = BestHomeOdds.HomeOdds - 1;
-                double p = HomeWinProbability;
+                double p = CalculateHomeWinProbability();
                 double q = 1.0 - p;
                 KellyCriterionHome = ((b * p) - q) / b;
             }
@@ -215,7 +215,7 @@ namespace BettingPredictorV3.DataStructures
             if(BestDrawOdds != null)
             {
                 double b = BestDrawOdds.DrawOdds - 1;
-                double p = DrawProbability;
+                double p = CalculateDrawProbability();
                 double q = 1.0 - p;
                 KellyCriterionDraw = ((b * p) - q) / b;
             }
@@ -223,7 +223,7 @@ namespace BettingPredictorV3.DataStructures
             if(BestAwayOdds != null)
             {
                 double b = BestAwayOdds.AwayOdds - 1;
-                double p = AwayWinProbability;
+                double p = CalculateAwayWinProbability();
                 double q = 1.0 - p;
                 KellyCriterionAway = ((b * p) - q) / b;
             }
@@ -283,8 +283,8 @@ namespace BettingPredictorV3.DataStructures
                     // calc poisson prob of h goals given rate of predicted home goals
                     // calc poisson prob of a goals given rate of predicted away goals
                     // multiply and add to total probability
-                    hProb = StatsLib.poissonPDF(predictedHomeGoals, h);
-                    aProb = StatsLib.poissonPDF(predictedAwayGoals, a);
+                    hProb = StatsLib.poissonPDF(PredictedHomeGoals, h);
+                    aProb = StatsLib.poissonPDF(PredictedAwayGoals, a);
                     prob += hProb * aProb;
                 }
             }
@@ -305,8 +305,8 @@ namespace BettingPredictorV3.DataStructures
                     // calc poisson prob of h goals given rate of predicted home goals
                     // calc poisson prob of a goals given rate of predicted away goals
                     // multiply and add to total probability
-                    hProb = StatsLib.poissonPDF(predictedHomeGoals, h);
-                    aProb = StatsLib.poissonPDF(predictedAwayGoals, a);
+                    hProb = StatsLib.poissonPDF(PredictedHomeGoals, h);
+                    aProb = StatsLib.poissonPDF(PredictedAwayGoals, a);
                     prob += hProb * aProb;
                 }
             }
@@ -325,8 +325,8 @@ namespace BettingPredictorV3.DataStructures
                 // calc poisson prob of h goals given rate of predicted home goals
                 // calc poisson prob of a goals given rate of predicted away goals
                 // multiply and add to total probability
-                hProb = StatsLib.poissonPDF(predictedHomeGoals, x);
-                aProb = StatsLib.poissonPDF(predictedAwayGoals, x);
+                hProb = StatsLib.poissonPDF(PredictedHomeGoals, x);
+                aProb = StatsLib.poissonPDF(PredictedAwayGoals, x);
                 prob += hProb * aProb;
             }
 
