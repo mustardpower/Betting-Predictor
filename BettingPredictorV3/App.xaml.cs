@@ -40,8 +40,9 @@ namespace BettingPredictorV3
                 {
                     FileParser fileParser = new FileParser();
                     fileParser.PopulateDatabase(database, splashWindow);
-                    PredictResults();
                 }
+
+                PredictResults();
 
                 // Create the main window, but on the UI thread.
                 Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
