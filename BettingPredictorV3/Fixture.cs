@@ -26,7 +26,7 @@ namespace BettingPredictorV3.DataStructures
         public int HomeForm { get; set; }
         public int AwayForm { get; set; }
 
-        public List<Bookmaker> Odds { get; set; }
+        public virtual ICollection<Bookmaker> Odds { get; set; }
 
         public Fixture()
         {
