@@ -58,6 +58,9 @@ namespace BettingPredictorV3
                 fixture.AverageAwayResidual = awayResiduals.Count > 0 ? awayResiduals.Average() : 0.0;
 
                 fixture.BothToScore = CalculateBothToScore(fixture.PredictedHomeGoals, fixture.PredictedAwayGoals);
+
+                fixture.Odds = dbContext.Bookmakers.Where(x => x.FixtureId == fixture.FixtureId).ToList();
+                fixture.FindBestOdds();
                 fixture.CalculateKellyCriterion();
 
                 dbContext.SaveChanges();

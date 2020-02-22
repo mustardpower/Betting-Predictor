@@ -14,6 +14,8 @@ namespace BettingPredictorV3
         public DbSet<Team> Teams { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
 
+        public DbSet<Bookmaker> Bookmakers { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Fixture>()

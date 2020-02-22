@@ -9,6 +9,9 @@ namespace BettingPredictorV3
     public class Bookmaker
     {
         public int BookmakerId { get; set; }
+
+        public int FixtureId { get; set; }
+
         private string name;
         private double home_odds;
         private double draw_odds;
@@ -46,6 +49,7 @@ namespace BettingPredictorV3
             }
         }
 
+        public Bookmaker() { }
         public Bookmaker(string name, double home,double draw,double away)
         {
             this.name = name;
