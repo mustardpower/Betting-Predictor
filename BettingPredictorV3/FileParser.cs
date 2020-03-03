@@ -36,7 +36,7 @@ namespace BettingPredictorV3
             var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
             int totalNumberOfFiles = relevantFiles.Sum(l => l.Value.Distinct().Count());
 
-            foreach (String leagueCode in database.LeagueCodes)          // download and parse previous results
+            foreach (string leagueCode in database.LeagueCodes)          // download and parse previous results
             {
                 try
                 {
@@ -47,7 +47,7 @@ namespace BettingPredictorV3
                         fileNumber++;
                         progressAmount = (double)fileNumber / (double)totalNumberOfFiles;
                         splash.SetProgress(progressAmount);
-                        splash.SetText(System.String.Format("Loading historical data file number: {0} / {1} File Name: {2}", fileNumber, totalNumberOfFiles, file));
+                        splash.SetText(string.Format("Loading historical data file number: {0} / {1} File Name: {2}", fileNumber, totalNumberOfFiles, file));
                     }
                 }
                 catch(Exception ex)
@@ -57,7 +57,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public void LoadHistoricalFile(String aFile)
+        public void LoadHistoricalFile(string aFile)
         {
             try
             {
@@ -90,9 +90,9 @@ namespace BettingPredictorV3
         {
             using (WebClient client = new WebClient())         // download upcoming fixture list
             {
-                foreach (String fixturesFile in Database.FixtureFiles)
+                foreach (string fixturesFile in Database.FixtureFiles)
                 {
-                    String htmlCode = client.DownloadString(fixturesFile);
+                    string htmlCode = client.DownloadString(fixturesFile);
                     ParseUpcomingFixtures(htmlCode);
                 }
             }
@@ -101,13 +101,13 @@ namespace BettingPredictorV3
         public void ParseHistoricalData(string htmlCode)
         {
             int headings = htmlCode.IndexOf("\n");
-            var columnHeaders = htmlCode.Substring(0, headings).Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries).ToList();
+            var columnHeaders = htmlCode.Substring(0, headings).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
-            var fixtures = htmlCode.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+            var fixtures = htmlCode.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string fixture in fixtures)
             {
-                var fixtureData = fixture.Split(new[] { ',' }, System.StringSplitOptions.None);
+                var fixtureData = fixture.Split(new[] { ',' }, StringSplitOptions.None);
                 string league_code = fixtureData[0];
                 if (league_code.Length > 0)
                 {
@@ -123,7 +123,7 @@ namespace BettingPredictorV3
         {
             int headings = htmlCode.IndexOf("\n");
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
-            var fixtures = htmlCode.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+            var fixtures = htmlCode.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             ParseUpcomingFixtures(fixtures);
         }
 
@@ -134,7 +134,7 @@ namespace BettingPredictorV3
             {
                 odds.Clear();
 
-                var fixtureData = fixture.Split(new[] { ',' }, System.StringSplitOptions.None);
+                var fixtureData = fixture.Split(new[] { ',' }, StringSplitOptions.None);
                 string leagueCode = fixtureData[0];
                 if (leagueCode.Length == 0)
                 {
