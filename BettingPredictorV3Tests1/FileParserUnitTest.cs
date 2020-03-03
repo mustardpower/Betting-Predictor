@@ -19,10 +19,10 @@ namespace BettingPredictorV3Tests
 B1,09 / 08 / 2019,19:30,Anderlecht,Mechelen,,,,,,,1.75,4.2,4,1.83,3.75,3.9,1.77,3.8,3.95,1.82,3.88,4.36,1.75,3.8,4.2,1.75,4,4.2,1.86,4.2,4.36,1.79,3.81,4.07,1.6,2.3,1.58,2.43,1.62,2.43,1.58,2.31,-0.75,1.98,1.88,2.04,1.84,2.04,1.94,2,1.84,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
 
             FileParser fileParser = new FileParser();
-            fileParser.ParseUpcomingFixtures(testHtmlCode);
-            Assert.AreEqual(fileParser.Database.FixtureList.Count, 1);
+            List<Fixture> fixtures = fileParser.ParseUpcomingFixtures(testHtmlCode);
+            Assert.AreEqual(fixtures.Count, 1);
 
-            Fixture fixture = fileParser.Database.FixtureList.First();
+            Fixture fixture = fixtures.First();
 
             Assert.AreEqual("B1", fixture.LeagueID);
             Assert.AreEqual(9, fixture.Date.Day);
