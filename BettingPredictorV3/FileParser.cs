@@ -22,7 +22,7 @@ namespace BettingPredictorV3
         {
             Database = database;
 
-            LoadUpcomingFixturesFile();
+            Database.FixtureList = LoadUpcomingFixturesFile();
 
             var relevantFiles = Database.HistoryFiles.Where(x => (Database.LeagueCodes.Find(y => y == x.Key) != null));
             ParseFiles(splash, relevantFiles);
@@ -88,16 +88,20 @@ namespace BettingPredictorV3
             }
         }
 
-        public void LoadUpcomingFixturesFile()
+        public List<Fixture> LoadUpcomingFixturesFile()
         {
+            List<Fixture> fixtures = new List<Fixture>();
+
             using (WebClient client = new WebClient())         // download upcoming fixture list
             {
                 foreach (string fixturesFile in Database.FixtureFiles)
                 {
                     string htmlCode = client.DownloadString(fixturesFile);
-                    ParseUpcomingFixtures(htmlCode);
+                    fixtures.AddRange(ParseUpcomingFixtures(htmlCode));
                 }
             }
+
+            return fixtures;
         }
 
         public void ParseHistoricalData(string htmlCode)
@@ -285,18 +289,21 @@ namespace BettingPredictorV3
 
         /* Reads in fixture data for upcoming fixtures. Obviously these will not have goals scored or conceded and will just be dates, team names and odds.
          * Teams from upcoming fixtures are not actually added to the database - if they do not already exist in the database the fixture will be ignored */
-        public void ParseUpcomingFixtures(string htmlCode)
+        public List<Fixture> ParseUpcomingFixtures(string htmlCode)
         {
+            List<Fixture> fixtures = new List<Fixture>();
             int headings = htmlCode.IndexOf("\n");
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
-            var fixtures = htmlCode.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            ParseUpcomingFixtures(fixtures);
+            var fixtureData = htmlCode.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            return ParseUpcomingFixtures(fixtureData);
         }
 
-        private void ParseUpcomingFixtures(string[] fixtures)
+        private List<Fixture> ParseUpcomingFixtures(string[] fixturesData)
         {
             List<Bookmaker> odds = new List<Bookmaker>();
-            foreach (string fixture in fixtures)
+            List<Fixture> fixtures = new List<Fixture>();
+
+            foreach (string fixture in fixturesData)
             {
                 odds.Clear();
 
@@ -391,8 +398,37 @@ namespace BettingPredictorV3
                     string a = ex.Message;
                 }
 
-                Database.AddUpcomingFixture(leagueCode, date, homeTeamName, awayTeamName, odds);
+                fixtures.Add(CreateUpcomingFixture(leagueCode, date, homeTeamName, awayTeamName, odds));
             }
+
+            return fixtures;
+        }
+
+        private Fixture CreateUpcomingFixture(string leagueCode, DateTime date, string homeTeamName, string awayTeamName, List<Bookmaker> odds)
+        {
+            League league = Database.GetLeague(leagueCode);
+            if (league == null)
+            {
+                League newLeague = new League(leagueCode);
+                Database.Leagues.Add(newLeague);
+                league = newLeague;
+            }
+
+            Team homeTeam = Database.GetTeam(leagueCode, homeTeamName);
+            Team awayTeam = Database.GetTeam(leagueCode, awayTeamName);
+
+            if (homeTeam == null)
+            {
+                league.AddTeam(new Team(league, homeTeamName));
+                homeTeam = Database.GetTeam(leagueCode, homeTeamName);
+            }
+            if (awayTeam == null)
+            {
+                league.AddTeam(new Team(league, awayTeamName));
+                awayTeam = Database.GetTeam(leagueCode, awayTeamName);
+            }
+
+            return new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds);
         }
     }
 }
