@@ -24,25 +24,25 @@ namespace BettingPredictorV3
 
             LoadUpcomingFixturesFile();
 
-            ParseFiles(splash, Database.HistoryFiles, Database.LeagueCodes);
+            var relevantFiles = Database.HistoryFiles.Where(x => (Database.LeagueCodes.Find(y => y == x.Key) != null));
+            ParseFiles(splash, relevantFiles);
 
             return database;
         }
 
-        public void ParseFiles(Splash splash, Dictionary<string, List<string>> historyFiles, List<string> leagueCodes)
+        public void ParseFiles(Splash splash, IEnumerable<KeyValuePair<string, List<string>>> relevantFiles)
         {
             int fileNumber = 0;
             double progressAmount = 0.0;
 
             // Only count the leagues that have upcoming fixtures
-            var relevantFiles = historyFiles.Where(x => (leagueCodes.Find(y => y == x.Key) != null));
             int totalNumberOfFiles = relevantFiles.Sum(l => l.Value.Distinct().Count());
 
-            foreach (string leagueCode in leagueCodes)          // download and parse previous results
+            foreach (var keyPair in relevantFiles)          // download and parse previous results
             {
                 try
                 {
-                    var leagueFiles = historyFiles[leagueCode];
+                    var leagueFiles = keyPair.Value;
                     foreach (var file in leagueFiles)
                     {
                         LoadHistoricalFile(file);
