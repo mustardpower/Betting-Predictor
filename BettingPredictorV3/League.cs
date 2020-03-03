@@ -150,8 +150,8 @@ namespace BettingPredictorV3.DataStructures
             awayTeam = GetTeam(awayTeamName);
 
             Fixture newFixture = new Fixture(this, date, homeTeam, awayTeam, homeGoals, awayGoals, new Referee(""), odds);
-            home_team.AddFixture(newFixture);
-            away_team.AddFixture(newFixture);
+            homeTeam.AddFixture(newFixture);
+            awayTeam.AddFixture(newFixture);
         }
 
         private static List<Bookmaker> ParseBookmakers(string[] fixtureData, List<string> columnHeaders)

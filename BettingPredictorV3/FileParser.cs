@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace BettingPredictorV3
 {
-    public class FileParser : IFileParser
+    public class FileParser
     {
         public Database Database { get; set; }
 
@@ -20,27 +20,27 @@ namespace BettingPredictorV3
         {
             Database = database;
 
-            ParseFiles(database, splash);
+            LoadUpcomingFixturesFile();
+
+            ParseFiles(splash, Database.HistoryFiles, Database.LeagueCodes);
 
             return database;
         }
 
-        public void ParseFiles(Database database, Splash splash)
+        public void ParseFiles(Splash splash, Dictionary<string, List<string>> historyFiles, List<string> leagueCodes)
         {
             int fileNumber = 0;
             double progressAmount = 0.0;
 
-            LoadUpcomingFixturesFile();
-
             // Only count the leagues that have upcoming fixtures
-            var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
+            var relevantFiles = historyFiles.Where(x => (leagueCodes.Find(y => y == x.Key) != null));
             int totalNumberOfFiles = relevantFiles.Sum(l => l.Value.Distinct().Count());
 
-            foreach (string leagueCode in database.LeagueCodes)          // download and parse previous results
+            foreach (string leagueCode in leagueCodes)          // download and parse previous results
             {
                 try
                 {
-                    var leagueFiles = database.HistoryFiles[leagueCode];
+                    var leagueFiles = historyFiles[leagueCode];
                     foreach (var file in leagueFiles)
                     {
                         LoadHistoricalFile(file);
