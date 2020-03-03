@@ -70,21 +70,6 @@ namespace BettingPredictorV3
             FixtureList.Add(new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds));
         }
 
-        public void AddLeague(string leagueCode, List<string> columnHeaders, string[] fixtureData)
-        {
-            League aLeague = GetLeague(leagueCode);
-            if (aLeague != null)
-            {
-                aLeague.ParseHistoricalData(fixtureData, columnHeaders);
-            }
-            else
-            {
-                League newLeague = new League(leagueCode);
-                newLeague.ParseHistoricalData(fixtureData, columnHeaders);
-                Leagues.Add(newLeague);
-            }
-        }
-
         internal List<ProfitLossInterval> CalculateProfitLossIntervals()
         {
             List<Fixture> previousFixtures = GetPreviousResults();
