@@ -9,23 +9,23 @@ namespace BettingPredictorV3.DataStructures
     [Serializable]
     public class League
     {
-        private string league_ID;
+        private string leagueID;
 
-        public League(String league_ID)
+        public League(string leagueID)
         {
-            this.league_ID = league_ID;
+            this.leagueID = leagueID;
             Teams = new List<Team>();
         }
 
-        public String LeagueID
+        public string LeagueID
         {
             get
             {
-                return league_ID;
+                return leagueID;
             }
             set
             {
-                league_ID = value;
+                leagueID = value;
             }
         }
 
@@ -39,7 +39,7 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public Team GetTeam(String name)
+        public Team GetTeam(string name)
         {
             foreach (Team team in Teams)
             {
@@ -69,9 +69,9 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public void ParseHistoricalData(string[] fixture_data, List<string> columnHeaders)
+        public void ParseHistoricalData(string[] fixtureData, List<string> columnHeaders)
         {
-            Debug.Assert(fixture_data.Length == columnHeaders.Count);
+            Debug.Assert(fixtureData.Length == columnHeaders.Count);
 
             Team home_team = null;
             Team away_team = null;
@@ -80,11 +80,11 @@ namespace BettingPredictorV3.DataStructures
             /* Additional league data has been added at a later point, 
             these new leagues have less info in a different format */
 
-            Console.WriteLine("[{0}]", string.Join("\", \"", fixture_data));
+            Console.WriteLine("[{0}]", string.Join("\", \"", fixtureData));
 
-            var newLeague = fixture_data.Length == 19; 
+            var newLeague = fixtureData.Length == 19; 
             var dateIndex = newLeague ? 3 : 1;
-            var date_params = fixture_data[dateIndex].Split('/');
+            var date_params = fixtureData[dateIndex].Split('/');
             int yearParam = int.Parse(date_params[2]);
             const int kMinimumYearPossible = 1990;
             if (yearParam < kMinimumYearPossible)
@@ -99,20 +99,20 @@ namespace BettingPredictorV3.DataStructures
             DateTime dateThatKickOffTimeWasAdded = new DateTime(2019, 7, 1);
             int extraColumnOffset = date > dateThatKickOffTimeWasAdded ? 1 : 0;
 
-            String home_team_name = newLeague ? fixture_data[5] : fixture_data[2 + extraColumnOffset];
-            String away_team_name = newLeague ? fixture_data[6] : fixture_data[3 + extraColumnOffset];
+            String home_team_name = newLeague ? fixtureData[5] : fixtureData[2 + extraColumnOffset];
+            String away_team_name = newLeague ? fixtureData[6] : fixtureData[3 + extraColumnOffset];
 
-            for (int idx = 0; idx < fixture_data.Length; idx++)
+            for (int idx = 0; idx < fixtureData.Length; idx++)
             {
-                if (string.IsNullOrEmpty(fixture_data[idx]))
+                if (string.IsNullOrEmpty(fixtureData[idx]))
                 {
-                    fixture_data[idx] = "0";
+                    fixtureData[idx] = "0";
                 }
             }
 
             try
             {
-                List<Bookmaker> bookmakers = ParseBookmakers(fixture_data, columnHeaders);
+                List<Bookmaker> bookmakers = ParseBookmakers(fixtureData, columnHeaders);
                 foreach (Bookmaker bookmaker in bookmakers)
                 {
                     int index = DatabaseSettings.BookmakersUsed.IndexOf(bookmaker.Name);
@@ -132,13 +132,13 @@ namespace BettingPredictorV3.DataStructures
 
             if (newLeague)
             {
-                home_goals = int.Parse(fixture_data[7]);
-                away_goals = int.Parse(fixture_data[8]);
+                home_goals = int.Parse(fixtureData[7]);
+                away_goals = int.Parse(fixtureData[8]);
             }
             else
             {
-                home_goals = int.Parse(fixture_data[4 + extraColumnOffset]);
-                away_goals = int.Parse(fixture_data[5 + extraColumnOffset]);
+                home_goals = int.Parse(fixtureData[4 + extraColumnOffset]);
+                away_goals = int.Parse(fixtureData[5 + extraColumnOffset]);
                 
             }
             
@@ -154,65 +154,65 @@ namespace BettingPredictorV3.DataStructures
             away_team.AddFixture(newFixture);
         }
 
-        private static List<Bookmaker> ParseBookmakers(string[] fixture_data, List<string> columnHeaders)
+        private static List<Bookmaker> ParseBookmakers(string[] fixtureData, List<string> columnHeaders)
         {
             List<Bookmaker> bookmakers = new List<Bookmaker>();
 
             if(columnHeaders.Contains("B365H"))
             {
                 int oddsOffset = columnHeaders.IndexOf("B365H");
-                bookmakers.Add(new Bookmaker("Bet 365", double.Parse(fixture_data[oddsOffset]), double.Parse(fixture_data[oddsOffset + 1]),
-                                        double.Parse(fixture_data[oddsOffset + 2])));
+                bookmakers.Add(new Bookmaker("Bet 365", double.Parse(fixtureData[oddsOffset]), double.Parse(fixtureData[oddsOffset + 1]),
+                                        double.Parse(fixtureData[oddsOffset + 2])));
             }
             
             if(columnHeaders.Contains("BWH"))
             {
                 int oddsOffset = columnHeaders.IndexOf("BWH");
-                bookmakers.Add(new Bookmaker("BetWin", double.Parse(fixture_data[oddsOffset]), double.Parse(fixture_data[oddsOffset + 1]),
-                double.Parse(fixture_data[oddsOffset + 2])));
+                bookmakers.Add(new Bookmaker("BetWin", double.Parse(fixtureData[oddsOffset]), double.Parse(fixtureData[oddsOffset + 1]),
+                double.Parse(fixtureData[oddsOffset + 2])));
             }
             
             if(columnHeaders.Contains("IWH"))
             {
                 int oddsOffset = columnHeaders.IndexOf("IWH");
-                bookmakers.Add(new Bookmaker("InterWetten", double.Parse(fixture_data[oddsOffset]), double.Parse(fixture_data[oddsOffset + 1]),
-                double.Parse(fixture_data[oddsOffset + 2])));
+                bookmakers.Add(new Bookmaker("InterWetten", double.Parse(fixtureData[oddsOffset]), double.Parse(fixtureData[oddsOffset + 1]),
+                double.Parse(fixtureData[oddsOffset + 2])));
             }
 
             if(columnHeaders.Contains("LBH"))
             {
                 int oddsOffset = columnHeaders.IndexOf("LBH");
-                bookmakers.Add(new Bookmaker("Ladbrokes", double.Parse(fixture_data[oddsOffset]), double.Parse(fixture_data[oddsOffset + 1]),
-                double.Parse(fixture_data[oddsOffset + 2])));
+                bookmakers.Add(new Bookmaker("Ladbrokes", double.Parse(fixtureData[oddsOffset]), double.Parse(fixtureData[oddsOffset + 1]),
+                double.Parse(fixtureData[oddsOffset + 2])));
             }
             
             // The new leagues use PH for Pinnacle Sport, the old leagues use PSH!
             if(columnHeaders.Contains("PSH"))
             {
                 int oddsOffset = columnHeaders.IndexOf("PSH");
-                bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixture_data[oddsOffset]), double.Parse(fixture_data[oddsOffset + 1]),
-                double.Parse(fixture_data[oddsOffset + 2])));
+                bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixtureData[oddsOffset]), double.Parse(fixtureData[oddsOffset + 1]),
+                double.Parse(fixtureData[oddsOffset + 2])));
             }
 
             if (columnHeaders.Contains("PH"))
             {
                 int oddsOffset = columnHeaders.IndexOf("PH");
-                bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixture_data[oddsOffset]), double.Parse(fixture_data[oddsOffset + 1]),
-                double.Parse(fixture_data[oddsOffset + 2])));
+                bookmakers.Add(new Bookmaker("Pinnacle Sport", double.Parse(fixtureData[oddsOffset]), double.Parse(fixtureData[oddsOffset + 1]),
+                double.Parse(fixtureData[oddsOffset + 2])));
             }
 
             if (columnHeaders.Contains("WHH"))
             {
                 int oddsOffset = columnHeaders.IndexOf("WHH");
-                bookmakers.Add(new Bookmaker("William Hill", double.Parse(fixture_data[oddsOffset]), double.Parse(fixture_data[oddsOffset + 1]),
-                double.Parse(fixture_data[oddsOffset + 2])));
+                bookmakers.Add(new Bookmaker("William Hill", double.Parse(fixtureData[oddsOffset]), double.Parse(fixtureData[oddsOffset + 1]),
+                double.Parse(fixtureData[oddsOffset + 2])));
             }
 
             if(columnHeaders.Contains("SJH"))
             {
                 int oddsOffset = columnHeaders.IndexOf("SJH");
-                bookmakers.Add(new Bookmaker("Stan James", double.Parse(fixture_data[oddsOffset]), double.Parse(fixture_data[oddsOffset + 1]),
-                double.Parse(fixture_data[oddsOffset + 2])));
+                bookmakers.Add(new Bookmaker("Stan James", double.Parse(fixtureData[oddsOffset]), double.Parse(fixtureData[oddsOffset + 1]),
+                double.Parse(fixtureData[oddsOffset + 2])));
             }
             
             return bookmakers;
