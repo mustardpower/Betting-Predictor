@@ -134,7 +134,7 @@ namespace BettingPredictorV3
             }
         }
 
-        public void ParseHistoricalData(League aLeague, string[] fixtureData, List<string> columnHeaders)
+        public static void ParseHistoricalData(League aLeague, string[] fixtureData, List<string> columnHeaders)
         {
             Debug.Assert(fixtureData.Length == columnHeaders.Count);
 

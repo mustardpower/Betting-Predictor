@@ -50,8 +50,7 @@ namespace BettingPredictorV3.DataStructures.Tests
 
             };
 
-            FileParser fileParser = new FileParser();
-            fileParser.ParseHistoricalData(league, testData, columnHeaders);
+            FileParser.ParseHistoricalData(league, testData, columnHeaders);
 
             Assert.AreEqual(league.LeagueID, "SP2");
             Assert.AreEqual(league.Teams.Count, 2);
@@ -108,8 +107,7 @@ namespace BettingPredictorV3.DataStructures.Tests
 
             };
 
-            FileParser fileParser = new FileParser();
-            fileParser.ParseHistoricalData(league, testData, columnHeaders);
+            FileParser.ParseHistoricalData(league, testData, columnHeaders);
             Fixture fixture = league.GetFixtures().First();
 
             // No bookmakers chosen in settings by default
