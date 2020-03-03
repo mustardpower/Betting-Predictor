@@ -73,8 +73,8 @@ namespace BettingPredictorV3.DataStructures
         {
             Debug.Assert(fixtureData.Length == columnHeaders.Count);
 
-            Team home_team = null;
-            Team away_team = null;
+            Team homeTeam = null;
+            Team awayTeam = null;
             List<Bookmaker> odds = new List<Bookmaker>();
 
             /* Additional league data has been added at a later point, 
@@ -99,8 +99,8 @@ namespace BettingPredictorV3.DataStructures
             DateTime dateThatKickOffTimeWasAdded = new DateTime(2019, 7, 1);
             int extraColumnOffset = date > dateThatKickOffTimeWasAdded ? 1 : 0;
 
-            String home_team_name = newLeague ? fixtureData[5] : fixtureData[2 + extraColumnOffset];
-            String away_team_name = newLeague ? fixtureData[6] : fixtureData[3 + extraColumnOffset];
+            string homeTeamName = newLeague ? fixtureData[5] : fixtureData[2 + extraColumnOffset];
+            string awayTeamName = newLeague ? fixtureData[6] : fixtureData[3 + extraColumnOffset];
 
             for (int idx = 0; idx < fixtureData.Length; idx++)
             {
@@ -124,32 +124,32 @@ namespace BettingPredictorV3.DataStructures
             }
             catch (FormatException ex)
             {
-                String a = ex.Message;
+                string a = ex.Message;
             }
 
-            int home_goals;
-            int away_goals;
+            int homeGoals;
+            int awayGoals;
 
             if (newLeague)
             {
-                home_goals = int.Parse(fixtureData[7]);
-                away_goals = int.Parse(fixtureData[8]);
+                homeGoals = int.Parse(fixtureData[7]);
+                awayGoals = int.Parse(fixtureData[8]);
             }
             else
             {
-                home_goals = int.Parse(fixtureData[4 + extraColumnOffset]);
-                away_goals = int.Parse(fixtureData[5 + extraColumnOffset]);
+                homeGoals = int.Parse(fixtureData[4 + extraColumnOffset]);
+                awayGoals = int.Parse(fixtureData[5 + extraColumnOffset]);
                 
             }
             
 
-            AddTeam(new Team(this, home_team_name));
-            AddTeam(new Team(this, away_team_name));
+            AddTeam(new Team(this, homeTeamName));
+            AddTeam(new Team(this, awayTeamName));
 
-            home_team = GetTeam(home_team_name);
-            away_team = GetTeam(away_team_name);
+            homeTeam = GetTeam(homeTeamName);
+            awayTeam = GetTeam(awayTeamName);
 
-            Fixture newFixture = new Fixture(this, date, home_team, away_team, home_goals, away_goals, new Referee(""), odds);
+            Fixture newFixture = new Fixture(this, date, homeTeam, awayTeam, homeGoals, awayGoals, new Referee(""), odds);
             home_team.AddFixture(newFixture);
             away_team.AddFixture(newFixture);
         }
