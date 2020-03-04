@@ -57,8 +57,6 @@ namespace BettingPredictorV3
             FileParser fileParser = new FileParser();
             database.ClearData();
 
-            fileParser.Database = database;
-
             var csvFixtures = fileParser.LoadUpcomingFixturesFile(database.FixtureFiles);
             var upcomingFixtures = database.AddFixtures(csvFixtures);
             database.FixtureList = upcomingFixtures;

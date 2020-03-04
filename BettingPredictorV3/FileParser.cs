@@ -11,10 +11,8 @@ namespace BettingPredictorV3
 {
     public class FileParser
     {
-        public Database Database { get; set; }
         public FileParser()
         {
-            Database = new Database();
         }
 
         public List<FixtureDTO> ParseFiles(Splash splash, IEnumerable<KeyValuePair<string, List<string>>> relevantFiles)
