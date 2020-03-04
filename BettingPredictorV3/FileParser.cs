@@ -76,13 +76,13 @@ namespace BettingPredictorV3
             }
         }
 
-        public List<Fixture> LoadUpcomingFixturesFile()
+        public List<Fixture> LoadUpcomingFixturesFile(List<string> fixturesFiles)
         {
             List<Fixture> fixtures = new List<Fixture>();
 
             using (WebClient client = new WebClient())         // download upcoming fixture list
             {
-                foreach (string fixturesFile in Database.FixtureFiles)
+                foreach (string fixturesFile in fixturesFiles)
                 {
                     string htmlCode = client.DownloadString(fixturesFile);
                     fixtures.AddRange(ParseUpcomingFixtures(htmlCode));
