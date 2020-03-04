@@ -18,18 +18,6 @@ namespace BettingPredictorV3
             Database = new Database();
         }
 
-        public Database PopulateDatabase(Database database, Splash splash)
-        {
-            Database = database;
-
-            Database.FixtureList = LoadUpcomingFixturesFile();
-
-            var relevantFiles = Database.HistoryFiles.Where(x => (Database.LeagueCodes.Find(y => y == x.Key) != null));
-            ParseFiles(splash, relevantFiles);
-
-            return database;
-        }
-
         public void ParseFiles(Splash splash, IEnumerable<KeyValuePair<string, List<string>>> relevantFiles)
         {
             int fileNumber = 0;

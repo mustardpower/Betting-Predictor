@@ -39,7 +39,14 @@ namespace BettingPredictorV3
                 {
                     FileParser fileParser = new FileParser();
                     database.ClearData();
-                    fileParser.PopulateDatabase(database, splashWindow);
+
+                    fileParser.Database = database;
+
+                    database.FixtureList = fileParser.LoadUpcomingFixturesFile();
+
+                    var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
+                    fileParser.ParseFiles(splashWindow, relevantFiles);
+
                     PredictResults();
                 }
 
