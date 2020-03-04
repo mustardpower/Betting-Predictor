@@ -34,8 +34,8 @@ namespace BettingPredictorV3
         {
             Leagues = new List<League>();
             FixtureList = new List<Fixture>();
-            HistoryFiles = new Dictionary<String, List<String>>();
-            FixtureFiles = new List<String>();
+            HistoryFiles = new Dictionary<string, List<string>>();
+            FixtureFiles = new List<string>();
         }
 
         public void ClearData()
