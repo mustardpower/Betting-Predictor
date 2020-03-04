@@ -13,5 +13,7 @@ namespace BettingPredictorV3
         public string HomeTeamName { get; internal set; }
         public string AwayTeamName { get; internal set; }
         public List<Bookmaker> Odds { get; internal set; }
+        public int HomeGoals { get; internal set; }
+        public int AwayGoals { get; internal set; }
     }
 }

@@ -17,10 +17,11 @@ namespace BettingPredictorV3
             Database = new Database();
         }
 
-        public void ParseFiles(Splash splash, IEnumerable<KeyValuePair<string, List<string>>> relevantFiles)
+        public List<FixtureDTO> ParseFiles(Splash splash, IEnumerable<KeyValuePair<string, List<string>>> relevantFiles)
         {
             int fileNumber = 0;
             double progressAmount = 0.0;
+            List<FixtureDTO> fixtures = new List<FixtureDTO>();
 
             // Only count the leagues that have upcoming fixtures
             int totalNumberOfFiles = relevantFiles.Sum(l => l.Value.Distinct().Count());
@@ -32,7 +33,7 @@ namespace BettingPredictorV3
                     var leagueFiles = keyPair.Value;
                     foreach (var file in leagueFiles)
                     {
-                        LoadHistoricalFile(file);
+                        fixtures.AddRange(LoadHistoricalFile(file));
                         fileNumber++;
                         progressAmount = (double)fileNumber / (double)totalNumberOfFiles;
                         splash.SetProgress(progressAmount);
@@ -44,17 +45,21 @@ namespace BettingPredictorV3
                     Console.WriteLine(ex.Message);
                 }
             }
+
+            return fixtures;
         }
 
-        public void LoadHistoricalFile(string aFile)
+        public List<FixtureDTO> LoadHistoricalFile(string aFile)
         {
+            List<FixtureDTO> fixtures = new List<FixtureDTO>();
+
             try
             {
                 using (WebClient client = new WebClient())
                 {
                     // TO DO: Add handling for exceptions
                     string htmlCode = client.DownloadString(aFile);
-                    ParseHistoricalData(htmlCode);
+                    fixtures.AddRange(ParseHistoricalData(htmlCode));
                 }
             }
             catch (WebException ex)
@@ -73,6 +78,8 @@ namespace BettingPredictorV3
             {
                 MessageBox.Show("Could not download file: " + aFile + ".\n\n Error: " + ex.Message);
             }
+
+            return fixtures;
         }
 
         public List<FixtureDTO> LoadUpcomingFixturesFile(List<string> fixturesFiles)
@@ -91,46 +98,32 @@ namespace BettingPredictorV3
             return fixtures;
         }
 
-        public void ParseHistoricalData(string htmlCode)
+        public List<FixtureDTO> ParseHistoricalData(string htmlCode)
         {
+            List<FixtureDTO> fixtures = new List<FixtureDTO>();
             int headings = htmlCode.IndexOf("\n");
             var columnHeaders = htmlCode.Substring(0, headings).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
-            var fixtures = htmlCode.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            var csvRow = htmlCode.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (string fixture in fixtures)
+            foreach (string fixture in csvRow)
             {
                 var fixtureData = fixture.Split(new[] { ',' }, StringSplitOptions.None);
-                string league_code = fixtureData[0];
-                if (league_code.Length > 0)
+                string leagueCode = fixtureData[0];
+                if (leagueCode.Length > 0)
                 {
-                    Console.WriteLine(league_code + ": " + fixtureData.Length);
-                    AddLeague(league_code, columnHeaders, fixtureData);
+                    Console.WriteLine(leagueCode + ": " + fixtureData.Length);
+                    fixtures.Add(ParseHistoricalData(fixtureData, columnHeaders));
                 }
             }
+
+            return fixtures;
         }
 
-        private void AddLeague(string leagueCode, List<string> columnHeaders, string[] fixtureData)
-        {
-            League aLeague = Database.GetLeague(leagueCode);
-            if (aLeague != null)
-            {
-                ParseHistoricalData(aLeague, fixtureData, columnHeaders);
-            }
-            else
-            {
-                League newLeague = new League(leagueCode);
-                ParseHistoricalData(newLeague, fixtureData, columnHeaders);
-                Database.Leagues.Add(newLeague);
-            }
-        }
-
-        public static void ParseHistoricalData(League aLeague, string[] fixtureData, List<string> columnHeaders)
+        public static FixtureDTO ParseHistoricalData(string[] fixtureData, List<string> columnHeaders)
         {
             Debug.Assert(fixtureData.Length == columnHeaders.Count);
 
-            Team homeTeam = null;
-            Team awayTeam = null;
             List<Bookmaker> odds = new List<Bookmaker>();
 
             /* Additional league data has been added at a later point, 
@@ -198,16 +191,17 @@ namespace BettingPredictorV3
 
             }
 
-
-            aLeague.AddTeam(new Team(aLeague, homeTeamName));
-            aLeague.AddTeam(new Team(aLeague, awayTeamName));
-
-            homeTeam = aLeague.GetTeam(homeTeamName);
-            awayTeam = aLeague.GetTeam(awayTeamName);
-
-            Fixture newFixture = new Fixture(aLeague, date, homeTeam, awayTeam, homeGoals, awayGoals, new Referee(""), odds);
-            homeTeam.AddFixture(newFixture);
-            awayTeam.AddFixture(newFixture);
+            string leagueCode = fixtureData[0];
+            return new FixtureDTO
+            {
+                LeagueCode = leagueCode,
+                Date = date,
+                HomeTeamName = homeTeamName,
+                AwayTeamName = awayTeamName,
+                HomeGoals = homeGoals,
+                AwayGoals = awayGoals,
+                Odds = odds
+            };
         }
 
         private static List<Bookmaker> ParseBookmakers(string[] fixtureData, List<string> columnHeaders)
@@ -278,7 +272,6 @@ namespace BettingPredictorV3
          * Teams from upcoming fixtures are not actually added to the database - if they do not already exist in the database the fixture will be ignored */
         public List<FixtureDTO> ParseUpcomingFixtures(string htmlCode)
         {
-            List<FixtureDTO> fixtures = new List<FixtureDTO>();
             int headings = htmlCode.IndexOf("\n");
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
             var fixtureData = htmlCode.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);

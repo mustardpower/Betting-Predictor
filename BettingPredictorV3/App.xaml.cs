@@ -64,7 +64,8 @@ namespace BettingPredictorV3
             database.FixtureList = upcomingFixtures;
 
             var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
-            fileParser.ParseFiles(splashWindow, relevantFiles);
+            var historicFixtures = fileParser.ParseFiles(splashWindow, relevantFiles);
+            database.AddHistoricalFixtures(historicFixtures);
         }
 
         private bool? OpenDatabaseSettingsWindow()
