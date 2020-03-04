@@ -43,6 +43,44 @@ namespace BettingPredictorV3
             Leagues.Clear();
         }
 
+        public List<Fixture> AddFixtures(List<FixtureDTO> csvFixtures)
+        {
+            List<Fixture> fixtures = new List<Fixture>();
+            foreach (var csvFixture in csvFixtures)
+            {
+                Fixture fixture = CreateUpcomingFixture(csvFixture.LeagueCode, csvFixture.Date, csvFixture.HomeTeamName, csvFixture.AwayTeamName, csvFixture.Odds);
+                fixtures.Add(fixture);
+            }
+
+            return fixtures;
+        }
+
+        private Fixture CreateUpcomingFixture(string leagueCode, DateTime date, string homeTeamName, string awayTeamName, List<Bookmaker> odds)
+        {
+            League league = GetLeague(leagueCode);
+            if (league == null)
+            {
+                League newLeague = new League(leagueCode);
+                Leagues.Add(newLeague);
+                league = newLeague;
+            }
+
+            Team homeTeam = GetTeam(leagueCode, homeTeamName);
+            Team awayTeam = GetTeam(leagueCode, awayTeamName);
+
+            if (homeTeam == null)
+            {
+                league.AddTeam(new Team(league, homeTeamName));
+                homeTeam = GetTeam(leagueCode, homeTeamName);
+            }
+            if (awayTeam == null)
+            {
+                league.AddTeam(new Team(league, awayTeamName));
+                awayTeam = GetTeam(leagueCode, awayTeamName);
+            }
+
+            return new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds);
+        }
 
         internal List<ProfitLossInterval> CalculateProfitLossIntervals()
         {

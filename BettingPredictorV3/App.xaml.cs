@@ -59,7 +59,9 @@ namespace BettingPredictorV3
 
             fileParser.Database = database;
 
-            database.FixtureList = fileParser.LoadUpcomingFixturesFile(database.FixtureFiles);
+            var csvFixtures = fileParser.LoadUpcomingFixturesFile(database.FixtureFiles);
+            var upcomingFixtures = database.AddFixtures(csvFixtures);
+            database.FixtureList = upcomingFixtures;
 
             var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
             fileParser.ParseFiles(splashWindow, relevantFiles);
