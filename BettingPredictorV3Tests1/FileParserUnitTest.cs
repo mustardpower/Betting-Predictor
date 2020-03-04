@@ -75,8 +75,8 @@ B1,09 / 08 / 2019,19:30,Anderlecht,Mechelen,,,,,,,1.75,4.2,4,1.83,3.75,3.9,1.77,
 
             DatabaseSettings.BookmakersUsed = bookmakersSelected;
 
-            var historicalFixtures = parser.LoadHistoricalFile("..\\..\\Test Files\\I1 (22-12-19).csv");
-            database.AddHistoricalFixtures(historicalFixtures);
+            List<HistoricalFixtureDTO> historicalFixtures = parser.LoadHistoricalFile("..\\..\\Test Files\\I1 (22-12-19).csv");
+            database.AddFixtures(historicalFixtures.ToList<IDatabaseObject<Fixture>>());
 
             Team homeTeam = database.GetTeam("I1", "Brescia");
             Fixture testFixture = homeTeam.Fixtures.Find(fixture => fixture.Date == new DateTime(2019, 12, 14));
