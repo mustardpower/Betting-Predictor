@@ -19,18 +19,18 @@ namespace BettingPredictorV3Tests
 B1,09 / 08 / 2019,19:30,Anderlecht,Mechelen,,,,,,,1.75,4.2,4,1.83,3.75,3.9,1.77,3.8,3.95,1.82,3.88,4.36,1.75,3.8,4.2,1.75,4,4.2,1.86,4.2,4.36,1.79,3.81,4.07,1.6,2.3,1.58,2.43,1.62,2.43,1.58,2.31,-0.75,1.98,1.88,2.04,1.84,2.04,1.94,2,1.84,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
 
             FileParser fileParser = new FileParser();
-            List<Fixture> fixtures = fileParser.ParseUpcomingFixtures(testHtmlCode);
+            List<FixtureDTO> fixtures = fileParser.ParseUpcomingFixtures(testHtmlCode);
             Assert.AreEqual(fixtures.Count, 1);
 
-            Fixture fixture = fixtures.First();
+            FixtureDTO fixture = fixtures.First();
 
-            Assert.AreEqual("B1", fixture.LeagueID);
+            Assert.AreEqual("B1", fixture.LeagueCode);
             Assert.AreEqual(9, fixture.Date.Day);
             Assert.AreEqual(8, fixture.Date.Month);
             Assert.AreEqual(2019, fixture.Date.Year);
 
-            Assert.AreEqual("Anderlecht", fixture.HomeTeam.Name);
-            Assert.AreEqual("Mechelen", fixture.AwayTeam.Name);
+            Assert.AreEqual("Anderlecht", fixture.HomeTeamName);
+            Assert.AreEqual("Mechelen", fixture.AwayTeamName);
 
             Assert.AreEqual("Bet 365", fixture.Odds[0].Name);
             Assert.AreEqual(1.75, fixture.Odds[0].HomeOdds);
@@ -69,14 +69,14 @@ B1,09 / 08 / 2019,19:30,Anderlecht,Mechelen,,,,,,,1.75,4.2,4,1.83,3.75,3.9,1.77,
             Database database = new Database();
 
             FileParser parser = new FileParser();
-            parser.Database = database;
 
             List<string> bookmakersSelected = new List<string>();
             bookmakersSelected.Add("William Hill");
 
             DatabaseSettings.BookmakersUsed = bookmakersSelected;
 
-            parser.LoadHistoricalFile("..\\..\\Test Files\\I1 (22-12-19).csv");
+            var historicalFixtures = parser.LoadHistoricalFile("..\\..\\Test Files\\I1 (22-12-19).csv");
+            database.AddHistoricalFixtures(historicalFixtures);
 
             Team homeTeam = database.GetTeam("I1", "Brescia");
             Fixture testFixture = homeTeam.Fixtures.Find(fixture => fixture.Date == new DateTime(2019, 12, 14));

@@ -50,21 +50,17 @@ namespace BettingPredictorV3.DataStructures.Tests
 
             };
 
-            FileParser.ParseHistoricalData(league, testData, columnHeaders);
+            var fixture = FileParser.ParseHistoricalData(testData, columnHeaders);
 
             Assert.AreEqual(league.LeagueID, "SP2");
-            Assert.AreEqual(league.Teams.Count, 2);
 
-            Fixture fixture = league.GetFixtures().First();
-
-            Assert.AreEqual(fixture.League, league);
-            Assert.AreEqual(fixture.LeagueID, "SP2");
+            Assert.AreEqual(fixture.LeagueCode, "SP2");
             Assert.AreEqual(fixture.Date.Day, 16);
             Assert.AreEqual(fixture.Date.Month, 8);
             Assert.AreEqual(fixture.Date.Year, 2013);
 
-            Assert.AreEqual(fixture.HomeTeam.Name, "Girona");
-            Assert.AreEqual(fixture.AwayTeam.Name, "Alaves");
+            Assert.AreEqual(fixture.HomeTeamName, "Girona");
+            Assert.AreEqual(fixture.AwayTeamName, "Alaves");
             Assert.AreEqual(fixture.HomeGoals, 1);
             Assert.AreEqual(fixture.AwayGoals, 0);
         }
@@ -72,7 +68,6 @@ namespace BettingPredictorV3.DataStructures.Tests
         [TestMethod()]
         public void ParseBookmakerOddsTest()
         {
-            League league = new League("SP2");
             string[] testData = new string[]
             {
                 "SP2",
@@ -107,11 +102,10 @@ namespace BettingPredictorV3.DataStructures.Tests
 
             };
 
-            FileParser.ParseHistoricalData(league, testData, columnHeaders);
-            Fixture fixture = league.GetFixtures().First();
+            var historicalFixture = FileParser.ParseHistoricalData(testData, columnHeaders);
 
             // No bookmakers chosen in settings by default
-            Assert.AreEqual(fixture.Odds.Count, 5);
+            Assert.AreEqual(historicalFixture.Odds.Count, 5);
 
         }
     }
