@@ -177,14 +177,14 @@ namespace BettingPredictorV3
             return fixtures;
         }
 
-        public Team GetTeam(String leagueCode, String teamName)
+        public Team GetTeam(string leagueCode, string teamName)
         {
             League league = Leagues.Find(x => x.LeagueID == leagueCode);
             if(league == null){ return null; }
             return league.GetTeam(teamName);
         }
 
-        public League GetLeague(String leagueCode)
+        public League GetLeague(string leagueCode)
         {
             return Leagues.Find(x => x.LeagueID == leagueCode);
         }
@@ -224,7 +224,7 @@ namespace BettingPredictorV3
                 errors.Add(fixture.AverageHomeResidual);
             }
 
-            errors.RemoveAll(x => Double.IsNaN(x));
+            errors.RemoveAll(x => double.IsNaN(x));
 
             if (errors.Count > 0)
             {
@@ -244,7 +244,7 @@ namespace BettingPredictorV3
                 errors.Add(fixture.AverageAwayResidual);
             }
 
-            errors.RemoveAll(x => Double.IsNaN(x));
+            errors.RemoveAll(x => double.IsNaN(x));
 
             if (errors.Count > 0)
             {
