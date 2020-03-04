@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 
 namespace BettingPredictorV3
 {
-    public class HistoricalFixtureDTO : FixtureDTO
+    public class UpcomingFixtureDTO : FixtureDTO
     {
-        public int HomeGoals { get; internal set; }
-        public int AwayGoals { get; internal set; }
-
         public override Fixture CreateFixture(League league, Team homeTeam, Team awayTeam)
         {
-            return new Fixture(league, Date, homeTeam, awayTeam, HomeGoals, AwayGoals, new Referee(""), Odds);
+            return new Fixture(league, Date, homeTeam, awayTeam, new Referee(""), Odds);
         }
     }
 }

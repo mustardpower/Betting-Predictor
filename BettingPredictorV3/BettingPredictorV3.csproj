@@ -87,6 +87,7 @@
     <Compile Include="Fixture.cs" />
     <Compile Include="FixtureDTO.cs" />
     <Compile Include="HistoricalFixtureDTO.cs" />
+    <Compile Include="IFixtureDTO.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="ProfitLossInterval.cs" />
     <Compile Include="Referee.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="FixtureWindow.xaml.cs">
       <DependentUpon>FixtureWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UpcomingFixtureDTO.cs" />
     <Page Include="DatabaseSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

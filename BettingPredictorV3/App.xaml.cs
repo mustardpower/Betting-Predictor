@@ -58,12 +58,12 @@ namespace BettingPredictorV3
             database.ClearData();
 
             var csvFixtures = fileParser.LoadUpcomingFixturesFile(database.FixtureFiles);
-            var upcomingFixtures = database.AddFixtures(csvFixtures);
+            var upcomingFixtures = database.AddFixtures(csvFixtures.ToList<IDatabaseFixture>());
             database.FixtureList = upcomingFixtures;
 
             var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
             var historicFixtures = fileParser.ParseFiles(splashWindow, relevantFiles);
-            database.AddHistoricalFixtures(historicFixtures);
+            database.AddFixtures(historicFixtures.ToList<IDatabaseFixture>());
         }
 
         private bool? OpenDatabaseSettingsWindow()

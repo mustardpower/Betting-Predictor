@@ -43,85 +43,16 @@ namespace BettingPredictorV3
             Leagues.Clear();
         }
 
-        public List<Fixture> AddFixtures(List<FixtureDTO> csvFixtures)
+        public List<Fixture> AddFixtures(List<IDatabaseFixture> csvFixtures)
         {
             List<Fixture> fixtures = new List<Fixture>();
             foreach (var csvFixture in csvFixtures)
             {
-                Fixture fixture = CreateUpcomingFixture(csvFixture.LeagueCode, csvFixture.Date, csvFixture.HomeTeamName, csvFixture.AwayTeamName, csvFixture.Odds);
+                Fixture fixture = csvFixture.AddToDatabase(this);
                 fixtures.Add(fixture);
             }
 
             return fixtures;
-        }
-
-        public List<Fixture> AddHistoricalFixtures(List<HistoricalFixtureDTO> csvFixtures)
-        {
-            List<Fixture> fixtures = new List<Fixture>();
-            foreach (var csvFixture in csvFixtures)
-            {
-                Fixture fixture = CreateHistoricalFixture(csvFixture.LeagueCode, csvFixture.Date, csvFixture.HomeTeamName, csvFixture.AwayTeamName, csvFixture.HomeGoals, csvFixture.AwayGoals, csvFixture.Odds);
-                fixtures.Add(fixture);
-            }
-
-            return fixtures;
-        }
-
-        private Fixture CreateUpcomingFixture(string leagueCode, DateTime date, string homeTeamName, string awayTeamName, List<Bookmaker> odds)
-        {
-            League league = GetLeague(leagueCode);
-            if (league == null)
-            {
-                League newLeague = new League(leagueCode);
-                Leagues.Add(newLeague);
-                league = newLeague;
-            }
-
-            Team homeTeam = GetTeam(leagueCode, homeTeamName);
-            Team awayTeam = GetTeam(leagueCode, awayTeamName);
-
-            if (homeTeam == null)
-            {
-                league.AddTeam(new Team(league, homeTeamName));
-                homeTeam = GetTeam(leagueCode, homeTeamName);
-            }
-            if (awayTeam == null)
-            {
-                league.AddTeam(new Team(league, awayTeamName));
-                awayTeam = GetTeam(leagueCode, awayTeamName);
-            }
-
-            return new Fixture(league, date, homeTeam, awayTeam, new Referee(""), odds);
-        }
-
-        private Fixture CreateHistoricalFixture(string leagueCode, DateTime date, string homeTeamName, string awayTeamName, int homeGoals, int awayGoals, List<Bookmaker> odds)
-        {
-            League league = GetLeague(leagueCode);
-            if (league == null)
-            {
-                League newLeague = new League(leagueCode);
-                Leagues.Add(newLeague);
-                league = newLeague;
-            }
-
-            Team homeTeam = GetTeam(leagueCode, homeTeamName);
-            Team awayTeam = GetTeam(leagueCode, awayTeamName);
-
-            if (homeTeam == null)
-            {
-                league.AddTeam(new Team(league, homeTeamName));
-                homeTeam = GetTeam(leagueCode, homeTeamName);
-            }
-            if (awayTeam == null)
-            {
-                league.AddTeam(new Team(league, awayTeamName));
-                awayTeam = GetTeam(leagueCode, awayTeamName);
-            }
-
-            var fixture = new Fixture(league, date, homeTeam, awayTeam, homeGoals, awayGoals, new Referee(""), odds); 
-            homeTeam.AddFixture(fixture);
-            awayTeam.AddFixture(fixture);
-            return fixture;
         }
 
         internal List<ProfitLossInterval> CalculateProfitLossIntervals()

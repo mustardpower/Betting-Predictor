@@ -375,7 +375,7 @@ namespace BettingPredictorV3
                     string a = ex.Message;
                 }
 
-                fixtures.Add(new FixtureDTO()
+                fixtures.Add(new UpcomingFixtureDTO()
                 {
                     LeagueCode = leagueCode,
                     Date = date,
