@@ -15,11 +15,11 @@ namespace BettingPredictorV3
         {
         }
 
-        public List<FixtureDTO> ParseFiles(Splash splash, IEnumerable<KeyValuePair<string, List<string>>> relevantFiles)
+        public List<HistoricalFixtureDTO> ParseFiles(Splash splash, IEnumerable<KeyValuePair<string, List<string>>> relevantFiles)
         {
             int fileNumber = 0;
             double progressAmount = 0.0;
-            List<FixtureDTO> fixtures = new List<FixtureDTO>();
+            List<HistoricalFixtureDTO> fixtures = new List<HistoricalFixtureDTO>();
 
             // Only count the leagues that have upcoming fixtures
             int totalNumberOfFiles = relevantFiles.Sum(l => l.Value.Distinct().Count());
@@ -47,9 +47,9 @@ namespace BettingPredictorV3
             return fixtures;
         }
 
-        public List<FixtureDTO> LoadHistoricalFile(string aFile)
+        public List<HistoricalFixtureDTO> LoadHistoricalFile(string aFile)
         {
-            List<FixtureDTO> fixtures = new List<FixtureDTO>();
+            List<HistoricalFixtureDTO> fixtures = new List<HistoricalFixtureDTO>();
 
             try
             {
@@ -96,9 +96,9 @@ namespace BettingPredictorV3
             return fixtures;
         }
 
-        public List<FixtureDTO> ParseHistoricalData(string htmlCode)
+        public List<HistoricalFixtureDTO> ParseHistoricalData(string htmlCode)
         {
-            List<FixtureDTO> fixtures = new List<FixtureDTO>();
+            List<HistoricalFixtureDTO> fixtures = new List<HistoricalFixtureDTO>();
             int headings = htmlCode.IndexOf("\n");
             var columnHeaders = htmlCode.Substring(0, headings).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
             htmlCode = htmlCode.Remove(0, headings + "\n".Length); // remove all column headings from the CSV file
@@ -118,7 +118,7 @@ namespace BettingPredictorV3
             return fixtures;
         }
 
-        public static FixtureDTO ParseHistoricalData(string[] fixtureData, List<string> columnHeaders)
+        public static HistoricalFixtureDTO ParseHistoricalData(string[] fixtureData, List<string> columnHeaders)
         {
             Debug.Assert(fixtureData.Length == columnHeaders.Count);
 
@@ -190,7 +190,7 @@ namespace BettingPredictorV3
             }
 
             string leagueCode = fixtureData[0];
-            return new FixtureDTO
+            return new HistoricalFixtureDTO
             {
                 LeagueCode = leagueCode,
                 Date = date,

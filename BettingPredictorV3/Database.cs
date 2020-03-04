@@ -55,7 +55,7 @@ namespace BettingPredictorV3
             return fixtures;
         }
 
-        public List<Fixture> AddHistoricalFixtures(List<FixtureDTO> csvFixtures)
+        public List<Fixture> AddHistoricalFixtures(List<HistoricalFixtureDTO> csvFixtures)
         {
             List<Fixture> fixtures = new List<Fixture>();
             foreach (var csvFixture in csvFixtures)
