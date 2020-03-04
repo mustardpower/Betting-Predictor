@@ -37,15 +37,7 @@ namespace BettingPredictorV3
             {
                 if (DatabaseSettings.PopulateDatabase)
                 {
-                    FileParser fileParser = new FileParser();
-                    database.ClearData();
-
-                    fileParser.Database = database;
-
-                    database.FixtureList = fileParser.LoadUpcomingFixturesFile();
-
-                    var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
-                    fileParser.ParseFiles(splashWindow, relevantFiles);
+                    PopulateDatabase(splashWindow);
 
                     PredictResults();
                 }
@@ -58,6 +50,19 @@ namespace BettingPredictorV3
                     MainWindow.Show();
                 });
             }
+        }
+
+        private void PopulateDatabase(Splash splashWindow)
+        {
+            FileParser fileParser = new FileParser();
+            database.ClearData();
+
+            fileParser.Database = database;
+
+            database.FixtureList = fileParser.LoadUpcomingFixturesFile();
+
+            var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
+            fileParser.ParseFiles(splashWindow, relevantFiles);
         }
 
         private bool? OpenDatabaseSettingsWindow()
