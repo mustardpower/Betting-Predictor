@@ -14,7 +14,9 @@ namespace BettingPredictorV3
         {
         }
 
-        public List<HistoricalFixtureDTO> ParseFiles(Splash splash, IEnumerable<KeyValuePair<string, List<string>>> relevantFiles)
+        public delegate void ProgressUpdater(int fileNumber, int totalFiles, string fileName);
+
+        public List<HistoricalFixtureDTO> ParseFiles(ProgressUpdater progressUpdater, IEnumerable<KeyValuePair<string, List<string>>> relevantFiles)
         {
             int fileNumber = 0;
             double progressAmount = 0.0;
@@ -32,9 +34,7 @@ namespace BettingPredictorV3
                     {
                         fixtures.AddRange(LoadHistoricalFile(file));
                         fileNumber++;
-                        progressAmount = (double)fileNumber / (double)totalNumberOfFiles;
-                        splash.SetProgress(progressAmount);
-                        splash.SetText(string.Format("Loading historical data file number: {0} / {1} File Name: {2}", fileNumber, totalNumberOfFiles, file));
+                        progressUpdater(fileNumber, totalNumberOfFiles, file);
                     }
                 }
                 catch(Exception ex)

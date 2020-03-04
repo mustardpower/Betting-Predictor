@@ -18,6 +18,7 @@ namespace BettingPredictorV3
     public partial class App : Application
     {
         private Database database = new Database();
+        private Splash SplashWindow;
         
         public App()
         {
@@ -33,13 +34,14 @@ namespace BettingPredictorV3
         internal ApplicationInitializeDelegate ApplicationInitialize;
         private void _applicationInitialize(Splash splashWindow)
         {
+            SplashWindow = splashWindow;
+
             var dialogResult = OpenDatabaseSettingsWindow();
             if (dialogResult == true)
             {
                 if (DatabaseSettings.PopulateDatabase)
                 {
-                    PopulateDatabase(splashWindow);
-
+                    PopulateDatabase();
                     PredictResults();
                 }
 
@@ -53,7 +55,7 @@ namespace BettingPredictorV3
             }
         }
 
-        private void PopulateDatabase(Splash splashWindow)
+        private void PopulateDatabase()
         {
             FileParser fileParser = new FileParser();
             database.ClearData();
@@ -63,8 +65,15 @@ namespace BettingPredictorV3
             database.FixtureList = upcomingFixtures;
 
             var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
-            var historicFixtures = fileParser.ParseFiles(splashWindow, relevantFiles);
+            var historicFixtures = fileParser.ParseFiles(UpdateProgressBar, relevantFiles);
             database.AddFixtures(historicFixtures.ToList<IDatabaseObject<Fixture>>());
+        }
+
+        public void UpdateProgressBar(int fileNumber, int totalNumberOfFiles, string fileName)
+        {
+            double progressAmount = fileNumber / (double)totalNumberOfFiles;
+            SplashWindow.SetProgress(progressAmount);
+            SplashWindow.SetText(string.Format("Loading historical data file number: {0} / {1} File Name: {2}", fileNumber, totalNumberOfFiles, fileName));
         }
 
         private bool? OpenDatabaseSettingsWindow()
