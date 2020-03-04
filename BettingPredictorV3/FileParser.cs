@@ -33,8 +33,7 @@ namespace BettingPredictorV3
                     foreach (var file in leagueFiles)
                     {
                         fixtures.AddRange(LoadHistoricalFile(file));
-                        fileNumber++;
-                        progressUpdater(fileNumber, totalNumberOfFiles, file);
+                        progressUpdater(++fileNumber, totalNumberOfFiles, file);
                     }
                 }
                 catch(Exception ex)
