@@ -43,7 +43,7 @@ namespace BettingPredictorV3
             Leagues.Clear();
         }
 
-        public List<Fixture> AddFixtures(List<IDatabaseFixture> csvFixtures)
+        public List<Fixture> AddFixtures(List<IDatabaseObject<Fixture>> csvFixtures)
         {
             List<Fixture> fixtures = new List<Fixture>();
             foreach (var csvFixture in csvFixtures)

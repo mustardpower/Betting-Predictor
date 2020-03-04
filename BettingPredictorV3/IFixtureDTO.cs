@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BettingPredictorV3
 {
-    public interface IDatabaseFixture
+    public interface IDatabaseObject<T>
     {
-        Fixture AddToDatabase(Database database);
+        T AddToDatabase(Database database);
     }
 }

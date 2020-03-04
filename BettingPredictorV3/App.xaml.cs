@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BettingPredictorV3.DataStructures;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -58,12 +59,12 @@ namespace BettingPredictorV3
             database.ClearData();
 
             var csvFixtures = fileParser.LoadUpcomingFixturesFile(database.FixtureFiles);
-            var upcomingFixtures = database.AddFixtures(csvFixtures.ToList<IDatabaseFixture>());
+            var upcomingFixtures = database.AddFixtures(csvFixtures.ToList<IDatabaseObject<Fixture>>());
             database.FixtureList = upcomingFixtures;
 
             var relevantFiles = database.HistoryFiles.Where(x => (database.LeagueCodes.Find(y => y == x.Key) != null));
             var historicFixtures = fileParser.ParseFiles(splashWindow, relevantFiles);
-            database.AddFixtures(historicFixtures.ToList<IDatabaseFixture>());
+            database.AddFixtures(historicFixtures.ToList<IDatabaseObject<Fixture>>());
         }
 
         private bool? OpenDatabaseSettingsWindow()

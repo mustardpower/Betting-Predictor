@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BettingPredictorV3
 {
-    public abstract class FixtureDTO : IDatabaseFixture
+    public abstract class FixtureDTO : IDatabaseObject<Fixture>
     {
         public string LeagueCode { get; internal set; }
         public DateTime Date { get; internal set; }
