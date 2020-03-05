@@ -189,28 +189,28 @@ namespace BettingPredictorV3
             return Leagues.Find(x => x.LeagueID == leagueCode);
         }
 
-        public void PredictResults()
+        public void PredictResults(double alpha,double beta)
         {
             // predict the results for historical fixtures - used to find profitable betting areas 
-            PredictHistoricalResults();
+            PredictHistoricalResults(alpha, beta);
             // predict the upcoming fixtures
-            PredictUpcomingFixtures();
+            PredictUpcomingFixtures(alpha, beta);
         }
 
-        public void PredictHistoricalResults()
+        public void PredictHistoricalResults(double alpha, double beta)
         {
             foreach (League league in Leagues)
             {
-                league.PredictResults();
+                league.PredictResults(alpha, beta);
             }
         }
 
-        public void PredictUpcomingFixtures()
+        public void PredictUpcomingFixtures(double alpha, double beta)
         {
             ResultPredictor resultPredictor = new ResultPredictor();
             foreach (Fixture fixture in FixtureList)
             {
-                resultPredictor.PredictResult(fixture);
+                resultPredictor.PredictResult(fixture, alpha, beta);
             }
         }
 

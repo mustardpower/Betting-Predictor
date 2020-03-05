@@ -192,12 +192,12 @@ namespace BettingPredictorV3.DataStructures
 
             return sample;
         }
-        public void PredictResults()
+        public void PredictResults(double alpha,double beta)
         {
             ResultPredictor resultPredictor = new ResultPredictor();
             foreach (Fixture fixture in fixtures)
             {
-                resultPredictor.PredictResult(fixture);
+                resultPredictor.PredictResult(fixture, alpha, beta);
                 fixture.CalculateResiduals();
             }
         }

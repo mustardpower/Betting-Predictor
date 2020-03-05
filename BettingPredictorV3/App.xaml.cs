@@ -95,7 +95,15 @@ namespace BettingPredictorV3
 
         private void PredictResults()
         {
-            database.PredictResults();
+            double alpha, beta;
+
+            do
+            {
+                alpha = database.GetAlphaValue();
+                beta = database.GetBetaValue();
+                database.PredictResults(alpha, beta);
+            }
+            while ((Math.Abs(alpha) > Math.Abs(database.GetAlphaValue()) && (Math.Abs(beta) > Math.Abs(database.GetBetaValue()))));
         }
     }
 }
