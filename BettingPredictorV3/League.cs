@@ -69,11 +69,11 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public void PredictResults(double alpha, double beta)
+        public void PredictResults()
         {
             foreach (Team team in Teams)
             {
-                team.PredictResults(alpha,beta);
+                team.PredictResults();
             }
         }
 
