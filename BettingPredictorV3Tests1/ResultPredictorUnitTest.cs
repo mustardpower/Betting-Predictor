@@ -24,7 +24,7 @@ namespace BettingPredictorV3Tests
 
             Assert.AreEqual(0, fixture.PredictedHomeGoals);
             Assert.AreEqual(0, fixture.PredictedAwayGoals);
-            resultPredictor.PredictResult(fixture, 0, 0);
+            resultPredictor.PredictResult(fixture);
             Assert.AreEqual(0, fixture.PredictedHomeGoals, "Should not have changed since there are no previous fixtures");
             Assert.AreEqual(0, fixture.PredictedAwayGoals, "Should not have changed since there are no previous fixtures");
         }
