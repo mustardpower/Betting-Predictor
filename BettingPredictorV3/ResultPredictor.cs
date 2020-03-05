@@ -49,6 +49,15 @@ namespace BettingPredictorV3
             }
         }
 
+        public void PredictResults(List<Fixture> fixtures)
+        {
+            ResultPredictor resultPredictor = new ResultPredictor();
+            foreach (Fixture fixture in fixtures)
+            {
+                resultPredictor.PredictResult(fixture);
+            }
+        }
+
         public static List<double> WeightingFunction(List<double> sample)
         {
             List<double> new_sample = new List<double>();

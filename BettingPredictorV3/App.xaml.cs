@@ -95,7 +95,12 @@ namespace BettingPredictorV3
 
         private void PredictResults()
         {
-            database.PredictResults();
+            ResultPredictor predictor = new ResultPredictor();
+
+            // predict historic results 
+            predictor.PredictResults(database.GetPreviousResults());
+
+            predictor.PredictResults(database.FixtureList);
         }
     }
 }
