@@ -295,7 +295,7 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public void CalculateStrengths(List<double> home_sample, List<double> away_sample, List<double> home_opp_sample, List<double> away_opp_sample)
+        public void CalculateStrengths(List<double> home_sample, List<double> away_sample, List<double> home_opp_sample, List<double> away_opp_sample,double alpha,double beta)
         {
             double lgavghome_goals = league.GetAverageHomeGoals(date);
             double lgavgaway_goals = league.GetAverageAwayGoals(date);
@@ -315,8 +315,8 @@ namespace BettingPredictorV3.DataStructures
             // assumes a teams defensive strength and oppositions
             // attacking strength affect each other when calculating predicted goals
 
-            predictedHomeGoals = home_attack_strength * away_defence_strength * lgavghome_goals;
-            predictedAwayGoals = away_attack_strength * home_defence_strength * lgavgaway_goals;
+            predictedHomeGoals = home_attack_strength * away_defence_strength * lgavghome_goals-alpha;
+            predictedAwayGoals = away_attack_strength * home_defence_strength * lgavgaway_goals-beta;
             
         }
 
