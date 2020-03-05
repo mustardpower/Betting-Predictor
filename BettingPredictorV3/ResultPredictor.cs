@@ -9,7 +9,7 @@ namespace BettingPredictorV3
 {
     public class ResultPredictor
     {
-        public void PredictResult(Fixture fixture, double alpha, double beta)
+        public void PredictResult(Fixture fixture)
         {
             List<double> homeSample;
             List<double> awaySample;
@@ -32,7 +32,7 @@ namespace BettingPredictorV3
                 awaySample = WeightingFunction(awaySample);
 
                 // calculates a home attacking strength and defence strength
-                fixture.CalculateStrengths(homeSample, awaySample, homeOppSample, awayOppSample, alpha, beta);
+                fixture.CalculateStrengths(homeSample, awaySample, homeOppSample, awayOppSample);
 
                 fixture.PredictedGoalDifference = fixture.PredictedHomeGoals - fixture.PredictedAwayGoals;
 
