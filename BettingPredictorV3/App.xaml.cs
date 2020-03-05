@@ -80,16 +80,20 @@ namespace BettingPredictorV3
         {
             DatabaseSettingsWindow databaseSettingsWindow = null;
             bool? dialogResult = false;
-            ManualResetEvent m = new ManualResetEvent(false);
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
-            {
-                databaseSettingsWindow = new DatabaseSettingsWindow();
-                databaseSettingsWindow.ShowDialog();
-                dialogResult = databaseSettingsWindow.DialogResult;
-                m.Set();
-            });
 
-            m.WaitOne();
+            using (ManualResetEvent m = new ManualResetEvent(false))
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
+                {
+                    databaseSettingsWindow = new DatabaseSettingsWindow();
+                    databaseSettingsWindow.ShowDialog();
+                    dialogResult = databaseSettingsWindow.DialogResult;
+                    m.Set();
+                });
+
+                m.WaitOne();
+            }
+            
             return dialogResult;
         }
 
