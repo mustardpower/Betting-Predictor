@@ -295,28 +295,28 @@ namespace BettingPredictorV3.DataStructures
             }
         }
 
-        public void CalculateStrengths(List<double> home_sample, List<double> away_sample, List<double> home_opp_sample, List<double> away_opp_sample)
+        public void CalculateStrengths(List<double> homeSample, List<double> awaySample, List<double> homeOppositionSample, List<double> awayOppositionSample)
         {
             double lgavghome_goals = league.GetAverageHomeGoals(date);
             double lgavgaway_goals = league.GetAverageAwayGoals(date);
 
-            double home_attack_strength;
-            double home_defence_strength;
+            double homeAttackStrength;
+            double homeDefenceStrength;
 
-            double away_attack_strength;
-            double away_defence_strength;
+            double awayAttackStrength;
+            double awayDefenceStrength;
 
-            
-            home_attack_strength = home_sample.Average() / lgavghome_goals;
-            home_defence_strength = home_opp_sample.Average() / lgavgaway_goals;
-            away_attack_strength = away_sample.Average() / lgavgaway_goals; // calculates away attacking strength
-            away_defence_strength = away_opp_sample.Average() / lgavghome_goals;
+
+            homeAttackStrength = homeSample.Average() / lgavghome_goals;
+            homeDefenceStrength = homeOppositionSample.Average() / lgavgaway_goals;
+            awayAttackStrength = awaySample.Average() / lgavgaway_goals; // calculates away attacking strength
+            awayDefenceStrength = awayOppositionSample.Average() / lgavghome_goals;
 
             // assumes a teams defensive strength and oppositions
             // attacking strength affect each other when calculating predicted goals
 
-            predictedHomeGoals = home_attack_strength * away_defence_strength * lgavghome_goals;
-            predictedAwayGoals = away_attack_strength * home_defence_strength * lgavgaway_goals;
+            predictedHomeGoals = homeAttackStrength * awayDefenceStrength * lgavghome_goals;
+            predictedAwayGoals = awayAttackStrength * homeDefenceStrength * lgavgaway_goals;
             
         }
 
