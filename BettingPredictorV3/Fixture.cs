@@ -297,8 +297,8 @@ namespace BettingPredictorV3.DataStructures
 
         public void CalculateStrengths(List<double> homeSample, List<double> awaySample, List<double> homeOppositionSample, List<double> awayOppositionSample)
         {
-            double lgavghome_goals = league.GetAverageHomeGoals(date);
-            double lgavgaway_goals = league.GetAverageAwayGoals(date);
+            double leagueAverageHomeGoals = league.GetAverageHomeGoals(date);
+            double leagueAverageAwayGoals = league.GetAverageAwayGoals(date);
 
             double homeAttackStrength;
             double homeDefenceStrength;
@@ -307,16 +307,16 @@ namespace BettingPredictorV3.DataStructures
             double awayDefenceStrength;
 
 
-            homeAttackStrength = homeSample.Average() / lgavghome_goals;
-            homeDefenceStrength = homeOppositionSample.Average() / lgavgaway_goals;
-            awayAttackStrength = awaySample.Average() / lgavgaway_goals; // calculates away attacking strength
-            awayDefenceStrength = awayOppositionSample.Average() / lgavghome_goals;
+            homeAttackStrength = homeSample.Average() / leagueAverageHomeGoals;
+            homeDefenceStrength = homeOppositionSample.Average() / leagueAverageAwayGoals;
+            awayAttackStrength = awaySample.Average() / leagueAverageAwayGoals; // calculates away attacking strength
+            awayDefenceStrength = awayOppositionSample.Average() / leagueAverageHomeGoals;
 
             // assumes a teams defensive strength and oppositions
             // attacking strength affect each other when calculating predicted goals
 
-            predictedHomeGoals = homeAttackStrength * awayDefenceStrength * lgavghome_goals;
-            predictedAwayGoals = awayAttackStrength * homeDefenceStrength * lgavgaway_goals;
+            predictedHomeGoals = homeAttackStrength * awayDefenceStrength * leagueAverageHomeGoals;
+            predictedAwayGoals = awayAttackStrength * homeDefenceStrength * leagueAverageAwayGoals;
             
         }
 
