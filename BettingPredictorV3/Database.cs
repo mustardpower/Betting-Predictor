@@ -15,11 +15,78 @@ namespace BettingPredictorV3
     public class Database
     {
 
-        public List<League> Leagues { get; set; }
+        public List<League> Leagues { get; }
 
-        public List<string> FixtureFiles { get; set; }
+        public List<string> FixtureFiles {
+            get
+            {
+                List<string> fixturesFiles = new List<string>();
+                fixturesFiles.Add("http://www.football-data.co.uk/fixtures.csv");
+                fixturesFiles.Add("http://www.football-data.co.uk/new_league_fixtures.csv");
+                return fixturesFiles;
+            }
+        }
 
-        public Dictionary<string, List<string>> HistoryFiles { get; set; }
+        private Dictionary<string, List<string>> m_HistoryFiles;
+        public Dictionary<string, List<string>> HistoryFiles {
+            get
+            {
+                if(m_HistoryFiles == null)
+                    m_HistoryFiles = GetDefaultHistoricalDataURLs();
+                return m_HistoryFiles;
+            }
+        }
+
+        private static Dictionary<string, List<string>> GetDefaultHistoricalDataURLs()
+        {
+            Dictionary<string, List<string>> historyFiles = new Dictionary<string, List<string>>();
+            List<string> yearCodes = new List<string> { 
+                //"1415", "1516", "1617", "1718", "1819",
+                "1920" };
+            List<string> leagueCodes = new List<string>
+            {
+                "E0", "E1", "E2", "E3", "EC", "SC0", "SC1", "SC2", "SC3",
+                "D1", "D2", "I1", "I2", "SP1", "SP2", "F1", "F2", "N1", "B1", "P1", "T1", "G1"
+            };
+
+            foreach (string leagueCode in leagueCodes)
+            {
+                historyFiles.Add(leagueCode, new List<string>());
+                foreach (string yearCode in yearCodes)
+                {
+                    historyFiles[leagueCode].Add(string.Format("http://www.football-data.co.uk/mmz4281/{0}/{1}.csv", yearCode, leagueCode));
+                }
+            }
+
+            // The additional leagues have a different league code in the file contents
+            // than in the URL. The key is the league code in the URL, the value is the league code in the file.
+            var fileToURLNameMap = new Dictionary<string, string>()
+            {
+                { "ARG", "Argentina" },
+                { "AUT", "Austria" },
+                { "BRA", "Brazil" },
+                { "CHN", "China" },
+                { "DNK", "Denmark"},
+                { "FIN", "Finland" },
+                { "IRL", "Ireland" },
+                { "JPN", "Japan" },
+                { "MEX", "Mexico" },
+                { "NOR", "Norway" },
+                { "POL", "Poland" },
+                { "ROU", "Romania" },
+                { "RUS", "Russia" },
+                { "SWE", "Sweden" },
+                { "SWZ", "Switzerland" },
+                { "USA", "Usa" }
+            };
+
+            foreach (var leagueCode in fileToURLNameMap)
+            {
+                historyFiles.Add(leagueCode.Value, new List<string> { string.Format("http://www.football-data.co.uk/new/{0}.csv", leagueCode.Key) });
+            }
+
+            return historyFiles;
+        }
 
         public List<Fixture> FixtureList { get; set; }
 
@@ -34,8 +101,6 @@ namespace BettingPredictorV3
         {
             Leagues = new List<League>();
             FixtureList = new List<Fixture>();
-            HistoryFiles = new Dictionary<string, List<string>>();
-            FixtureFiles = new List<string>();
         }
 
         public void ClearData()
@@ -187,60 +252,6 @@ namespace BettingPredictorV3
         public League GetLeague(string leagueCode)
         {
             return Leagues.Find(x => x.LeagueID == leagueCode);
-        }
-
-        public void SetHistoryFiles()
-        {
-            List<string> yearCodes = new List<string> { 
-                //"1415", "1516", "1617", "1718", "1819",
-                "1920" };
-            List<string> leagueCodes = new List<string>
-            {
-                "E0", "E1", "E2", "E3", "EC", "SC0", "SC1", "SC2", "SC3",
-                "D1", "D2", "I1", "I2", "SP1", "SP2", "F1", "F2", "N1", "B1", "P1", "T1", "G1"
-            };
-
-            foreach(string leagueCode in leagueCodes)
-            {
-                HistoryFiles.Add(leagueCode, new List<string>());
-                foreach (string yearCode in yearCodes)
-                {
-                    HistoryFiles[leagueCode].Add(string.Format("http://www.football-data.co.uk/mmz4281/{0}/{1}.csv", yearCode, leagueCode));
-                }
-            }
-
-            // The additional leagues have a different league code in the file contents
-            // than in the URL. The key is the league code in the URL, the value is the league code in the file.
-            var fileToURLNameMap = new Dictionary<string, string>()
-            {
-                { "ARG", "Argentina" },
-                { "AUT", "Austria" },
-                { "BRA", "Brazil" },
-                { "CHN", "China" },
-                { "DNK", "Denmark"},
-                { "FIN", "Finland" },
-                { "IRL", "Ireland" },
-                { "JPN", "Japan" },
-                { "MEX", "Mexico" },
-                { "NOR", "Norway" },
-                { "POL", "Poland" },
-                { "ROU", "Romania" },
-                { "RUS", "Russia" },
-                { "SWE", "Sweden" },
-                { "SWZ", "Switzerland" },
-                { "USA", "Usa" }
-            };
-
-            foreach (var leagueCode in fileToURLNameMap)
-            {
-                HistoryFiles.Add(leagueCode.Value, new List<string> { string.Format("http://www.football-data.co.uk/new/{0}.csv", leagueCode.Key) });
-            }
-        }
-
-        public void SetFixturesFiles()
-        {
-            FixtureFiles.Add("http://www.football-data.co.uk/fixtures.csv");
-            FixtureFiles.Add("http://www.football-data.co.uk/new_league_fixtures.csv");
         }
     }
 }

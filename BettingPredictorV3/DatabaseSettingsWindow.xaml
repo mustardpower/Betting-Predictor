@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BettingPredictorV3"
         mc:Ignorable="d"
-        Title="Database Settings" Height="274" Width="281">
+        Title="Database Settings" Height="431" Width="713">
     <Grid>
         <CheckBox Name="ignoredPlayedFixturesCheckbox"  Content="Ignore played fixtures" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"/>
         <CheckBox Name="populateDatabaseCheckBox" Content="Populate database" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top"/>
@@ -23,7 +23,16 @@
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-        <Button Content="OK" HorizontalAlignment="Left" Margin="96,210,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="181,210,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="535,370,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="620,370,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+        <Label Content="Data sources:" Margin="271,14,44,4"></Label>
+        <ListView Name="historicalDataURLs"  HorizontalAlignment="Left" Height="293" Margin="271,40,0,0" VerticalAlignment="Top" Width="413" ItemsSource="{Binding SourceCollection}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="League code" DisplayMemberBinding="{Binding Item1}" />
+                    <GridViewColumn Header="URL" DisplayMemberBinding="{Binding Item2}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

@@ -23,8 +23,6 @@ namespace BettingPredictorV3
         public App()
         {
             ApplicationInitialize = _applicationInitialize;
-            database.SetFixturesFiles();
-            database.SetHistoryFiles();
         }
         public static new App Current
         {
@@ -85,7 +83,7 @@ namespace BettingPredictorV3
             {
                 Dispatcher.BeginInvoke(DispatcherPriority.Normal, (Invoker)delegate
                 {
-                    databaseSettingsWindow = new DatabaseSettingsWindow();
+                    databaseSettingsWindow = new DatabaseSettingsWindow(database);
                     databaseSettingsWindow.ShowDialog();
                     dialogResult = databaseSettingsWindow.DialogResult;
                     m.Set();

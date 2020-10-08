@@ -20,9 +20,13 @@ namespace BettingPredictorV3
     public partial class DatabaseSettingsWindow : Window
     {
 
-        public DatabaseSettingsWindow()
+        public DatabaseSettingsWindow(Database database)
         {
             InitializeComponent();
+
+            if(database != null)
+                historicalDataURLs.ItemsSource = database.HistoryFiles.SelectMany(f => f.Value.Select(s => new Tuple<string, string>(f.Key, s)))
+                 .ToList();
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -46,6 +50,16 @@ namespace BettingPredictorV3
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void AddURL_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Coming soon");
+        }
+
+        private void RemoveURL_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Coming soon");
         }
     }
 }
