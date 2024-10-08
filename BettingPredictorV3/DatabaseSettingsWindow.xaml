@@ -23,16 +23,20 @@
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-        <Button Content="OK" HorizontalAlignment="Left" Margin="535,370,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="620,370,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
-        <Label Content="Data sources:" Margin="271,14,44,4"></Label>
-        <ListView Name="historicalDataURLs"  HorizontalAlignment="Left" Height="293" Margin="271,40,0,0" VerticalAlignment="Top" Width="413" ItemsSource="{Binding SourceCollection}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="League code" DisplayMemberBinding="{Binding Item1}" />
-                    <GridViewColumn Header="URL" DisplayMemberBinding="{Binding Item2}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+            <Button Content="OK" Margin="5" Width="75" Click="btnOK_Click"/>
+            <Button Content="Cancel" Margin="5" Width="75" Click="btnCancel_Click"/>
+        </StackPanel>
+        <StackPanel Margin="271,14,44,60">
+            <Label Content="Data sources:"></Label>
+            <ListView Name="historicalDataURLs"  HorizontalAlignment="Left" Height="293" Width="391" ItemsSource="{Binding SourceCollection}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="League code" DisplayMemberBinding="{Binding Item1}" />
+                        <GridViewColumn Header="URL" DisplayMemberBinding="{Binding Item2}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
     </Grid>
 </Window>

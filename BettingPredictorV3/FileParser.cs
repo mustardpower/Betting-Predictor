@@ -70,7 +70,7 @@ namespace BettingPredictorV3
                     MessageBox.Show("Could not download file: " + aFile + ". Error: " + statusCode);
                 }
             }
-            catch(FormatException ex)
+            catch(Exception ex)
             {
                 MessageBox.Show("Could not download file: " + aFile + ".\n\n Error: " + ex.Message);
             }
@@ -127,7 +127,7 @@ namespace BettingPredictorV3
 
             Console.WriteLine("[{0}]", string.Join("\", \"", fixtureData));
 
-            var newLeague = fixtureData.Length == 19;
+            var newLeague = fixtureData.Length == 19 || fixtureData.Length == 22;
             var dateIndex = newLeague ? 3 : 1;
             var date_params = fixtureData[dateIndex].Split('/');
             int yearParam = int.Parse(date_params[2]);
@@ -290,7 +290,7 @@ namespace BettingPredictorV3
                     continue;
                 }
 
-                var newLeague = fixtureData.Length == 15;
+                var newLeague = fixtureData.Length == 15 || fixtureData.Length == 18;
                 var dateIndex = newLeague ? 2 : 1;
                 var dateParams = fixtureData[dateIndex].Split('/');
 

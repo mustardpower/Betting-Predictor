@@ -20,10 +20,11 @@ namespace BettingPredictorV3
         public List<string> FixtureFiles {
             get
             {
-                List<string> fixturesFiles = new List<string>();
-                fixturesFiles.Add("http://www.football-data.co.uk/fixtures.csv");
-                fixturesFiles.Add("http://www.football-data.co.uk/new_league_fixtures.csv");
-                return fixturesFiles;
+                return new List<string>()
+                {
+                    "https://www.football-data.co.uk/fixtures.csv",
+                    "https://www.football-data.co.uk/new_league_fixtures.csv"
+                };
             }
         }
 
@@ -41,8 +42,9 @@ namespace BettingPredictorV3
         {
             Dictionary<string, List<string>> historyFiles = new Dictionary<string, List<string>>();
             List<string> yearCodes = new List<string> { 
-                //"1415", "1516", "1617", "1718", "1819",
-                "1920" };
+                //"1415", "1516", "1617", "1718", "1819", "1920", "2021", "2122"
+                "22232", "2324", "2425"
+            };
             List<string> leagueCodes = new List<string>
             {
                 "E0", "E1", "E2", "E3", "EC", "SC0", "SC1", "SC2", "SC3",
@@ -54,7 +56,7 @@ namespace BettingPredictorV3
                 historyFiles.Add(leagueCode, new List<string>());
                 foreach (string yearCode in yearCodes)
                 {
-                    historyFiles[leagueCode].Add(string.Format("http://www.football-data.co.uk/mmz4281/{0}/{1}.csv", yearCode, leagueCode));
+                    historyFiles[leagueCode].Add(string.Format("https://www.football-data.co.uk/mmz4281/{0}/{1}.csv", yearCode, leagueCode));
                 }
             }
 
@@ -82,7 +84,7 @@ namespace BettingPredictorV3
 
             foreach (var leagueCode in fileToURLNameMap)
             {
-                historyFiles.Add(leagueCode.Value, new List<string> { string.Format("http://www.football-data.co.uk/new/{0}.csv", leagueCode.Key) });
+                historyFiles.Add(leagueCode.Value, new List<string> { string.Format("https://www.football-data.co.uk/new/{0}.csv", leagueCode.Key) });
             }
 
             return historyFiles;
